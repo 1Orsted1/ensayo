@@ -6,12 +6,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 @Injectable(as: IThemeFacade)
 class ThemeFacadeImpl implements IThemeFacade {
-  ThemeFacadeImpl();
+  ThemeFacadeImpl(this._sharedPreferences);
+
+  final SharedPreferences _sharedPreferences;
 
   @override
-  Future<SelectedTheme?> getThemeName() async {
-    String? current = null;
-    if (current == null) return SelectedTheme.light;
+  SelectedTheme? getThemeName() {
+    String? current = _sharedPreferences.getString(themeOpt);
+    if (current == null) return null;
 
     SelectedTheme theme = SelectedTheme.values.firstWhere(
       (t) => t.name == current,
@@ -24,6 +26,6 @@ class ThemeFacadeImpl implements IThemeFacade {
   Future<bool> setTheme(SelectedTheme selectedTheme) async {
     final name = selectedTheme.name;
     final themeName = themes.contains(name) ? name : light;
-    return true; //await _sharedPreferences.setString(themeOpt, themeName);
+    return await _sharedPreferences.setString(themeOpt, themeName);
   }
 }

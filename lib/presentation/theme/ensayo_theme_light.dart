@@ -2,10 +2,6 @@ import 'package:ensayo/presentation/theme/i_personalized_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
-// TODO: replace with your actual imports
-// import 'package:ensayo/domain/constants.dart';
-// import 'package:ensayo/presentation/theme/i_personalized_theme.dart';
-
 // ---------------------------------------------------------------------------
 // ENSAYO — Light Theme
 // Design System: "The Botanical Architect"
