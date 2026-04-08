@@ -1,31 +1,31 @@
-import 'package:ensayo/domain/theme/constants.dart';
-import 'package:ensayo/domain/theme/i_theme_facade.dart';
-import 'package:ensayo/domain/theme/selected_theme.dart';
-import 'package:injectable/injectable.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:ensayo/domain/theme/constants.dart';
+// import 'package:ensayo/domain/theme/i_theme_facade.dart';
+// import 'package:ensayo/domain/theme/selected_theme.dart';
+// import 'package:injectable/injectable.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 
-@Injectable(as: IThemeFacade)
-class ThemeFacadeImpl implements IThemeFacade {
-  ThemeFacadeImpl(this._sharedPreferences);
+// @Injectable(as: IThemeFacade)
+// class ThemeFacadeImpl implements IThemeFacade {
+//   ThemeFacadeImpl(this._sharedPreferences);
 
-  final SharedPreferences _sharedPreferences;
+//   final SharedPreferences _sharedPreferences;
 
-  @override
-  SelectedTheme? getThemeName() {
-    String? current = _sharedPreferences.getString(themeOpt);
-    if (current == null) return null;
+//   @override
+//   SelectedTheme? getThemeName() {
+//     String? current = _sharedPreferences.getString(themeOpt);
+//     if (current == null) return null;
 
-    SelectedTheme theme = SelectedTheme.values.firstWhere(
-      (t) => t.name == current,
-      orElse: () => SelectedTheme.light,
-    );
-    return theme;
-  }
+//     SelectedTheme theme = SelectedTheme.values.firstWhere(
+//       (t) => t.name == current,
+//       orElse: () => SelectedTheme.light,
+//     );
+//     return theme;
+//   }
 
-  @override
-  Future<bool> setTheme(SelectedTheme selectedTheme) async {
-    final name = selectedTheme.name;
-    final themeName = themes.contains(name) ? name : light;
-    return await _sharedPreferences.setString(themeOpt, themeName);
-  }
-}
+//   @override
+//   Future<bool> setTheme(SelectedTheme selectedTheme) async {
+//     final name = selectedTheme.name;
+//     final themeName = themes.contains(name) ? name : light;
+//     return await _sharedPreferences.setString(themeOpt, themeName);
+//   }
+// }
