@@ -17,11 +17,13 @@ class App extends StatelessWidget {
     }
     return MultiBlocProvider(
       providers: [
+        //Manages theme selection and persistence across app restarts using HydratedBloc.
         BlocProvider(
           create: (context) => getIt<ThemeCubit>(),
         ),
       ],
       child: BlocBuilder<ThemeCubit, SelectedTheme>(
+        buildWhen: (previous, current) => previous != current,
         builder: (context, selectedTheme) {
           return MaterialApp(
             title: 'Flutter Widgets Demo',
