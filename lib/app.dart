@@ -2,7 +2,7 @@ import 'package:ensayo/application/theme/theme_cubit.dart';
 import 'package:ensayo/domain/theme/selected_theme.dart';
 import 'package:ensayo/presentation/demo_screen.dart';
 import 'package:ensayo/injection.dart';
-import 'package:ensayo/presentation/theme/i_personalized_theme.dart';
+import 'package:ensayo/domain/theme/i_personalized_theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
