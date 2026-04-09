@@ -29,11 +29,11 @@ extension GetItInjectableX on _i174.GetIt {
   }) async {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final registerModule = _$RegisterModule();
-    gh.factory<_i309.ThemeCubit>(() => _i309.ThemeCubit());
     await gh.singletonAsync<_i460.SharedPreferences>(
       () => registerModule.getSharedPreferences(),
       preResolve: true,
     );
+    gh.lazySingleton<_i309.ThemeCubit>(() => _i309.ThemeCubit());
     await gh.lazySingletonAsync<_i883.QueryExecutor>(
       () => registerModule.databaseExecutor,
       preResolve: true,
