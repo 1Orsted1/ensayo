@@ -19,7 +19,7 @@ import 'infra/app_database.dart' as _i437;
 import 'infra/register_module.dart' as _i761;
 import 'presentation/theme/ensayo_theme_dark.dart' as _i213;
 import 'presentation/theme/ensayo_theme_light.dart' as _i553;
-import 'presentation/theme/i_personalized_theme.dart' as _i240;
+import 'domain/theme/i_personalized_theme.dart' as _i240;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt

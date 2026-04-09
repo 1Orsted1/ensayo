@@ -1,5 +1,5 @@
 import 'package:ensayo/domain/theme/selected_theme.dart';
-import 'package:ensayo/presentation/theme/i_personalized_theme.dart';
+import 'package:ensayo/domain/theme/i_personalized_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
