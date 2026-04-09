@@ -1,3 +1,4 @@
+import 'package:ensayo/domain/theme/selected_theme.dart';
 import 'package:ensayo/presentation/theme/i_personalized_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
@@ -9,7 +10,7 @@ import 'package:injectable/injectable.dart';
 // surfaces lift to pale mints and whites, maintaining the organic depth.
 // ---------------------------------------------------------------------------
 
-@Named('light')
+@Named(kLight)
 @Injectable(as: IPersonalizedTheme)
 class EnsayoThemeLight implements IPersonalizedTheme {
   // -------------------------------------------------------------------------

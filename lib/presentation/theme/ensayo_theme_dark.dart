@@ -1,3 +1,4 @@
+import 'package:ensayo/domain/theme/selected_theme.dart';
 import 'package:ensayo/presentation/theme/i_personalized_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
@@ -9,7 +10,7 @@ import 'package:injectable/injectable.dart';
 // Fonts: Space Grotesk (display/headlines) · Manrope (body/labels)
 // ---------------------------------------------------------------------------
 
-@Named('dark')
+@Named(kDark)
 @Injectable(as: IPersonalizedTheme)
 class EnsayoThemeDark implements IPersonalizedTheme {
   // -------------------------------------------------------------------------

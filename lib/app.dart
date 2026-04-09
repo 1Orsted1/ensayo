@@ -17,9 +17,6 @@ class App extends StatelessWidget {
     }
     return MultiBlocProvider(
       providers: [
-        // BlocProvider(
-        //   create: (context) => getIt<ThemeBloc>()..add(ThemeEvent.getTheme()),
-        // ),
         BlocProvider(
           create: (context) => getIt<ThemeCubit>(),
         ),
@@ -33,17 +30,6 @@ class App extends StatelessWidget {
           );
         },
       ),
-      // child: BlocBuilder<ThemeBloc, ThemeState>(
-      //   buildWhen: (p, c) => p.selectedTheme != c.selectedTheme,
-      //   builder: (context, state) {
-      //     final themeData = getThemeData(state.selectedTheme.name);
-      //     return MaterialApp(
-      //       title: 'Flutter Widgets Demo',
-      //       theme: themeData,
-      //       home: const DemoScreen(),
-      //     );
-      //   },
-      // ),
     );
   }
 }

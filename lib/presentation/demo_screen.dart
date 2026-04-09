@@ -1,4 +1,3 @@
-import 'package:ensayo/application/theme/theme_bloc.dart';
 import 'package:ensayo/application/theme/theme_cubit.dart';
 import 'package:ensayo/domain/theme/selected_theme.dart';
 import 'package:flutter/material.dart';
@@ -28,8 +27,6 @@ class _DemoScreenState extends State<DemoScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
     final themeCubit = context.watch<ThemeCubit>();
-    // return BlocBuilder<ThemeBloc, ThemeState>(
-    //   builder: (context, state) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Flutter Common Widgets'),
@@ -39,14 +36,8 @@ class _DemoScreenState extends State<DemoScreen> {
             onPressed: () {
               if (themeCubit.state == SelectedTheme.light) {
                 themeCubit.setTheme(SelectedTheme.dark);
-                // bloc.add(
-                //   ThemeEvent.setTheme(selectedTheme: SelectedTheme.dark),
-                // );
               } else {
                 themeCubit.setTheme(SelectedTheme.light);
-                // bloc.add(
-                //   ThemeEvent.setTheme(selectedTheme: SelectedTheme.light),
-                // );
               }
             },
           ),
