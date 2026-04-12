@@ -38,6 +38,7 @@ dependencies:
   drift_flutter: ^0.3.0
   path_provider: ^2.1.5
   hydrated_bloc: ^11.0.0
+  go_router: ^17.2.0
 
 dev_dependencies:
   flutter_test:
