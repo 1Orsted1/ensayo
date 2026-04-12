@@ -15,19 +15,17 @@ class App extends StatelessWidget {
     ThemeData getThemeData(String name) {
       return GetIt.I<IPersonalizedTheme>(instanceName: name).getTheme();
     }
+
     return MultiBlocProvider(
       providers: [
         //Manages theme selection and persistence across app restarts using HydratedBloc.
-        BlocProvider(
-          create: (context) => getIt<ThemeCubit>(),
-        ),
+        BlocProvider(create: (context) => getIt<ThemeCubit>()),
       ],
       child: BlocBuilder<ThemeCubit, SelectedTheme>(
-        buildWhen: (previous, current) => previous != current,
         builder: (context, selectedTheme) {
           return MaterialApp(
             title: 'Flutter Widgets Demo',
-            theme: getThemeData(selectedTheme.name),
+            theme: getThemeData(selectedTheme.value),
             home: const DemoScreen(),
           );
         },
