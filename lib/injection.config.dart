@@ -15,11 +15,11 @@ import 'package:injectable/injectable.dart' as _i526;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
 
 import 'application/theme/theme_cubit.dart' as _i309;
+import 'domain/theme/i_personalized_theme.dart' as _i130;
 import 'infra/app_database.dart' as _i437;
 import 'infra/register_module.dart' as _i761;
 import 'presentation/theme/ensayo_theme_dark.dart' as _i213;
 import 'presentation/theme/ensayo_theme_light.dart' as _i553;
-import 'domain/theme/i_personalized_theme.dart' as _i240;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -41,11 +41,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i437.AppDatabase>(
       () => registerModule.database(gh<_i883.QueryExecutor>()),
     );
-    gh.factory<_i240.IPersonalizedTheme>(
+    gh.factory<_i130.IPersonalizedTheme>(
       () => _i553.EnsayoThemeLight(),
       instanceName: 'light',
     );
-    gh.factory<_i240.IPersonalizedTheme>(
+    gh.factory<_i130.IPersonalizedTheme>(
       () => _i213.EnsayoThemeDark(),
       instanceName: 'dark',
     );
