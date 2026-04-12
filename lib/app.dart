@@ -1,6 +1,6 @@
 import 'package:ensayo/application/theme/theme_cubit.dart';
 import 'package:ensayo/domain/theme/selected_theme.dart';
-import 'package:ensayo/presentation/demo_screen.dart';
+import 'package:ensayo/presentation/core/app_router.dart';
 import 'package:ensayo/injection.dart';
 import 'package:ensayo/domain/theme/i_personalized_theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,16 +17,13 @@ class App extends StatelessWidget {
     }
 
     return MultiBlocProvider(
-      providers: [
-        //Manages theme selection and persistence across app restarts using HydratedBloc.
-        BlocProvider(create: (context) => getIt<ThemeCubit>()),
-      ],
+      providers: [BlocProvider(create: (context) => getIt<ThemeCubit>())],
       child: BlocBuilder<ThemeCubit, SelectedTheme>(
         builder: (context, selectedTheme) {
-          return MaterialApp(
+          return MaterialApp.router(
             title: 'Flutter Widgets Demo',
             theme: getThemeData(selectedTheme.value),
-            home: const DemoScreen(),
+            routerConfig: appRouter,
           );
         },
       ),
