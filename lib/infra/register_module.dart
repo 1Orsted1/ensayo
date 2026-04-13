@@ -1,13 +1,15 @@
 import 'package:drift/backends.dart';
 import 'package:drift/drift.dart';
+import 'package:drift/native.dart';
 import 'package:drift_flutter/drift_flutter.dart';
 import 'package:ensayo/infra/app_database.dart';
 import 'package:injectable/injectable.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 @module
 abstract class RegisterModule {
+  @dev
+  @prod
   @preResolve
   @lazySingleton
   Future<QueryExecutor> get databaseExecutor async {
@@ -22,9 +24,9 @@ abstract class RegisterModule {
   @lazySingleton
   AppDatabase database(QueryExecutor executor) => AppDatabase(executor);
 
+  @test
   @preResolve
-  @singleton
-  Future<SharedPreferences> getSharedPreferences() {
-    return SharedPreferences.getInstance();
-  }
+  @lazySingleton
+  Future<QueryExecutor> get databaseExecutorTest async =>
+      NativeDatabase.memory();
 }

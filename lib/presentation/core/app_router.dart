@@ -1,4 +1,4 @@
-import 'package:ensayo/presentation/dashboard/ScaffoldWithNavBar.dart';
+import 'package:ensayo/presentation/dashboard/scaffold_with_nav_bar.dart';
 import 'package:ensayo/presentation/dashboard/home_screen.dart';
 import 'package:ensayo/presentation/dashboard/plan_screen.dart';
 import 'package:ensayo/presentation/dashboard/progress_screen.dart';

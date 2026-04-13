@@ -1,26 +1,34 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-    "version": "0.2.0",
-    "configurations": [
-    
-        {
-            "name": "ensayo",
-            "request": "launch",
-            "type": "dart"
-        },
-        {
-            "name": "ensayo (profile mode)",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "profile"
-        },
-        {
-            "name": "ensayo (release mode)",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "release"
-        }
-    ]
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Dev (debug)",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main_dev.dart"
+    },
+    {
+      "name": "Prod (debug)",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main_prod.dart"
+    },
+    {
+      "name": "Dev (release)",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main_dev.dart",
+      "flutterMode": "release"
+    },
+    {
+      "name": "Prod (release)",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main_prod.dart",
+      "flutterMode": "release"
+    }
+  ]
 }
