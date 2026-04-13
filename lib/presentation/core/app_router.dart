@@ -1,4 +1,4 @@
-import 'package:ensayo/presentation/dashboard/ScaffoldWithNavBar.dart';
+import 'package:ensayo/presentation/dashboard/scaffold_with_nav_bar.dart';
 import 'package:ensayo/presentation/dashboard/home_screen.dart';
 import 'package:ensayo/presentation/dashboard/plan_screen.dart';
 import 'package:ensayo/presentation/dashboard/progress_screen.dart';
@@ -29,7 +29,7 @@ final appRouter = GoRouter(
                   HomeScreen(),
               routes: [
                 GoRoute(
-                  path: '/demo',
+                  path: 'demo',
                   builder: (BuildContext context, GoRouterState state) =>
                       DemoScreen(),
                 ),
@@ -46,7 +46,7 @@ final appRouter = GoRouter(
                   PlanScreen(),
               routes: [
                 GoRoute(
-                  path: '/demo',
+                  path: 'demo',
                   builder: (BuildContext context, GoRouterState state) =>
                       DemoScreen(),
                 ),
@@ -63,7 +63,7 @@ final appRouter = GoRouter(
                   SessionScreen(),
               routes: [
                 GoRoute(
-                  path: '/demo',
+                  path: 'demo',
                   builder: (BuildContext context, GoRouterState state) =>
                       DemoScreen(),
                 ),
@@ -80,7 +80,7 @@ final appRouter = GoRouter(
                   ProgressScreen(),
               routes: [
                 GoRoute(
-                  path: '/demo',
+                  path: 'demo',
                   builder: (BuildContext context, GoRouterState state) =>
                       DemoScreen(),
                 ),
