@@ -5,17 +5,12 @@ import 'package:ensayo/injection.dart';
 import 'package:ensayo/domain/theme/i_personalized_theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
 
   @override
   Widget build(BuildContext context) {
-    ThemeData getThemeData(String name) {
-      return GetIt.I<IPersonalizedTheme>(instanceName: name).getTheme();
-    }
-
     return MultiBlocProvider(
       providers: [BlocProvider(create: (context) => getIt<ThemeCubit>())],
       child: BlocBuilder<ThemeCubit, SelectedTheme>(
@@ -29,4 +24,8 @@ class App extends StatelessWidget {
       ),
     );
   }
+}
+
+ThemeData getThemeData(String name) {
+  return getIt<IPersonalizedTheme>(instanceName: name).getTheme();
 }

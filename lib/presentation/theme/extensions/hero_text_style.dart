@@ -18,7 +18,7 @@ class HeroTextStyle extends ThemeExtension<HeroTextStyle> {
     TextStyle? heroSubtitle,
   }) {
     return HeroTextStyle(
-      heroTitle: heroTitle ?? this.heroSubtitle,
+      heroTitle: heroTitle ?? this.heroTitle,
       heroMessage: heroMessage ?? this.heroMessage,
       heroSubtitle: heroSubtitle ?? this.heroSubtitle,
     );
