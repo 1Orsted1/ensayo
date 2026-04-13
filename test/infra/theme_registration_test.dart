@@ -14,7 +14,6 @@ void main() {
 
   test('every SelectedTheme value has a registered theme in GetIt', () {
     for (final theme in SelectedTheme.values) {
-      print("Theme ${theme.value}");
       expect(
         () => GetIt.instance<IPersonalizedTheme>(instanceName: theme.value),
         returnsNormally,
