@@ -1,5 +1,6 @@
 import 'package:ensayo/domain/theme/selected_theme.dart';
 import 'package:ensayo/domain/theme/i_personalized_theme.dart';
+import 'package:ensayo/presentation/theme/extensions/custom_card_style.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
@@ -420,6 +421,30 @@ class EnsayoThemeDark implements IPersonalizedTheme {
         behavior: SnackBarBehavior.floating,
         elevation: 0,
       ),
+
+      // -- Custom extensions --
+      extensions: [
+        CustomCardStyle(
+          backgroundColor: colorScheme.primaryContainer,
+          titleStyle: _textTheme.titleLarge!.copyWith(
+            fontFamily: 'SpaceGrotesk',
+            color: colorScheme.onPrimaryContainer,
+          ),
+          subtitleStyle: _textTheme.bodyMedium!.copyWith(
+            color: colorScheme.onPrimaryContainer,
+          ),
+          buttonStyle: OutlinedButton.styleFrom(
+            foregroundColor: colorScheme.onPrimaryContainer,
+            backgroundColor: colorScheme.primaryContainer,
+            side: BorderSide(color: colorScheme.onPrimaryContainer),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(24),
+            ),
+          ),
+          padding: const EdgeInsets.all(20),
+          borderRadius: BorderRadius.circular(24),
+        ),
+      ],
     );
   }
 }
