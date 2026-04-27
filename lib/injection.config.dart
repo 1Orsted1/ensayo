@@ -10,6 +10,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:drift/backends.dart' as _i883;
+import 'package:firebase_analytics/firebase_analytics.dart' as _i398;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
@@ -33,6 +34,9 @@ extension GetItInjectableX on _i174.GetIt {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final registerModule = _$RegisterModule();
     gh.lazySingleton<_i309.ThemeCubit>(() => _i309.ThemeCubit());
+    gh.lazySingleton<_i398.FirebaseAnalytics>(
+      () => registerModule.getAnalitics(),
+    );
     gh.factory<_i130.IPersonalizedTheme>(
       () => _i553.EnsayoThemeLight(),
       instanceName: 'light',

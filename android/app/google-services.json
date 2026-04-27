@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "359550886948",
+    "project_id": "ensayo-81aeb",
+    "storage_bucket": "ensayo-81aeb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:359550886948:android:71db60c1f268808307a4b1",
+        "android_client_info": {
+          "package_name": "com.example.ensayo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDu3LW7MEcd5hAonUjlc-5LIFMeqD3wEpQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
