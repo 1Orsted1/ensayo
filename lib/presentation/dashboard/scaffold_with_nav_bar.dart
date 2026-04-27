@@ -10,7 +10,7 @@ class ScaffoldWithNavBar extends StatelessWidget {
     return Scaffold(
       body: navigationShell,
       bottomNavigationBar: NavigationBar(
-        selectedIndex: navigationShell.currentIndex, // no manual sync needed
+        selectedIndex: navigationShell.currentIndex,
         onDestinationSelected: (i) => navigationShell.goBranch(i),
         destinations: const [
           NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
