@@ -17,15 +17,13 @@ class App extends StatelessWidget {
         builder: (context, selectedTheme) {
           return MaterialApp.router(
             title: 'Flutter Widgets Demo',
-            theme: getThemeData(selectedTheme.value),
+            theme: getIt<IPersonalizedTheme>(
+              instanceName: selectedTheme.value,
+            ).getTheme(),
             routerConfig: appRouter,
           );
         },
       ),
     );
   }
-}
-
-ThemeData getThemeData(String name) {
-  return getIt<IPersonalizedTheme>(instanceName: name).getTheme();
 }
