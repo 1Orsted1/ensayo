@@ -197,6 +197,24 @@ class EnsayoThemeDark implements IPersonalizedTheme {
   // -------------------------------------------------------------------------
   @override
   ThemeData getTheme() {
+    final customCardStyle = CustomCardStyle(
+      backgroundColor: colorScheme.primaryContainer,
+      titleStyle: _textTheme.titleLarge!.copyWith(
+        fontFamily: 'SpaceGrotesk',
+        color: colorScheme.onPrimaryContainer,
+      ),
+      subtitleStyle: _textTheme.bodyMedium!.copyWith(
+        color: colorScheme.onPrimaryContainer,
+      ),
+      buttonStyle: OutlinedButton.styleFrom(
+        foregroundColor: colorScheme.onPrimaryContainer,
+        backgroundColor: colorScheme.primaryContainer,
+        side: BorderSide(color: colorScheme.onPrimaryContainer),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+      ),
+      padding: const EdgeInsets.all(20),
+      borderRadius: BorderRadius.circular(24),
+    );
     return ThemeData(
       useMaterial3: true,
       fontFamily: 'Manrope',
@@ -423,28 +441,8 @@ class EnsayoThemeDark implements IPersonalizedTheme {
       ),
 
       // -- Custom extensions --
-      extensions: [
-        CustomCardStyle(
-          backgroundColor: colorScheme.primaryContainer,
-          titleStyle: _textTheme.titleLarge!.copyWith(
-            fontFamily: 'SpaceGrotesk',
-            color: colorScheme.onPrimaryContainer,
-          ),
-          subtitleStyle: _textTheme.bodyMedium!.copyWith(
-            color: colorScheme.onPrimaryContainer,
-          ),
-          buttonStyle: OutlinedButton.styleFrom(
-            foregroundColor: colorScheme.onPrimaryContainer,
-            backgroundColor: colorScheme.primaryContainer,
-            side: BorderSide(color: colorScheme.onPrimaryContainer),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(24),
-            ),
-          ),
-          padding: const EdgeInsets.all(20),
-          borderRadius: BorderRadius.circular(24),
-        ),
-      ],
+      ///Todo: refactor move customCard style outside extensions (try keep it clean as list of names)
+      extensions: [customCardStyle],
     );
   }
 }
