@@ -4,4 +4,9 @@ import 'package:flutter/material.dart';
 extension AppThemeX on BuildContext {
   CustomCardStyle get customCardStyle =>
       Theme.of(this).extension<CustomCardStyle>()!;
+
+  //Todo: Actually create text style!
+  TextTheme get textStyle => Theme.of(this).textTheme;
+
+  ColorScheme get colorScheme => Theme.of(this).colorScheme;
 }

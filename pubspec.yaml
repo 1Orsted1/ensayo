@@ -27,6 +27,7 @@ dependencies:
   go_router: ^17.2.0
   firebase_core: ^4.7.0
   firebase_analytics: ^12.3.0
+  gap: ^3.0.1
 
 dev_dependencies:
   flutter_test:
