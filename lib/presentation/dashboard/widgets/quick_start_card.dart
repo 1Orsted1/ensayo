@@ -18,7 +18,7 @@ class QuickStartCard extends StatelessWidget {
     final style = context.customCardStyle;
 
     return Material(
-      elevation: 8.0,
+      elevation: 2.0,
       borderRadius: style.borderRadius,
       child: Container(
         padding: style.padding,

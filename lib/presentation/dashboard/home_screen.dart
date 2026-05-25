@@ -1,6 +1,7 @@
 import 'package:ensayo/application/theme/theme_cubit.dart';
 import 'package:ensayo/domain/theme/selected_theme.dart';
 import 'package:ensayo/presentation/dashboard/widgets/quick_start_card.dart';
+import 'package:ensayo/presentation/dashboard/widgets/recent_pieces_card.dart';
 import 'package:ensayo/presentation/theme/extensions/app_theme_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,6 +23,14 @@ class HomeScreen extends StatelessWidget {
     final bloc = context.watch<ThemeCubit>();
     final textStyle = context.textStyle;
     final colorScheme = context.colorScheme;
+
+    final List<(String, String)> dummy = [
+      ("Cello Suite No. 1", "J.S. Bach"),
+      ("Moonlight Sonata", "L. v. Beethoven"),
+      ("Zigeunerweisen", "Pablo de Sarasate"),
+    ];
+    final List<String> dummyCat = ["Learning", "Polishing", "Not mastered"];
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Home page"),
@@ -135,7 +144,17 @@ class HomeScreen extends StatelessWidget {
                 Text("View all"),
               ],
             ),
-            Column(children: [Gap(12)]),
+            Column(
+              children: dummy
+                  .map(
+                    (e) => RecentPiecesCard(
+                      title: e.$1,
+                      subTitle: e.$2,
+                      categories: dummyCat,
+                    ),
+                  )
+                  .toList(),
+            ),
           ],
         ),
       ),
