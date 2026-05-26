@@ -1,3 +1,4 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:ensayo/app.dart';
 import 'package:ensayo/injection.dart';
 import 'package:flutter/foundation.dart';
@@ -14,5 +15,10 @@ Future<void> main() async {
         : HydratedStorageDirectory((await getTemporaryDirectory()).path),
   );
   await configureDependencies(environment: Environment.dev);
-  runApp(const App());
+  runApp(
+    DevicePreview(
+      enabled: !kReleaseMode,
+      builder: (context) => App(), // Wrap your app
+    ),
+  );
 }

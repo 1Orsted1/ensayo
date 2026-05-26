@@ -26,7 +26,8 @@ class RecentPiecesCard extends StatelessWidget {
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-                colors: [Colors.blue, Colors.green],
+                colors: [color.secondary, color.surfaceContainerHigh],
+                //colors: [Colors.blue, Colors.green],
                 stops: [
                   0.0,
                   1.0,
@@ -34,7 +35,7 @@ class RecentPiecesCard extends StatelessWidget {
               ),
             ),
             padding: EdgeInsets.all(16.0),
-            child: Icon(Icons.music_note),
+            child: Icon(Icons.music_note, color: color.tertiary),
           ),
           title: Text(title),
           subtitle: Column(

@@ -81,26 +81,26 @@ class EnsayoThemeDark implements IPersonalizedTheme {
   // Space Grotesk → display + headlines (editorial voice)
   // Manrope       → body + labels    (functional voice)
   // -------------------------------------------------------------------------
-  TextTheme get _textTheme => const TextTheme(
+  TextTheme get _textTheme => TextTheme(
     // --- Display (Space Grotesk) ---
     displayLarge: TextStyle(
       fontFamily: 'SpaceGrotesk',
       fontSize: 57,
       fontWeight: FontWeight.w400,
       letterSpacing: -0.25,
-      color: Color(0xFFDEE4E1),
+      color: colorScheme.onSurface,
     ),
     displayMedium: TextStyle(
       fontFamily: 'SpaceGrotesk',
       fontSize: 45,
       fontWeight: FontWeight.w400,
-      color: Color(0xFFDEE4E1),
+      color: colorScheme.onSurface,
     ),
     displaySmall: TextStyle(
       fontFamily: 'SpaceGrotesk',
       fontSize: 36,
       fontWeight: FontWeight.w400,
-      color: Color(0xFFDEE4E1),
+      color: colorScheme.onSurface,
     ),
 
     // --- Headline (Space Grotesk) ---
@@ -108,19 +108,19 @@ class EnsayoThemeDark implements IPersonalizedTheme {
       fontFamily: 'SpaceGrotesk',
       fontSize: 32,
       fontWeight: FontWeight.w500,
-      color: Color(0xFFDEE4E1),
+      color: colorScheme.onSurface,
     ),
     headlineMedium: TextStyle(
       fontFamily: 'SpaceGrotesk',
       fontSize: 28,
       fontWeight: FontWeight.w500,
-      color: Color(0xFFDEE4E1),
+      color: colorScheme.onSurface,
     ),
     headlineSmall: TextStyle(
       fontFamily: 'SpaceGrotesk',
       fontSize: 24,
       fontWeight: FontWeight.w500,
-      color: Color(0xFFDEE4E1),
+      color: colorScheme.onSurface,
     ),
 
     // --- Title (Manrope — transitional) ---
@@ -128,21 +128,21 @@ class EnsayoThemeDark implements IPersonalizedTheme {
       fontFamily: 'Manrope',
       fontSize: 22,
       fontWeight: FontWeight.w600,
-      color: Color(0xFFDEE4E1),
+      color: colorScheme.onSurface,
     ),
     titleMedium: TextStyle(
       fontFamily: 'Manrope',
       fontSize: 16,
       fontWeight: FontWeight.w600,
       letterSpacing: 0.15,
-      color: Color(0xFFDEE4E1),
+      color: colorScheme.onSurface,
     ),
     titleSmall: TextStyle(
       fontFamily: 'Manrope',
       fontSize: 14,
       fontWeight: FontWeight.w600,
       letterSpacing: 0.1,
-      color: Color(0xFFDEE4E1),
+      color: colorScheme.onSurface,
     ),
 
     // --- Body (Manrope) ---
@@ -151,21 +151,21 @@ class EnsayoThemeDark implements IPersonalizedTheme {
       fontSize: 16,
       fontWeight: FontWeight.w400,
       letterSpacing: 0.5,
-      color: Color(0xFFC0C8C5), // onSurfaceVariant — softer, premium
+      color: colorScheme.onSurfaceVariant,
     ),
     bodyMedium: TextStyle(
       fontFamily: 'Manrope',
       fontSize: 14,
       fontWeight: FontWeight.w400,
       letterSpacing: 0.25,
-      color: Color(0xFFC0C8C5),
+      color: colorScheme.onSurfaceVariant,
     ),
     bodySmall: TextStyle(
       fontFamily: 'Manrope',
       fontSize: 12,
       fontWeight: FontWeight.w400,
       letterSpacing: 0.4,
-      color: Color(0xFFC0C8C5),
+      color: colorScheme.onSurfaceVariant,
     ),
 
     // --- Label (Manrope — uppercase buttons / tags) ---
@@ -174,21 +174,21 @@ class EnsayoThemeDark implements IPersonalizedTheme {
       fontSize: 14,
       fontWeight: FontWeight.w600,
       letterSpacing: 0.05 * 14, // 0.05em
-      color: Color(0xFFDEE4E1),
+      color: colorScheme.onSurface,
     ),
     labelMedium: TextStyle(
       fontFamily: 'Manrope',
       fontSize: 12,
       fontWeight: FontWeight.w600,
       letterSpacing: 0.5,
-      color: Color(0xFFDEE4E1),
+      color: colorScheme.onSurface,
     ),
     labelSmall: TextStyle(
       fontFamily: 'Manrope',
       fontSize: 11,
       fontWeight: FontWeight.w500,
       letterSpacing: 0.5,
-      color: Color(0xFFC0C8C5),
+      color: colorScheme.onSurfaceVariant,
     ),
   );
 
@@ -245,9 +245,10 @@ class EnsayoThemeDark implements IPersonalizedTheme {
       // No dividers, xl rounding (24px), tonal depth only — no shadows
       cardTheme: CardThemeData(
         color: colorScheme.surfaceContainer,
-        elevation: 0,
+        elevation: 12,
         shadowColor: Colors.transparent,
         shape: RoundedRectangleBorder(
+          side: BorderSide(color: colorScheme.tertiaryContainer),
           borderRadius: BorderRadius.circular(24), // xl
         ),
         margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 0),
