@@ -1,3 +1,4 @@
+import 'package:ensayo/application/metrics/metrics_cubit.dart';
 import 'package:ensayo/application/theme/theme_cubit.dart';
 import 'package:ensayo/domain/theme/selected_theme.dart';
 import 'package:ensayo/presentation/core/app_router.dart';
@@ -12,7 +13,10 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [BlocProvider(create: (context) => getIt<ThemeCubit>())],
+      providers: [
+        BlocProvider(create: (context) => getIt<ThemeCubit>()),
+        BlocProvider(create: (context) => getIt<MetricsCubit>()..increase()),
+      ],
       child: BlocBuilder<ThemeCubit, SelectedTheme>(
         builder: (context, selectedTheme) {
           return MaterialApp.router(

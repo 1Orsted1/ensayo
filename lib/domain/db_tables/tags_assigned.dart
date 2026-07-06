@@ -1,6 +1,6 @@
 import 'package:drift/drift.dart';
-import 'package:ensayo/domain/db/songs.dart';
-import 'package:ensayo/domain/db/tags.dart';
+import 'package:ensayo/domain/db_tables/songs.dart';
+import 'package:ensayo/domain/db_tables/tags.dart';
 
 class TagsAssigned extends Table {
   IntColumn get id => integer().autoIncrement()();

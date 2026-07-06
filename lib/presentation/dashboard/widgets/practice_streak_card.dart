@@ -6,12 +6,14 @@ class PracticeStreak extends StatelessWidget {
     required this.streakDays,
     required this.subtitle,
     required this.onStart,
+    required this.isLoading,
     super.key,
   });
 
   final int streakDays;
   final String subtitle;
   final VoidCallback onStart;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +31,12 @@ class PracticeStreak extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text("Practice strak", style: textStyle.labelSmall),
-                Icon(Icons.local_fire_department_rounded, color: Colors.orange),
+                isLoading
+                    ? CircularProgressIndicator.adaptive()
+                    : Icon(
+                        Icons.local_fire_department_rounded,
+                        color: Colors.orange,
+                      ),
               ],
             ),
             Text("$streakDays days", style: textStyle.headlineMedium),

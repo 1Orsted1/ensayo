@@ -1,10 +1,10 @@
 import 'package:drift/drift.dart';
-import 'package:ensayo/domain/db/feelings.dart';
-import 'package:ensayo/domain/db/metrics.dart';
-import 'package:ensayo/domain/db/practice_logs.dart';
-import 'package:ensayo/domain/db/songs.dart';
-import 'package:ensayo/domain/db/tags_assigned.dart';
-import 'package:ensayo/domain/db/tags.dart';
+import 'package:ensayo/domain/db_tables/feelings.dart';
+import 'package:ensayo/domain/db_tables/metrics.dart';
+import 'package:ensayo/domain/db_tables/practice_logs.dart';
+import 'package:ensayo/domain/db_tables/songs.dart';
+import 'package:ensayo/domain/db_tables/tags_assigned.dart';
+import 'package:ensayo/domain/db_tables/tags.dart';
 import 'package:ensayo/domain/metrics/metrics_data.dart';
 
 part 'app_database.g.dart';

@@ -11,7 +11,7 @@ class DailyGoalCard extends StatelessWidget {
   });
 
   final int currentTimeInvested;
-  final int dailyGoalInMinutes;
+  final double dailyGoalInMinutes;
   final VoidCallback onStart;
 
   @override

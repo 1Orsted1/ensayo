@@ -1,9 +1,6 @@
-import 'package:drift/drift.dart' as drift;
+import 'package:ensayo/application/metrics/metrics_cubit.dart';
 import 'package:ensayo/application/theme/theme_cubit.dart';
-import 'package:ensayo/domain/metrics/metrics_data.dart';
 import 'package:ensayo/domain/theme/selected_theme.dart';
-import 'package:ensayo/infra/app_database.dart';
-import 'package:ensayo/injection.dart';
 import 'package:ensayo/presentation/dashboard/widgets/daily_goal_card.dart';
 import 'package:ensayo/presentation/dashboard/widgets/metronome_card.dart';
 import 'package:ensayo/presentation/dashboard/widgets/practice_streak_card.dart';
@@ -14,20 +11,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
-
-  //TODO: create DB finnally please :v
-  //TODO: make work the practice streak widget
-  //TODO: make work the daily goal widget
   //TODO add translations
   //TODO: build metronome
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    context.read<MetricsCubit>().load();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     final bloc = context.watch<ThemeCubit>();
     final textStyle = context.textStyle;
-    final dataBase = getIt<AppDatabase>();
 
     final List<(String, String)> dummy = [
       ("Cello Suite No. 1", "J.S. Bach"),
@@ -35,8 +37,6 @@ class HomeScreen extends StatelessWidget {
       ("Zigeunerweisen", "Pablo de Sarasate"),
     ];
     final List<String> dummyCat = ["Learning", "Polishing", "Not mastered"];
-
-    List<MetricsData> allItems = [];
 
     return Scaffold(
       appBar: AppBar(
@@ -59,32 +59,33 @@ class HomeScreen extends StatelessWidget {
         child: ListView(
           children: [
             QuickStartCard(
-              title: allItems.join(), //'Ready to play',
+              title: 'Ready to play',
               subtitle: 'Your focus today: technical proficiency',
-              onStart: () async {
-                // await dataBase
-                //     .into(dataBase.metrics)
-                //     .insert(
-                //       MetricsCompanion(
-                //         streakDays: drift.Value(1),
-                //         dailyGoalInMinutes: drift.Value(60),
-                //       ),
-                //     );
-                allItems = await dataBase.select(dataBase.metrics).get();
-
-                print('items in database: ${allItems.first}');
-              },
+              onStart: () async {},
             ),
             Gap(32),
-            PracticeStreak(
-              streakDays: 2,
-              subtitle: 'This is your oportunity to improve',
-              onStart: () {},
+            BlocBuilder<MetricsCubit, MetricsState>(
+              buildWhen: (previous, current) =>
+                  previous.isLoading != current.isLoading,
+              builder: (context, state) {
+                return PracticeStreak(
+                  isLoading: state.isLoading,
+                  streakDays: state.data?.streakDays ?? 0,
+                  subtitle: 'This is your oportunity to improve',
+                  onStart: () {},
+                );
+              },
             ),
-            DailyGoalCard(
-              currentTimeInvested: 35,
-              dailyGoalInMinutes: 60,
-              onStart: () {},
+            BlocBuilder<MetricsCubit, MetricsState>(
+              buildWhen: (previous, current) =>
+                  previous.isLoading != current.isLoading,
+              builder: (context, state) {
+                return DailyGoalCard(
+                  currentTimeInvested: 0,
+                  dailyGoalInMinutes: state.data?.dailyGoalInMinutes ?? 1.0,
+                  onStart: () {},
+                );
+              },
             ),
             MetronomeCard(),
             Gap(16),

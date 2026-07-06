@@ -1,5 +1,5 @@
 import 'package:drift/drift.dart';
-import 'package:ensayo/domain/db/feelings.dart';
+import 'package:ensayo/domain/db_tables/feelings.dart';
 
 class PracticeLogs extends Table {
   IntColumn get id => integer().autoIncrement()();
