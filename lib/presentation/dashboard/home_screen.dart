@@ -1,5 +1,9 @@
+import 'package:drift/drift.dart' as drift;
 import 'package:ensayo/application/theme/theme_cubit.dart';
+import 'package:ensayo/domain/metrics/metrics_data.dart';
 import 'package:ensayo/domain/theme/selected_theme.dart';
+import 'package:ensayo/infra/app_database.dart';
+import 'package:ensayo/injection.dart';
 import 'package:ensayo/presentation/dashboard/widgets/daily_goal_card.dart';
 import 'package:ensayo/presentation/dashboard/widgets/metronome_card.dart';
 import 'package:ensayo/presentation/dashboard/widgets/practice_streak_card.dart';
@@ -23,6 +27,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final bloc = context.watch<ThemeCubit>();
     final textStyle = context.textStyle;
+    final dataBase = getIt<AppDatabase>();
 
     final List<(String, String)> dummy = [
       ("Cello Suite No. 1", "J.S. Bach"),
@@ -30,6 +35,8 @@ class HomeScreen extends StatelessWidget {
       ("Zigeunerweisen", "Pablo de Sarasate"),
     ];
     final List<String> dummyCat = ["Learning", "Polishing", "Not mastered"];
+
+    List<MetricsData> allItems = [];
 
     return Scaffold(
       appBar: AppBar(
@@ -52,9 +59,21 @@ class HomeScreen extends StatelessWidget {
         child: ListView(
           children: [
             QuickStartCard(
-              title: 'Ready to play',
+              title: allItems.join(), //'Ready to play',
               subtitle: 'Your focus today: technical proficiency',
-              onStart: () {},
+              onStart: () async {
+                // await dataBase
+                //     .into(dataBase.metrics)
+                //     .insert(
+                //       MetricsCompanion(
+                //         streakDays: drift.Value(1),
+                //         dailyGoalInMinutes: drift.Value(60),
+                //       ),
+                //     );
+                allItems = await dataBase.select(dataBase.metrics).get();
+
+                print('items in database: ${allItems.first}');
+              },
             ),
             Gap(32),
             PracticeStreak(
