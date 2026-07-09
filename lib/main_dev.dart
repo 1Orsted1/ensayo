@@ -1,5 +1,6 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:ensayo/app.dart';
+import 'package:ensayo/i18n/strings.g.dart';
 import 'package:ensayo/injection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
@@ -15,10 +16,13 @@ Future<void> main() async {
         : HydratedStorageDirectory((await getTemporaryDirectory()).path),
   );
   await configureDependencies(environment: Environment.dev);
+  LocaleSettings.useDeviceLocale();
   runApp(
-    DevicePreview(
-      enabled: !kReleaseMode,
-      builder: (context) => App(), // Wrap your app
+    TranslationProvider(
+      child: DevicePreview(
+        enabled: !kReleaseMode,
+        builder: (context) => App(), // Wrap your app
+      ),
     ),
   );
 }

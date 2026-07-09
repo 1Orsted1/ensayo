@@ -1,0 +1,50 @@
+{
+  "hello": "Hola $name",
+  "save": "Guardar",
+  "login": {
+    "success": "Login exitoso",
+    "fail": "Login fallido"
+  },
+  "nav": {
+    "home": "Inicio",
+    "plan": "Plan",
+    "session": "Sesión",
+    "progress": "Progreso"
+  },
+  "home": {
+    "title": "Página de inicio",
+    "quickStart": {
+      "title": "Listo para tocar",
+      "subtitle": "Tu enfoque de hoy: destreza técnica"
+    },
+    "recentPieces": {
+      "title": "Piezas recientes",
+      "viewAll": "Ver todo"
+    }
+  },
+  "plan": {
+    "title": "Página de plan"
+  },
+  "session": {
+    "title": "Página de sesión"
+  },
+  "progress": {
+    "title": "Página de progreso"
+  },
+  "practiceStreak": {
+    "title": "Racha de práctica",
+    "subtitle": "Esta es tu oportunidad de mejorar",
+    "days": "$count días"
+  },
+  "dailyGoal": {
+    "title": "Meta diaria",
+    "remaining": "/$goal min"
+  },
+  "metronome": {
+    "title": "Metrónomo rápido",
+    "bpm": "$count bpm"
+  },
+  "quickStartCard": {
+    "startSession": "Iniciar práctica"
+  }
+}

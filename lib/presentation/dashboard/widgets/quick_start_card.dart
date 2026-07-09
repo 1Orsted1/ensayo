@@ -1,3 +1,4 @@
+import 'package:ensayo/i18n/strings.g.dart';
 import 'package:ensayo/presentation/theme/extensions/app_theme_extensions.dart';
 import 'package:flutter/material.dart';
 
@@ -16,6 +17,7 @@ class QuickStartCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = context.customCardStyle;
+    final t = context.t;
 
     return Material(
       elevation: 2.0,
@@ -37,7 +39,7 @@ class QuickStartCard extends StatelessWidget {
             OutlinedButton(
               onPressed: onStart,
               style: style.buttonStyle,
-              child: const Text('Start Session'),
+              child: Text(t.quickStartCard.startSession),
             ),
           ],
         ),

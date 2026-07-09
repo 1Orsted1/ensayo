@@ -1,3 +1,4 @@
+import 'package:ensayo/i18n/strings.g.dart';
 import 'package:ensayo/presentation/theme/extensions/app_theme_extensions.dart';
 import 'package:flutter/material.dart';
 
@@ -18,6 +19,7 @@ class PracticeStreak extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textStyle = context.textStyle;
+    final t = context.t;
     //TODO later get here directly the data from the streak days
 
     return Card(
@@ -30,7 +32,7 @@ class PracticeStreak extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Practice strak", style: textStyle.labelSmall),
+                Text(t.practiceStreak.title, style: textStyle.labelSmall),
                 isLoading
                     ? CircularProgressIndicator.adaptive()
                     : Icon(
@@ -39,7 +41,10 @@ class PracticeStreak extends StatelessWidget {
                       ),
               ],
             ),
-            Text("$streakDays days", style: textStyle.headlineMedium),
+            Text(
+              t.practiceStreak.days(count: streakDays),
+              style: textStyle.headlineMedium,
+            ),
             Text(subtitle, style: textStyle.bodySmall),
           ],
         ),

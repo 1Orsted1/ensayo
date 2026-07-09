@@ -1,6 +1,7 @@
 import 'package:ensayo/application/metrics/metrics_cubit.dart';
 import 'package:ensayo/application/theme/theme_cubit.dart';
 import 'package:ensayo/domain/theme/selected_theme.dart';
+import 'package:ensayo/i18n/strings.g.dart';
 import 'package:ensayo/presentation/dashboard/widgets/daily_goal_card.dart';
 import 'package:ensayo/presentation/dashboard/widgets/metronome_card.dart';
 import 'package:ensayo/presentation/dashboard/widgets/practice_streak_card.dart';
@@ -13,7 +14,6 @@ import 'package:gap/gap.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
-  //TODO add translations
   //TODO: build metronome
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -30,6 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final bloc = context.watch<ThemeCubit>();
     final textStyle = context.textStyle;
+    final t = context.t;
 
     final List<(String, String)> dummy = [
       ("Cello Suite No. 1", "J.S. Bach"),
@@ -40,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Home page", style: textStyle.labelLarge),
+        title: Text(t.home.title, style: textStyle.labelLarge),
         actions: [
           IconButton(
             onPressed: () {
@@ -59,8 +60,8 @@ class _HomeScreenState extends State<HomeScreen> {
         child: ListView(
           children: [
             QuickStartCard(
-              title: 'Ready to play',
-              subtitle: 'Your focus today: technical proficiency',
+              title: t.home.quickStart.title,
+              subtitle: t.home.quickStart.subtitle,
               onStart: () async {},
             ),
             Gap(32),
@@ -71,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 return PracticeStreak(
                   isLoading: state.isLoading,
                   streakDays: state.data?.streakDays ?? 0,
-                  subtitle: 'This is your oportunity to improve',
+                  subtitle: t.practiceStreak.subtitle,
                   onStart: () {},
                 );
               },
@@ -95,10 +96,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Recent pieces",
+                    t.home.recentPieces.title,
                     style: TextStyle(fontWeight: FontWeight.w800, fontSize: 16),
                   ),
-                  Text("View all"),
+                  Text(t.home.recentPieces.viewAll),
                 ],
               ),
             ),

@@ -1,3 +1,4 @@
+import 'package:ensayo/i18n/strings.g.dart';
 import 'package:flutter/material.dart';
 
 class MetronomeCard extends StatefulWidget {
@@ -10,6 +11,8 @@ class MetronomeCard extends StatefulWidget {
 class _MetronomeCardState extends State<MetronomeCard> {
   @override
   Widget build(BuildContext context) {
+    final t = context.t;
+
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -21,10 +24,10 @@ class _MetronomeCardState extends State<MetronomeCard> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Quick metronome",
+                  t.metronome.title,
                   style: TextStyle(fontWeight: FontWeight.w800),
                 ),
-                Text("115 bpm"),
+                Text(t.metronome.bpm(count: 115)),
               ],
             ),
             Slider(value: .5, onChanged: (_) => print("TODO")),

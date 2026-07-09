@@ -1,11 +1,13 @@
 import 'package:ensayo/application/metrics/metrics_cubit.dart';
 import 'package:ensayo/application/theme/theme_cubit.dart';
 import 'package:ensayo/domain/theme/selected_theme.dart';
+import 'package:ensayo/i18n/strings.g.dart';
 import 'package:ensayo/presentation/core/app_router.dart';
 import 'package:ensayo/injection.dart';
 import 'package:ensayo/domain/theme/i_personalized_theme.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -24,6 +26,9 @@ class App extends StatelessWidget {
             theme: getIt<IPersonalizedTheme>(
               instanceName: selectedTheme.value,
             ).getTheme(),
+            locale: TranslationProvider.of(context).flutterLocale,
+            supportedLocales: AppLocaleUtils.supportedLocales,
+            localizationsDelegates: GlobalMaterialLocalizations.delegates,
             routerConfig: appRouter,
           );
         },

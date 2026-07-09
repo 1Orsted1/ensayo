@@ -1,3 +1,4 @@
+import 'package:ensayo/i18n/strings.g.dart';
 import 'package:ensayo/presentation/theme/extensions/app_theme_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -17,6 +18,7 @@ class DailyGoalCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textStyle = context.textStyle;
+    final t = context.t;
     //TODO later get here directly the data from the streak days
 
     return Card(
@@ -28,7 +30,7 @@ class DailyGoalCard extends StatelessWidget {
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [Text("Daily goal"), Icon(Icons.track_changes)],
+              children: [Text(t.dailyGoal.title), Icon(Icons.track_changes)],
             ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -37,7 +39,7 @@ class DailyGoalCard extends StatelessWidget {
                   currentTimeInvested.toString(),
                   style: TextStyle(fontSize: 32),
                 ),
-                Text(" /$dailyGoalInMinutes min"),
+                Text(t.dailyGoal.remaining(goal: dailyGoalInMinutes)),
               ],
             ),
             Gap(12),
