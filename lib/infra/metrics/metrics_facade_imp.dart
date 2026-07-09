@@ -19,4 +19,9 @@ class MetricsFacadeImp implements IMetricsFacade {
   Future<void> increaseStreak({required int id, required int newStreak}) {
     return metricsDataSource.increaseStreak(id: id, newStreak: newStreak);
   }
+
+  @override
+  Future<void> createMetric() {
+    return metricsDataSource.createMetric();
+  }
 }

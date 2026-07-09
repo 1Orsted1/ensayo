@@ -28,7 +28,11 @@ class MetricsCubit extends Cubit<MetricsState> {
   Future<void> increase() async {
     try {
       emit(state.copyWith(isLoading: true));
-      final oldData = await facade.getMetrics();
+      var oldData = await facade.getMetrics();
+      if (oldData == null) {
+        await facade.createMetric();
+      }
+      oldData = await facade.getMetrics();
       final (_, newData) = await (
         facade.increaseStreak(
           id: oldData?.id ?? -1,

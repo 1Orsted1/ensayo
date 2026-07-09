@@ -21,4 +21,20 @@ class MetricsDataSourceImp implements IMetricsDataSource {
     await (dataBase.update(dataBase.metrics)..where((t) => t.id.equals(id)))
         .write(MetricsCompanion(streakDays: drift.Value(newStreak)));
   }
+
+  //   IntColumn get id => integer().autoIncrement()();
+  // IntColumn get streakDays => integer()();
+  // RealColumn get dailyGoalInMinutes => real()();
+  @override
+  Future<void> createMetric() async {
+    final newMetric = await dataBase
+        .into(dataBase.metrics)
+        .insert(
+          MetricsCompanion(
+            streakDays: drift.Value(1),
+            dailyGoalInMinutes: drift.Value(60),
+          ),
+        );
+    print('new id: $newMetric');
+  }
 }
