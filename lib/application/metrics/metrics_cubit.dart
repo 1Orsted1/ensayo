@@ -9,14 +9,16 @@ part "metrics_cubit.freezed.dart";
 
 @lazySingleton
 class MetricsCubit extends Cubit<MetricsState> {
-  MetricsCubit(this.facade) : super(MetricsState.initial());
+  MetricsCubit(this._facade) : super(MetricsState.initial());
 
-  final IMetricsFacade facade;
+  final IMetricsFacade _facade;
 
   Future<void> load() async {
     try {
       emit(state.copyWith(isLoading: true));
-      final data = await facade.getMetrics();
+      MetricsData? data;
+      data = await _facade.getMetrics();
+      data ??= await _facade.createMetric();
       emit(state.copyWith(data: data, isLoading: false));
     } catch (e) {
       //TODO add error to analytics
@@ -24,23 +26,14 @@ class MetricsCubit extends Cubit<MetricsState> {
     }
   }
 
-  //TODO refactor for final version
   Future<void> increase() async {
     try {
       emit(state.copyWith(isLoading: true));
-      var oldData = await facade.getMetrics();
-      if (oldData == null) {
-        await facade.createMetric();
-      }
-      oldData = await facade.getMetrics();
-      final (_, newData) = await (
-        facade.increaseStreak(
-          id: oldData?.id ?? -1,
-          newStreak: (oldData?.streakDays ?? 0) + 1,
-        ),
-        facade.getMetrics(),
-      ).wait;
-      emit(state.copyWith(data: newData, isLoading: false));
+      var data = await _facade.increaseStreak(
+        id: state.data.id,
+        newStreak: state.data.streakDays + 1,
+      );
+      emit(state.copyWith(data: data, isLoading: false));
     } catch (e) {
       //TODO add error to analytics
       emit(state.copyWith(isLoading: false));
@@ -51,9 +44,11 @@ class MetricsCubit extends Cubit<MetricsState> {
 @freezed
 abstract class MetricsState with _$MetricsState {
   const factory MetricsState({
-    MetricsData? data,
+    required MetricsData data,
     @Default(false) bool isLoading,
   }) = _MetricsState;
 
-  factory MetricsState.initial() => MetricsState();
+  factory MetricsState.initial() => MetricsState(
+    data: MetricsData(id: -1, streakDays: -1, dailyGoalInMinutes: -1),
+  );
 }

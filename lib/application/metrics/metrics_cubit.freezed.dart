@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$MetricsState implements DiagnosticableTreeMixin {
 
- MetricsData? get data; bool get isLoading;
+ MetricsData get data; bool get isLoading;
 /// Create a copy of MetricsState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -51,11 +51,11 @@ abstract mixin class $MetricsStateCopyWith<$Res>  {
   factory $MetricsStateCopyWith(MetricsState value, $Res Function(MetricsState) _then) = _$MetricsStateCopyWithImpl;
 @useResult
 $Res call({
- MetricsData? data, bool isLoading
+ MetricsData data, bool isLoading
 });
 
 
-$MetricsDataCopyWith<$Res>? get data;
+$MetricsDataCopyWith<$Res> get data;
 
 }
 /// @nodoc
@@ -68,10 +68,10 @@ class _$MetricsStateCopyWithImpl<$Res>
 
 /// Create a copy of MetricsState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? data = freezed,Object? isLoading = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? data = null,Object? isLoading = null,}) {
   return _then(_self.copyWith(
-data: freezed == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
-as MetricsData?,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
+data: null == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
+as MetricsData,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }
@@ -79,12 +79,9 @@ as bool,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$MetricsDataCopyWith<$Res>? get data {
-    if (_self.data == null) {
-    return null;
-  }
-
-  return $MetricsDataCopyWith<$Res>(_self.data!, (value) {
+$MetricsDataCopyWith<$Res> get data {
+  
+  return $MetricsDataCopyWith<$Res>(_self.data, (value) {
     return _then(_self.copyWith(data: value));
   });
 }
@@ -169,7 +166,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( MetricsData? data,  bool isLoading)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( MetricsData data,  bool isLoading)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _MetricsState() when $default != null:
 return $default(_that.data,_that.isLoading);case _:
@@ -190,7 +187,7 @@ return $default(_that.data,_that.isLoading);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( MetricsData? data,  bool isLoading)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( MetricsData data,  bool isLoading)  $default,) {final _that = this;
 switch (_that) {
 case _MetricsState():
 return $default(_that.data,_that.isLoading);case _:
@@ -210,7 +207,7 @@ return $default(_that.data,_that.isLoading);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( MetricsData? data,  bool isLoading)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( MetricsData data,  bool isLoading)?  $default,) {final _that = this;
 switch (_that) {
 case _MetricsState() when $default != null:
 return $default(_that.data,_that.isLoading);case _:
@@ -225,10 +222,10 @@ return $default(_that.data,_that.isLoading);case _:
 
 
 class _MetricsState with DiagnosticableTreeMixin implements MetricsState {
-  const _MetricsState({this.data, this.isLoading = false});
+  const _MetricsState({required this.data, this.isLoading = false});
   
 
-@override final  MetricsData? data;
+@override final  MetricsData data;
 @override@JsonKey() final  bool isLoading;
 
 /// Create a copy of MetricsState
@@ -267,11 +264,11 @@ abstract mixin class _$MetricsStateCopyWith<$Res> implements $MetricsStateCopyWi
   factory _$MetricsStateCopyWith(_MetricsState value, $Res Function(_MetricsState) _then) = __$MetricsStateCopyWithImpl;
 @override @useResult
 $Res call({
- MetricsData? data, bool isLoading
+ MetricsData data, bool isLoading
 });
 
 
-@override $MetricsDataCopyWith<$Res>? get data;
+@override $MetricsDataCopyWith<$Res> get data;
 
 }
 /// @nodoc
@@ -284,10 +281,10 @@ class __$MetricsStateCopyWithImpl<$Res>
 
 /// Create a copy of MetricsState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? data = freezed,Object? isLoading = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? data = null,Object? isLoading = null,}) {
   return _then(_MetricsState(
-data: freezed == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
-as MetricsData?,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
+data: null == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
+as MetricsData,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
 as bool,
   ));
 }
@@ -296,12 +293,9 @@ as bool,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$MetricsDataCopyWith<$Res>? get data {
-    if (_self.data == null) {
-    return null;
-  }
-
-  return $MetricsDataCopyWith<$Res>(_self.data!, (value) {
+$MetricsDataCopyWith<$Res> get data {
+  
+  return $MetricsDataCopyWith<$Res>(_self.data, (value) {
     return _then(_self.copyWith(data: value));
   });
 }

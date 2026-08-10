@@ -14,7 +14,9 @@ import 'package:gap/gap.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
-  //TODO: build metronome
+  //TODO: clean up and prepare for an MVP in home (no metronome yet)
+  //loaders for the 0 and then value widg
+  //
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -22,16 +24,18 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
-    context.read<MetricsCubit>().load();
+    //context.read<MetricsCubit>().increase();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     final bloc = context.watch<ThemeCubit>();
+    final streak = context.read<MetricsCubit>();
     final textStyle = context.textStyle;
     final t = context.t;
 
+    //this will be replaced later on
     final List<(String, String)> dummy = [
       ("Cello Suite No. 1", "J.S. Bach"),
       ("Moonlight Sonata", "L. v. Beethoven"),
@@ -62,7 +66,9 @@ class _HomeScreenState extends State<HomeScreen> {
             QuickStartCard(
               title: t.home.quickStart.title,
               subtitle: t.home.quickStart.subtitle,
-              onStart: () async {},
+              onStart: () async {
+                streak.increase();
+              },
             ),
             Gap(32),
             BlocBuilder<MetricsCubit, MetricsState>(
@@ -71,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
               builder: (context, state) {
                 return PracticeStreak(
                   isLoading: state.isLoading,
-                  streakDays: state.data?.streakDays ?? 0,
+                  streakDays: state.data.streakDays,
                   subtitle: t.practiceStreak.subtitle,
                   onStart: () {},
                 );

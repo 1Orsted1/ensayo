@@ -11,30 +11,39 @@ class MetricsDataSourceImp implements IMetricsDataSource {
   final AppDatabase dataBase;
 
   @override
-  Future<List<MetricsData>> getMetrics() async {
-    final metrics = await dataBase.select(dataBase.metrics).get();
+  Future<MetricsData?> getMetrics() async {
+    final metrics = await dataBase.select(dataBase.metrics).getSingleOrNull();
     return metrics;
   }
 
   @override
-  Future<void> increaseStreak({required int id, required int newStreak}) async {
-    await (dataBase.update(dataBase.metrics)..where((t) => t.id.equals(id)))
-        .write(MetricsCompanion(streakDays: drift.Value(newStreak)));
+  Future<MetricsData> increaseStreak({
+    required int id,
+    required int newStreak,
+  }) async {
+    final row =
+        await (dataBase.update(
+          dataBase.metrics,
+        )..where((t) => t.id.equals(id))).writeReturning(
+          MetricsCompanion(streakDays: drift.Value(newStreak)),
+        );
+
+    return row.single;
   }
 
   //   IntColumn get id => integer().autoIncrement()();
   // IntColumn get streakDays => integer()();
   // RealColumn get dailyGoalInMinutes => real()();
   @override
-  Future<void> createMetric() async {
-    final newMetric = await dataBase
+  Future<MetricsData> createMetric() async {
+    final row = await dataBase
         .into(dataBase.metrics)
-        .insert(
+        .insertReturning(
           MetricsCompanion(
             streakDays: drift.Value(1),
             dailyGoalInMinutes: drift.Value(60),
           ),
         );
-    print('new id: $newMetric');
+    return row;
   }
 }

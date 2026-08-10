@@ -11,17 +11,19 @@ class MetricsFacadeImp implements IMetricsFacade {
 
   @override
   Future<MetricsData?> getMetrics() async {
-    final data = await metricsDataSource.getMetrics();
-    return data.isNotEmpty ? data.first : null;
+    return await metricsDataSource.getMetrics();
   }
 
   @override
-  Future<void> increaseStreak({required int id, required int newStreak}) {
+  Future<MetricsData> increaseStreak({
+    required int id,
+    required int newStreak,
+  }) {
     return metricsDataSource.increaseStreak(id: id, newStreak: newStreak);
   }
 
   @override
-  Future<void> createMetric() {
+  Future<MetricsData> createMetric() {
     return metricsDataSource.createMetric();
   }
 }
