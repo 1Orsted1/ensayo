@@ -3,6 +3,7 @@ import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:drift_flutter/drift_flutter.dart';
 import 'package:ensayo/infra/app_database.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:injectable/injectable.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -23,6 +24,11 @@ abstract class RegisterModule {
 
   @lazySingleton
   AppDatabase database(QueryExecutor executor) => AppDatabase(executor);
+
+  @lazySingleton
+  FirebaseAnalytics getAnalitics() {
+    return FirebaseAnalytics.instance;
+  }
 
   @test
   @preResolve

@@ -1,5 +1,6 @@
 import 'package:ensayo/domain/theme/selected_theme.dart';
 import 'package:ensayo/domain/theme/i_personalized_theme.dart';
+import 'package:ensayo/presentation/theme/extensions/custom_card_style.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
@@ -80,26 +81,26 @@ class EnsayoThemeDark implements IPersonalizedTheme {
   // Space Grotesk → display + headlines (editorial voice)
   // Manrope       → body + labels    (functional voice)
   // -------------------------------------------------------------------------
-  TextTheme get _textTheme => const TextTheme(
+  TextTheme get _textTheme => TextTheme(
     // --- Display (Space Grotesk) ---
     displayLarge: TextStyle(
       fontFamily: 'SpaceGrotesk',
       fontSize: 57,
       fontWeight: FontWeight.w400,
       letterSpacing: -0.25,
-      color: Color(0xFFDEE4E1),
+      color: colorScheme.onSurface,
     ),
     displayMedium: TextStyle(
       fontFamily: 'SpaceGrotesk',
       fontSize: 45,
       fontWeight: FontWeight.w400,
-      color: Color(0xFFDEE4E1),
+      color: colorScheme.onSurface,
     ),
     displaySmall: TextStyle(
       fontFamily: 'SpaceGrotesk',
       fontSize: 36,
       fontWeight: FontWeight.w400,
-      color: Color(0xFFDEE4E1),
+      color: colorScheme.onSurface,
     ),
 
     // --- Headline (Space Grotesk) ---
@@ -107,19 +108,19 @@ class EnsayoThemeDark implements IPersonalizedTheme {
       fontFamily: 'SpaceGrotesk',
       fontSize: 32,
       fontWeight: FontWeight.w500,
-      color: Color(0xFFDEE4E1),
+      color: colorScheme.onSurface,
     ),
     headlineMedium: TextStyle(
       fontFamily: 'SpaceGrotesk',
       fontSize: 28,
       fontWeight: FontWeight.w500,
-      color: Color(0xFFDEE4E1),
+      color: colorScheme.onSurface,
     ),
     headlineSmall: TextStyle(
       fontFamily: 'SpaceGrotesk',
       fontSize: 24,
       fontWeight: FontWeight.w500,
-      color: Color(0xFFDEE4E1),
+      color: colorScheme.onSurface,
     ),
 
     // --- Title (Manrope — transitional) ---
@@ -127,21 +128,21 @@ class EnsayoThemeDark implements IPersonalizedTheme {
       fontFamily: 'Manrope',
       fontSize: 22,
       fontWeight: FontWeight.w600,
-      color: Color(0xFFDEE4E1),
+      color: colorScheme.onSurface,
     ),
     titleMedium: TextStyle(
       fontFamily: 'Manrope',
       fontSize: 16,
       fontWeight: FontWeight.w600,
       letterSpacing: 0.15,
-      color: Color(0xFFDEE4E1),
+      color: colorScheme.onSurface,
     ),
     titleSmall: TextStyle(
       fontFamily: 'Manrope',
       fontSize: 14,
       fontWeight: FontWeight.w600,
       letterSpacing: 0.1,
-      color: Color(0xFFDEE4E1),
+      color: colorScheme.onSurface,
     ),
 
     // --- Body (Manrope) ---
@@ -150,21 +151,21 @@ class EnsayoThemeDark implements IPersonalizedTheme {
       fontSize: 16,
       fontWeight: FontWeight.w400,
       letterSpacing: 0.5,
-      color: Color(0xFFC0C8C5), // onSurfaceVariant — softer, premium
+      color: colorScheme.onSurfaceVariant,
     ),
     bodyMedium: TextStyle(
       fontFamily: 'Manrope',
       fontSize: 14,
       fontWeight: FontWeight.w400,
       letterSpacing: 0.25,
-      color: Color(0xFFC0C8C5),
+      color: colorScheme.onSurfaceVariant,
     ),
     bodySmall: TextStyle(
       fontFamily: 'Manrope',
       fontSize: 12,
       fontWeight: FontWeight.w400,
       letterSpacing: 0.4,
-      color: Color(0xFFC0C8C5),
+      color: colorScheme.onSurfaceVariant,
     ),
 
     // --- Label (Manrope — uppercase buttons / tags) ---
@@ -173,21 +174,21 @@ class EnsayoThemeDark implements IPersonalizedTheme {
       fontSize: 14,
       fontWeight: FontWeight.w600,
       letterSpacing: 0.05 * 14, // 0.05em
-      color: Color(0xFFDEE4E1),
+      color: colorScheme.onSurface,
     ),
     labelMedium: TextStyle(
       fontFamily: 'Manrope',
       fontSize: 12,
       fontWeight: FontWeight.w600,
       letterSpacing: 0.5,
-      color: Color(0xFFDEE4E1),
+      color: colorScheme.onSurface,
     ),
     labelSmall: TextStyle(
       fontFamily: 'Manrope',
       fontSize: 11,
       fontWeight: FontWeight.w500,
       letterSpacing: 0.5,
-      color: Color(0xFFC0C8C5),
+      color: colorScheme.onSurfaceVariant,
     ),
   );
 
@@ -196,6 +197,24 @@ class EnsayoThemeDark implements IPersonalizedTheme {
   // -------------------------------------------------------------------------
   @override
   ThemeData getTheme() {
+    final customCardStyle = CustomCardStyle(
+      backgroundColor: colorScheme.primaryContainer,
+      titleStyle: _textTheme.titleLarge!.copyWith(
+        fontFamily: 'SpaceGrotesk',
+        color: colorScheme.onPrimaryContainer,
+      ),
+      subtitleStyle: _textTheme.bodyMedium!.copyWith(
+        color: colorScheme.onPrimaryContainer,
+      ),
+      buttonStyle: OutlinedButton.styleFrom(
+        foregroundColor: colorScheme.onPrimaryContainer,
+        backgroundColor: colorScheme.primaryContainer,
+        side: BorderSide(color: colorScheme.onPrimaryContainer),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+      ),
+      padding: const EdgeInsets.all(20),
+      borderRadius: BorderRadius.circular(24),
+    );
     return ThemeData(
       useMaterial3: true,
       fontFamily: 'Manrope',
@@ -226,9 +245,10 @@ class EnsayoThemeDark implements IPersonalizedTheme {
       // No dividers, xl rounding (24px), tonal depth only — no shadows
       cardTheme: CardThemeData(
         color: colorScheme.surfaceContainer,
-        elevation: 0,
+        elevation: 12,
         shadowColor: Colors.transparent,
         shape: RoundedRectangleBorder(
+          side: BorderSide(color: colorScheme.tertiaryContainer),
           borderRadius: BorderRadius.circular(24), // xl
         ),
         margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 0),
@@ -420,6 +440,10 @@ class EnsayoThemeDark implements IPersonalizedTheme {
         behavior: SnackBarBehavior.floating,
         elevation: 0,
       ),
+
+      // -- Custom extensions --
+      ///Todo: refactor move customCard style outside extensions (try keep it clean as list of names)
+      extensions: [customCardStyle],
     );
   }
 }

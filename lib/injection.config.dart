@@ -10,12 +10,18 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:drift/backends.dart' as _i883;
+import 'package:firebase_analytics/firebase_analytics.dart' as _i398;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
+import 'application/metrics/metrics_cubit.dart' as _i600;
 import 'application/theme/theme_cubit.dart' as _i309;
+import 'domain/metrics/i_metrics_data_source.dart' as _i864;
+import 'domain/metrics/i_metrics_facade.dart' as _i159;
 import 'domain/theme/i_personalized_theme.dart' as _i130;
 import 'infra/app_database.dart' as _i437;
+import 'infra/metrics/metrics_data_source_imp.dart' as _i825;
+import 'infra/metrics/metrics_facade_imp.dart' as _i846;
 import 'infra/register_module.dart' as _i761;
 import 'presentation/theme/ensayo_theme_dark.dart' as _i213;
 import 'presentation/theme/ensayo_theme_light.dart' as _i553;
@@ -33,6 +39,9 @@ extension GetItInjectableX on _i174.GetIt {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final registerModule = _$RegisterModule();
     gh.lazySingleton<_i309.ThemeCubit>(() => _i309.ThemeCubit());
+    gh.lazySingleton<_i398.FirebaseAnalytics>(
+      () => registerModule.getAnalitics(),
+    );
     gh.factory<_i130.IPersonalizedTheme>(
       () => _i553.EnsayoThemeLight(),
       instanceName: 'light',
@@ -53,6 +62,17 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i437.AppDatabase>(
       () => registerModule.database(gh<_i883.QueryExecutor>()),
+    );
+    gh.factory<_i864.IMetricsDataSource>(
+      () => _i825.MetricsDataSourceImp(dataBase: gh<_i437.AppDatabase>()),
+    );
+    gh.factory<_i159.IMetricsFacade>(
+      () => _i846.MetricsFacadeImp(
+        metricsDataSource: gh<_i864.IMetricsDataSource>(),
+      ),
+    );
+    gh.lazySingleton<_i600.MetricsCubit>(
+      () => _i600.MetricsCubit(gh<_i159.IMetricsFacade>()),
     );
     return this;
   }

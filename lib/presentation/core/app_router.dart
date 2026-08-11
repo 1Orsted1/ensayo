@@ -1,9 +1,11 @@
+import 'package:ensayo/injection.dart';
 import 'package:ensayo/presentation/dashboard/scaffold_with_nav_bar.dart';
 import 'package:ensayo/presentation/dashboard/home_screen.dart';
 import 'package:ensayo/presentation/dashboard/plan_screen.dart';
 import 'package:ensayo/presentation/dashboard/progress_screen.dart';
 import 'package:ensayo/presentation/dashboard/session_screen.dart';
 import 'package:ensayo/presentation/demo_screen.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -91,4 +93,5 @@ final appRouter = GoRouter(
       ],
     ),
   ],
+  observers: [FirebaseAnalyticsObserver(analytics: getIt<FirebaseAnalytics>())],
 );

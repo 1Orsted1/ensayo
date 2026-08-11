@@ -1,0 +1,50 @@
+{
+  "hello": "Hello $name",
+  "save": "Save",
+  "login": {
+    "success": "Logged in successfully",
+    "fail": "Logged in failed"
+  },
+  "nav": {
+    "home": "Home",
+    "plan": "Plan",
+    "session": "Session",
+    "progress": "Progress"
+  },
+  "home": {
+    "title": "Home page",
+    "quickStart": {
+      "title": "Ready to play",
+      "subtitle": "Your focus today: technical proficiency"
+    },
+    "recentPieces": {
+      "title": "Recent pieces",
+      "viewAll": "View all"
+    }
+  },
+  "plan": {
+    "title": "Plan page"
+  },
+  "session": {
+    "title": "Session page"
+  },
+  "progress": {
+    "title": "Progress page"
+  },
+  "practiceStreak": {
+    "title": "Practice streak",
+    "subtitle": "This is your opportunity to improve",
+    "days": "$count days"
+  },
+  "dailyGoal": {
+    "title": "Daily goal",
+    "remaining": "/$goal min"
+  },
+  "metronome": {
+    "title": "Quick metronome",
+    "bpm": "$count bpm"
+  },
+  "quickStartCard": {
+    "startSession": "Start Session"
+  }
+}

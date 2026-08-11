@@ -24,6 +24,9 @@ class ThemeCubit extends HydratedCubit<SelectedTheme> {
     }
   }
 
+  bool get isLightTheme => state.value == SelectedTheme.light.value;
+  bool get isDarkTheme => state.value == SelectedTheme.dark.value;
+
   @override
   Map<String, dynamic>? toJson(SelectedTheme state) => {
     'selectedTheme': state.name,

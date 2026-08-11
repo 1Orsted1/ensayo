@@ -1,3 +1,4 @@
+import 'package:ensayo/i18n/strings.g.dart';
 import 'package:flutter/material.dart';
 
 class PlanScreen extends StatelessWidget {
@@ -5,6 +6,8 @@ class PlanScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(title: Text("Plan page")));
+    final t = context.t;
+
+    return Scaffold(appBar: AppBar(title: Text(t.plan.title)));
   }
 }
