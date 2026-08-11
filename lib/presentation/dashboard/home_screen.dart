@@ -14,9 +14,6 @@ import 'package:gap/gap.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
-  //TODO: clean up and prepare for an MVP in home (no metronome yet)
-  //loaders for the 0 and then value widg
-  //
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -24,7 +21,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
-    //context.read<MetricsCubit>().increase();
     super.initState();
   }
 
@@ -37,9 +33,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
     //this will be replaced later on
     final List<(String, String)> dummy = [
-      ("Cello Suite No. 1", "J.S. Bach"),
-      ("Moonlight Sonata", "L. v. Beethoven"),
-      ("Zigeunerweisen", "Pablo de Sarasate"),
+      // ("Cello Suite No. 1", "J.S. Bach"),
+      // ("Moonlight Sonata", "L. v. Beethoven"),
+      // ("Zigeunerweisen", "Pablo de Sarasate"),
     ];
     final List<String> dummyCat = ["Learning", "Polishing", "Not mastered"];
 
@@ -47,6 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: Text(t.home.title, style: textStyle.labelLarge),
         actions: [
+          Gap(32),
           IconButton(
             onPressed: () {
               bloc.setTheme(
@@ -60,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: ListView(
           children: [
             QuickStartCard(
@@ -70,56 +67,43 @@ class _HomeScreenState extends State<HomeScreen> {
                 streak.increase();
               },
             ),
-            Gap(32),
-            BlocBuilder<MetricsCubit, MetricsState>(
-              buildWhen: (previous, current) =>
-                  previous.isLoading != current.isLoading,
-              builder: (context, state) {
-                return PracticeStreak(
-                  isLoading: state.isLoading,
-                  streakDays: state.data.streakDays,
-                  subtitle: t.practiceStreak.subtitle,
-                  onStart: () {},
-                );
-              },
-            ),
-            BlocBuilder<MetricsCubit, MetricsState>(
-              buildWhen: (previous, current) =>
-                  previous.isLoading != current.isLoading,
-              builder: (context, state) {
-                return DailyGoalCard(
-                  currentTimeInvested: 0,
-                  dailyGoalInMinutes: state.data?.dailyGoalInMinutes ?? 1.0,
-                  onStart: () {},
-                );
-              },
-            ),
+            Gap(8),
+            PracticeStreak(subtitle: t.practiceStreak.subtitle, onStart: () {}),
+            Gap(8),
+            DailyGoalCard(onStart: () {}),
+            Gap(8),
             MetronomeCard(),
             Gap(16),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    t.home.recentPieces.title,
-                    style: TextStyle(fontWeight: FontWeight.w800, fontSize: 16),
-                  ),
-                  Text(t.home.recentPieces.viewAll),
-                ],
-              ),
-            ),
-            Column(
-              children: dummy
-                  .map(
-                    (e) => RecentPiecesCard(
-                      title: e.$1,
-                      subTitle: e.$2,
-                      categories: dummyCat,
+            if (dummy.isNotEmpty) ...[
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      t.home.recentPieces.title,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w800,
+                        fontSize: 16,
+                      ),
                     ),
-                  )
-                  .toList(),
-            ),
+                    Text(t.home.recentPieces.viewAll),
+                  ],
+                ),
+              ),
+              Column(
+                children: dummy
+                    .map(
+                      (e) => RecentPiecesCard(
+                        title: e.$1,
+                        subTitle: e.$2,
+                        categories: dummyCat,
+                      ),
+                    )
+                    .toList(),
+              ),
+            ],
+            Gap(32),
           ],
         ),
       ),

@@ -1,5 +1,4 @@
 import 'package:drift/drift.dart' as drift;
-import 'package:ensayo/domain/db_tables/metrics.dart';
 import 'package:ensayo/domain/metrics/i_metrics_data_source.dart';
 import 'package:ensayo/domain/metrics/metrics_data.dart';
 import 'package:ensayo/infra/app_database.dart';
@@ -31,9 +30,6 @@ class MetricsDataSourceImp implements IMetricsDataSource {
     return row.single;
   }
 
-  //   IntColumn get id => integer().autoIncrement()();
-  // IntColumn get streakDays => integer()();
-  // RealColumn get dailyGoalInMinutes => real()();
   @override
   Future<MetricsData> createMetric() async {
     final row = await dataBase

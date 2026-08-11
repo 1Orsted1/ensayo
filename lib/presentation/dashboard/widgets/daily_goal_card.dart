@@ -1,54 +1,59 @@
+import 'package:ensayo/application/metrics/metrics_cubit.dart';
 import 'package:ensayo/i18n/strings.g.dart';
-import 'package:ensayo/presentation/theme/extensions/app_theme_extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 
 class DailyGoalCard extends StatelessWidget {
-  const DailyGoalCard({
-    required this.dailyGoalInMinutes,
-    required this.onStart,
-    super.key,
-    required this.currentTimeInvested,
-  });
+  const DailyGoalCard({required this.onStart, super.key});
 
-  final int currentTimeInvested;
-  final double dailyGoalInMinutes;
   final VoidCallback onStart;
 
   @override
   Widget build(BuildContext context) {
-    final textStyle = context.textStyle;
     final t = context.t;
-    //TODO later get here directly the data from the streak days
-
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [Text(t.dailyGoal.title), Icon(Icons.track_changes)],
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
+    return BlocBuilder<MetricsCubit, MetricsState>(
+      buildWhen: (previous, current) => previous.isLoading != current.isLoading,
+      builder: (context, state) {
+        final dailyGoalMinutes = state.data.dailyGoalInMinutes;
+        return Card(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  currentTimeInvested.toString(),
-                  style: TextStyle(fontSize: 32),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(t.dailyGoal.title),
+                    Icon(Icons.track_changes),
+                  ],
                 ),
-                Text(t.dailyGoal.remaining(goal: dailyGoalInMinutes)),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    //TODO fix this later
+                    Text(
+                      "0", //currentTimeInvested.toString(),
+                      style: TextStyle(fontSize: 32),
+                    ),
+                    Text(
+                      t.dailyGoal.remaining(
+                        goal: state.isLoading ? 0.0 : dailyGoalMinutes,
+                      ),
+                    ),
+                  ],
+                ),
+                Gap(12),
+                (!state.isLoading)
+                    ? LinearProgressIndicator(value: 0 / dailyGoalMinutes)
+                    : SizedBox.shrink(),
               ],
             ),
-            Gap(12),
-            LinearProgressIndicator(
-              value: currentTimeInvested / dailyGoalInMinutes,
-            ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }
