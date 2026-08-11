@@ -30,7 +30,7 @@ class _MetronomeCardState extends State<MetronomeCard> {
                 Text(t.metronome.bpm(count: 115)),
               ],
             ),
-            Slider(value: .5, onChanged: (_) => print("TODO")),
+            Slider(value: .5, onChanged: (_) {}),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [

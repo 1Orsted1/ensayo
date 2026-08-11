@@ -14,7 +14,7 @@ class RecentPiecesCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = context.textStyle;
+    //final theme = context.textStyle;
     final color = context.colorScheme;
     return Card(
       child: Padding(
