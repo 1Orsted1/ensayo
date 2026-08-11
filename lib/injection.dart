@@ -13,6 +13,10 @@ final getIt = GetIt.instance;
   asExtension: true, // default
 )
 Future<void> configureDependencies({String? environment}) async {
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  if (environment != Environment.test) {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+  }
   await getIt.init(environment: environment);
 }

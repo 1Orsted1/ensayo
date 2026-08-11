@@ -7,6 +7,7 @@ import 'package:injectable/injectable.dart' show Environment;
 
 void main() {
   setUp(() async {
+    TestWidgetsFlutterBinding.ensureInitialized();
     await configureDependencies(environment: Environment.test);
   });
 
