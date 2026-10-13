@@ -1,0 +1,1 @@
+const twoBeatsPerSecondValue = 120;

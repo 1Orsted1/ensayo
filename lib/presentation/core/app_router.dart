@@ -5,6 +5,7 @@ import 'package:ensayo/presentation/dashboard/plan_screen.dart';
 import 'package:ensayo/presentation/dashboard/progress_screen.dart';
 import 'package:ensayo/presentation/dashboard/session_screen.dart';
 import 'package:ensayo/presentation/demo_screen.dart';
+import 'package:ensayo/presentation/playground.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -34,6 +35,10 @@ final appRouter = GoRouter(
                   path: 'demo',
                   builder: (BuildContext context, GoRouterState state) =>
                       DemoScreen(),
+                ),
+                GoRoute(
+                  path: 'playground',
+                  builder: (context, state) => Playground(),
                 ),
               ],
             ),

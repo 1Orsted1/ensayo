@@ -4,6 +4,7 @@ import 'package:drift/native.dart';
 import 'package:drift_flutter/drift_flutter.dart';
 import 'package:ensayo/infra/app_database.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:flutter_soloud/flutter_soloud.dart';
 import 'package:injectable/injectable.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -35,4 +36,7 @@ abstract class RegisterModule {
   @lazySingleton
   Future<QueryExecutor> get databaseExecutorTest async =>
       NativeDatabase.memory();
+
+  @lazySingleton
+  Future<SoLoud> get soLoud async => SoLoud.instance;
 }

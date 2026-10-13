@@ -11,6 +11,7 @@ import 'package:ensayo/presentation/theme/extensions/app_theme_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -27,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final bloc = context.watch<ThemeCubit>();
-    final streak = context.read<MetricsCubit>();
+    context.read<MetricsCubit>();
     final textStyle = context.textStyle;
     final t = context.t;
 
@@ -64,7 +65,8 @@ class _HomeScreenState extends State<HomeScreen> {
               title: t.home.quickStart.title,
               subtitle: t.home.quickStart.subtitle,
               onStart: () async {
-                streak.increase();
+                context.go('/home/playground');
+                //streak.increase();
               },
             ),
             Gap(8),

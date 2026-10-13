@@ -33,6 +33,8 @@ dependencies:
   slang: ^4.18.0
   slang_flutter: ^4.18.0
   slang_build_runner: ^4.18.0
+  flutter_soloud: ^3.5.4
+  logging: ^1.3.0
 
 dev_dependencies:
   flutter_test:

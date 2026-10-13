@@ -1,0 +1,121 @@
+# OpenSpec project config — ensayo
+# Docs: https://github.com/Fission-AI/OpenSpec/blob/main/docs/customization.md
+# Top-level keys used here: schema, context, rules, operations.
+# Rule keys must be artifact IDs (proposal, specs, design, tasks); operation keys
+# must be apply or archive. Every value is a list of strings.
+
+schema: spec-driven
+
+context: |
+  ## Product
+  ensayo is a practice journal that helps musicians organize and track
+  their instrument study sessions.
+  - The product, package and repo are all named "ensayo". Never introduce
+    another product name (e.g. from design mockups) in code, strings or artifacts.
+  - Platforms: Android and iOS only. No web or desktop work; leave the web/,
+    macos/, linux/ and windows/ folders untouched.
+  - Offline-first: every feature works with no network. Local data is the
+    source of truth. Firebase Analytics is the only network dependency; it is
+    best-effort and must never block or fail a feature.
+
+  ## Stack and architecture
+  - Flutter via fvm. Run every flutter/dart command as `fvm flutter …` / `fvm dart …`.
+  - Clean Architecture: lib/domain, lib/infra, lib/application/<feature>,
+    lib/presentation. GoRouter with a StatefulShellRoute for the bottom tabs.
+  - State management: flutter_bloc. Use a Bloc by default; use a Cubit only
+    when the design gives a reason it fits better (see CLAUDE.md).
+  - Freezed for models and states, Injectable + GetIt for DI, Drift for persistence.
+  - Generated files are never edited by hand: injection.config.dart, *.g.dart,
+    *.freezed.dart, *.mocks.dart. Change the source and re-run build_runner.
+
+  ## Localization
+  - Every user-facing string lives in the translation files, in both en and es.
+    No hardcoded user-facing text.
+
+  ## Database (Drift)
+  - Bump schemaVersion and add a migration step only when the on-disk schema
+    changes (table, column, index or constraint). Query or DAO-only changes
+    don't bump it.
+  - Never edit a migration step that has already shipped. Add a new one.
+
+  ## Metronome
+  - Timing must be as precise as possible, with no drift and no gaps between beats.
+  - Tempo range: 1–300 BPM, inclusive.
+  - The playground holds an unpolished reference implementation. Use it to
+    understand behavior, not as code to copy as-is.
+
+  ## Testing
+  - Unit and widget tests live in test/, mirroring lib/, file names ending in
+    _test.dart. Integration tests live in integration_test/ at the project root.
+  - Unit tests: flutter_test with group(), test(), setUp(), tearDown() and expect().
+  - Mocks: mockito + build_runner, always @GenerateNiceMocks([MockSpec<Type>()]).
+    Dependencies are injected through constructors so they can be mocked.
+  - Stubbing: thenReturn only for synchronous methods. Methods returning a Future
+    or Stream always use thenAnswer((_) async => value).
+  - Verify interactions with verify(mock.method()).called(n).
+  - Widget tests: testWidgets() with WidgetTester, widget wrapped in MaterialApp.
+    pump() after a tap, pumpAndSettle() after animations or async UI updates.
+  - Integration tests: the integration_test package, with ValueKeys on every
+    widget the test needs to find.
+  - Database tests use Drift's NativeDatabase.memory(), never the Flutter backend.
+    Drift data sources are tested against that in-memory database, not mocks;
+    everything above the data source mocks the layer below it.
+  - Apart from that in-memory database, tests never touch real platform
+    channels, audio output, the file system or the network.
+  - mockito and integration_test are pre-approved dev_dependencies: add them
+    the first time a change needs them, without a gate.
+
+  ## Boundaries
+  - Always: follow the existing folder structure and naming; reuse an existing
+    sibling (widget, repository, cubit) before creating a new one.
+  - Ask first: new dependencies or version bumps, database schema changes,
+    deleting or moving files, changes to shared widgets or the theme.
+  - Never: hardcoded user-facing text, edits to generated files, commits or
+    pushes unless asked.
+
+rules:
+  proposal:
+    - "Open with the problem and the user-visible outcome in two or three sentences, before any solution."
+    - "Include an explicit **Out of scope** list. Anything not listed there or in scope is assumed out."
+    - "Name every layer touched (domain, infra, application, presentation) and every existing feature affected."
+    - "State the database impact up front: none, or which tables change and that a migration is required."
+    - "List open questions and mark each one blocking or non-blocking."
+
+  specs:
+    - "Write the requirement sentence with SHALL, using EARS patterns: 'When …', 'While …', 'Where …', 'If … then …'. Scenarios keep OpenSpec's format: '#### Scenario:' headings with WHEN/THEN bullets."
+    - "Write every scenario in terms of what the user sees or which state is emitted. Never reference widget classes, file names or code."
+    - "Cover the offline case wherever data is read or written."
+    - "Include edge cases: empty states, first run, interruptions (app backgrounded, phone call, audio focus lost), and invalid input."
+    - "For the metronome, state timing requirements as measurable values (e.g. maximum beat deviation in ms, BPM range), not 'precise'."
+    - "When a requirement adds user-facing text, say so, so the tasks include en + es keys."
+
+  design:
+    - "Start with a **Template sibling** table: the existing code each new piece is modeled on, and why."
+    - "Add a **Reuse** table: existing classes, widgets and repositories used as-is, with their paths."
+    - "List the new domain interfaces, infrastructure implementations and Cubits/Blocs. Blocs are the default; for each Cubit, explain why it fits better than a Bloc."
+    - "State the database impact: tables and columns changed, the new schemaVersion, and the migration steps. Write 'None' if there is no impact."
+    - "Isolate pure logic (calculations, mappers, validators, timing math) in plain functions or classes so it can be unit-tested without Flutter."
+    - "Record each technical decision with its reasoning and the alternatives rejected."
+    - "End with a **Gated actions** table (G-1, G-2, …) listing every action that needs approval: new dependencies, schema changes, deletions or moves, platform files (AndroidManifest, Info.plist, Gradle, Podfile), and edits to shared code. Each row says what can break and has an **Approved** column set to ☐; the user approves a row by changing it to ☑."
+    - "Include a **Risks** section, and a **Test plan** listing each test target and roughly how many tests it needs."
+
+  tasks:
+    - "Start tasks.md with an **Implementation rules** block that repeats the apply guidance from openspec/config.yaml (operations.apply), so it's visible while implementing."
+    - "Each task is one PR-sized chunk that leaves the project compiling, analyzed and green. Prefix tasks that perform a gated action with ⚠️ and reference the gate (e.g. ⚠️ G-2)."
+    - "Each task lists the files it touches and the requirements it covers."
+    - "Tests are written first, inside the same task that adds the code they cover."
+    - "Include explicit tasks for 'run build_runner', 'add translation keys in en + es', and 'fvm flutter analyze is clean'."
+    - "End with a final verification task: full build_runner, fvm flutter analyze (0 errors, 0 warnings), fvm flutter test (all green), and a manual check on a device."
+    - "Add a **Requirement coverage** table at the end mapping every requirement to its tasks. No requirement may be left uncovered."
+
+operations:
+  apply:
+    guidance:
+      - "Use fvm for every flutter/dart command. Never edit generated files; change the source and re-run build_runner."
+      - "After each task, run fvm flutter analyze and fvm flutter test. Check it off only when both pass, then add a one-line result note with the date."
+      - "If the implementation needs to differ from design.md or the specs, stop and update the artifacts first."
+      - "Never perform a gated action unless its row in design.md's Gated actions table is marked ☑. If it is still ☐, stop and ask."
+  archive:
+    guidance:
+      - "Archive only when every task is checked and analyze + test are green."
+      - "Update CLAUDE.md and AGENTS.md if the change added a layer, table, route or pattern they document."
