@@ -20,7 +20,8 @@ class App extends StatelessWidget {
         BlocProvider(create: (context) => getIt<ThemeCubit>()),
         BlocProvider(create: (context) => getIt<MetricsCubit>()..load()),
         BlocProvider(
-          create: (context) => getIt<PlanBloc>()..add(const PlanStarted()),
+          create: (context) =>
+              getIt<PlanBloc>()..add(const PlanEvent.started()),
         ),
       ],
       child: BlocBuilder<ThemeCubit, SelectedTheme>(

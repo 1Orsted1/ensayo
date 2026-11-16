@@ -1,32 +1,13 @@
 part of 'plan_bloc.dart';
 
-sealed class PlanEvent {
-  const PlanEvent();
+@freezed
+abstract class PlanEvent with _$PlanEvent {
+  /// Also dispatched to retry after a failed load.
+  const factory PlanEvent.started() = _Started;
+
+  const factory PlanEvent.filterChanged(PlanFilter filter) = _FilterChanged;
+
+  const factory PlanEvent.pieceSaved(Piece piece) = _PieceSaved;
+
+  const factory PlanEvent.pieceDeleted(int id) = _PieceDeleted;
 }
-
-/// Loads the plan. Also used to retry after a failed load.
-final class PlanStarted extends PlanEvent {
-  const PlanStarted();
-}
-
-final class PlanFilterChanged extends PlanEvent {
-  const PlanFilterChanged(this.filter);
-  final PlanFilter filter;
-}
-
-/// Adds the piece when its id is null, otherwise updates it.
-final class PlanPieceSaved extends PlanEvent {
-  const PlanPieceSaved(this.piece);
-  final Piece piece;
-}
-
-final class PlanPieceDeleted extends PlanEvent {
-  const PlanPieceDeleted(this.id);
-  final int id;
-}
-
-// @freezed
-// abstract class PlanEventPrefered with _$PlanEvent{
-//     const factory PlanEventPrefered.customEvent(String param) = _CustomEvent;
-
-// }

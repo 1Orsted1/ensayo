@@ -1,11 +1,11 @@
 import 'package:ensayo/injection.dart';
 import 'package:ensayo/presentation/dashboard/scaffold_with_nav_bar.dart';
 import 'package:ensayo/presentation/dashboard/home_screen.dart';
-import 'package:ensayo/presentation/dashboard/plan_screen.dart';
+import 'package:ensayo/presentation/plan/plan_screen.dart';
 import 'package:ensayo/presentation/dashboard/progress_screen.dart';
 import 'package:ensayo/presentation/dashboard/session_screen.dart';
 import 'package:ensayo/presentation/demo_screen.dart';
-import 'package:ensayo/presentation/plan/piece_form_screen.dart';
+import 'package:ensayo/presentation/plan/piece_form.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -15,19 +15,18 @@ final _planNavKey = GlobalKey<NavigatorState>();
 final _sessionNavKey = GlobalKey<NavigatorState>();
 final _progressNavKey = GlobalKey<NavigatorState>();
 
-/// Add and edit routes under `/plan`. Shared with the navigation test.
+/// Public so the navigation test can mount the real routes.
 final planSubRoutes = <RouteBase>[
   GoRoute(
     path: 'new',
-    builder: (BuildContext context, GoRouterState state) =>
-        const PieceFormScreen(),
+    builder: (BuildContext context, GoRouterState state) => const PieceForm(),
   ),
   GoRoute(
     path: ':pieceId',
     redirect: (BuildContext context, GoRouterState state) =>
         int.tryParse(state.pathParameters['pieceId']!) == null ? '/plan' : null,
     builder: (BuildContext context, GoRouterState state) =>
-        PieceFormScreen(pieceId: int.parse(state.pathParameters['pieceId']!)),
+        PieceForm(pieceId: int.parse(state.pathParameters['pieceId']!)),
   ),
 ];
 

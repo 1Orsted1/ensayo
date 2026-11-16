@@ -992,7 +992,7 @@ class $SongsTable extends Songs with TableInfo<$SongsTable, Song> {
     false,
     additionalChecks: GeneratedColumn.checkTextLength(
       minTextLength: 1,
-      maxTextLength: 80,
+      maxTextLength: 160,
     ),
     type: DriftSqlType.string,
     requiredDuringInsert: true,

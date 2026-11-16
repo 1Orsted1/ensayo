@@ -12,6 +12,423 @@ part of 'plan_bloc.dart';
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
+mixin _$PlanEvent {
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PlanEvent);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'PlanEvent()';
+}
+
+
+}
+
+/// @nodoc
+class $PlanEventCopyWith<$Res>  {
+$PlanEventCopyWith(PlanEvent _, $Res Function(PlanEvent) __);
+}
+
+
+/// Adds pattern-matching-related methods to [PlanEvent].
+extension PlanEventPatterns on PlanEvent {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Started value)?  started,TResult Function( _FilterChanged value)?  filterChanged,TResult Function( _PieceSaved value)?  pieceSaved,TResult Function( _PieceDeleted value)?  pieceDeleted,required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _Started() when started != null:
+return started(_that);case _FilterChanged() when filterChanged != null:
+return filterChanged(_that);case _PieceSaved() when pieceSaved != null:
+return pieceSaved(_that);case _PieceDeleted() when pieceDeleted != null:
+return pieceDeleted(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Started value)  started,required TResult Function( _FilterChanged value)  filterChanged,required TResult Function( _PieceSaved value)  pieceSaved,required TResult Function( _PieceDeleted value)  pieceDeleted,}){
+final _that = this;
+switch (_that) {
+case _Started():
+return started(_that);case _FilterChanged():
+return filterChanged(_that);case _PieceSaved():
+return pieceSaved(_that);case _PieceDeleted():
+return pieceDeleted(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Started value)?  started,TResult? Function( _FilterChanged value)?  filterChanged,TResult? Function( _PieceSaved value)?  pieceSaved,TResult? Function( _PieceDeleted value)?  pieceDeleted,}){
+final _that = this;
+switch (_that) {
+case _Started() when started != null:
+return started(_that);case _FilterChanged() when filterChanged != null:
+return filterChanged(_that);case _PieceSaved() when pieceSaved != null:
+return pieceSaved(_that);case _PieceDeleted() when pieceDeleted != null:
+return pieceDeleted(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  started,TResult Function( PlanFilter filter)?  filterChanged,TResult Function( Piece piece)?  pieceSaved,TResult Function( int id)?  pieceDeleted,required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _Started() when started != null:
+return started();case _FilterChanged() when filterChanged != null:
+return filterChanged(_that.filter);case _PieceSaved() when pieceSaved != null:
+return pieceSaved(_that.piece);case _PieceDeleted() when pieceDeleted != null:
+return pieceDeleted(_that.id);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  started,required TResult Function( PlanFilter filter)  filterChanged,required TResult Function( Piece piece)  pieceSaved,required TResult Function( int id)  pieceDeleted,}) {final _that = this;
+switch (_that) {
+case _Started():
+return started();case _FilterChanged():
+return filterChanged(_that.filter);case _PieceSaved():
+return pieceSaved(_that.piece);case _PieceDeleted():
+return pieceDeleted(_that.id);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  started,TResult? Function( PlanFilter filter)?  filterChanged,TResult? Function( Piece piece)?  pieceSaved,TResult? Function( int id)?  pieceDeleted,}) {final _that = this;
+switch (_that) {
+case _Started() when started != null:
+return started();case _FilterChanged() when filterChanged != null:
+return filterChanged(_that.filter);case _PieceSaved() when pieceSaved != null:
+return pieceSaved(_that.piece);case _PieceDeleted() when pieceDeleted != null:
+return pieceDeleted(_that.id);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+
+
+class _Started implements PlanEvent {
+  const _Started();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Started);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'PlanEvent.started()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
+
+
+class _FilterChanged implements PlanEvent {
+  const _FilterChanged(this.filter);
+  
+
+ final  PlanFilter filter;
+
+/// Create a copy of PlanEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$FilterChangedCopyWith<_FilterChanged> get copyWith => __$FilterChangedCopyWithImpl<_FilterChanged>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _FilterChanged&&(identical(other.filter, filter) || other.filter == filter));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,filter);
+
+@override
+String toString() {
+  return 'PlanEvent.filterChanged(filter: $filter)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$FilterChangedCopyWith<$Res> implements $PlanEventCopyWith<$Res> {
+  factory _$FilterChangedCopyWith(_FilterChanged value, $Res Function(_FilterChanged) _then) = __$FilterChangedCopyWithImpl;
+@useResult
+$Res call({
+ PlanFilter filter
+});
+
+
+
+
+}
+/// @nodoc
+class __$FilterChangedCopyWithImpl<$Res>
+    implements _$FilterChangedCopyWith<$Res> {
+  __$FilterChangedCopyWithImpl(this._self, this._then);
+
+  final _FilterChanged _self;
+  final $Res Function(_FilterChanged) _then;
+
+/// Create a copy of PlanEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? filter = null,}) {
+  return _then(_FilterChanged(
+null == filter ? _self.filter : filter // ignore: cast_nullable_to_non_nullable
+as PlanFilter,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class _PieceSaved implements PlanEvent {
+  const _PieceSaved(this.piece);
+  
+
+ final  Piece piece;
+
+/// Create a copy of PlanEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$PieceSavedCopyWith<_PieceSaved> get copyWith => __$PieceSavedCopyWithImpl<_PieceSaved>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PieceSaved&&(identical(other.piece, piece) || other.piece == piece));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,piece);
+
+@override
+String toString() {
+  return 'PlanEvent.pieceSaved(piece: $piece)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$PieceSavedCopyWith<$Res> implements $PlanEventCopyWith<$Res> {
+  factory _$PieceSavedCopyWith(_PieceSaved value, $Res Function(_PieceSaved) _then) = __$PieceSavedCopyWithImpl;
+@useResult
+$Res call({
+ Piece piece
+});
+
+
+$PieceCopyWith<$Res> get piece;
+
+}
+/// @nodoc
+class __$PieceSavedCopyWithImpl<$Res>
+    implements _$PieceSavedCopyWith<$Res> {
+  __$PieceSavedCopyWithImpl(this._self, this._then);
+
+  final _PieceSaved _self;
+  final $Res Function(_PieceSaved) _then;
+
+/// Create a copy of PlanEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? piece = null,}) {
+  return _then(_PieceSaved(
+null == piece ? _self.piece : piece // ignore: cast_nullable_to_non_nullable
+as Piece,
+  ));
+}
+
+/// Create a copy of PlanEvent
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$PieceCopyWith<$Res> get piece {
+  
+  return $PieceCopyWith<$Res>(_self.piece, (value) {
+    return _then(_self.copyWith(piece: value));
+  });
+}
+}
+
+/// @nodoc
+
+
+class _PieceDeleted implements PlanEvent {
+  const _PieceDeleted(this.id);
+  
+
+ final  int id;
+
+/// Create a copy of PlanEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$PieceDeletedCopyWith<_PieceDeleted> get copyWith => __$PieceDeletedCopyWithImpl<_PieceDeleted>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PieceDeleted&&(identical(other.id, id) || other.id == id));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,id);
+
+@override
+String toString() {
+  return 'PlanEvent.pieceDeleted(id: $id)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$PieceDeletedCopyWith<$Res> implements $PlanEventCopyWith<$Res> {
+  factory _$PieceDeletedCopyWith(_PieceDeleted value, $Res Function(_PieceDeleted) _then) = __$PieceDeletedCopyWithImpl;
+@useResult
+$Res call({
+ int id
+});
+
+
+
+
+}
+/// @nodoc
+class __$PieceDeletedCopyWithImpl<$Res>
+    implements _$PieceDeletedCopyWith<$Res> {
+  __$PieceDeletedCopyWithImpl(this._self, this._then);
+
+  final _PieceDeleted _self;
+  final $Res Function(_PieceDeleted) _then;
+
+/// Create a copy of PlanEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? id = null,}) {
+  return _then(_PieceDeleted(
+null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int,
+  ));
+}
+
+
+}
+
+/// @nodoc
 mixin _$PlanState {
 
  List<Piece> get pieces; PlanFilter get filter; PlanLoadStatus get loadStatus; PlanActionStatus get actionStatus;

@@ -17,12 +17,8 @@ part 'app_database.g.dart';
 class AppDatabase extends _$AppDatabase {
   AppDatabase(super.executor);
 
-  /// Version history:
-  /// 1. Initial schema.
-  /// 2. Practice plan: `Songs` gains composer, status and targetBpm; focus
-  ///    tags are seeded.
-  ///
-  /// Never edit a step that has shipped; add a new `if (from < N)` block.
+  /// v2: plan columns on `Songs` and seeded focus tags.
+  /// Never edit a shipped step; add a new `if (from < N)` block.
   @override
   int get schemaVersion => 2;
 
@@ -42,7 +38,7 @@ class AppDatabase extends _$AppDatabase {
     },
   );
 
-  /// Inserts any [FocusTag] key that isn't in `Tags` yet.
+  /// Skips existing keys, so it's safe to run on any install.
   Future<void> _seedFocusTags() async {
     final existing = (await select(tags).get()).map((t) => t.name).toSet();
     final missing = FocusTag.values.where((t) => !existing.contains(t.name));

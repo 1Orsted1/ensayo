@@ -1,6 +1,8 @@
 import 'package:ensayo/domain/plan/i_plan_facade.dart';
 import 'package:ensayo/domain/plan/piece.dart';
-import 'package:ensayo/domain/plan/piece_status.dart';
+import 'package:ensayo/domain/plan/plan_action_status.dart';
+import 'package:ensayo/domain/plan/plan_filter.dart';
+import 'package:ensayo/domain/plan/plan_load_status.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
@@ -9,43 +11,34 @@ part 'plan_bloc.freezed.dart';
 part 'plan_event.dart';
 part 'plan_state.dart';
 
-/// The practice plan: its pieces, the status filter, and add/edit/delete.
-///
-/// Every facade failure is reported with [addError] and shown through the
-/// state; nothing is swallowed. The list is reloaded after each write so it
-/// always mirrors the database.
+/// Reloads after every write so the list always mirrors the database.
 @injectable
 class PlanBloc extends Bloc<PlanEvent, PlanState> {
   PlanBloc(this._facade) : super(const PlanState()) {
-    on<PlanStarted>(_onStarted);
-    on<PlanFilterChanged>(_onFilterChanged);
-    on<PlanPieceSaved>(_onPieceSaved);
-    on<PlanPieceDeleted>(_onPieceDeleted);
+    on<_Started>(_onStarted);
+    on<_FilterChanged>(_onFilterChanged);
+    on<_PieceSaved>(_onPieceSaved);
+    on<_PieceDeleted>(_onPieceDeleted);
   }
 
   final IPlanFacade _facade;
 
-  Future<void> _onStarted(PlanStarted event, Emitter<PlanState> emit) async {
+  Future<void> _onStarted(_Started event, Emitter<PlanState> emit) async {
     emit(state.copyWith(loadStatus: PlanLoadStatus.loading));
     await _reload(emit);
   }
 
-  void _onFilterChanged(PlanFilterChanged event, Emitter<PlanState> emit) {
+  void _onFilterChanged(_FilterChanged event, Emitter<PlanState> emit) {
     emit(state.copyWith(filter: event.filter));
   }
 
-  Future<void> _onPieceSaved(PlanPieceSaved event, Emitter<PlanState> emit) =>
+  Future<void> _onPieceSaved(_PieceSaved event, Emitter<PlanState> emit) =>
       _write(emit, () => _facade.savePiece(event.piece));
 
-  Future<void> _onPieceDeleted(
-    PlanPieceDeleted event,
-    Emitter<PlanState> emit,
-  ) => _write(emit, () => _facade.deletePiece(event.id));
+  Future<void> _onPieceDeleted(_PieceDeleted event, Emitter<PlanState> emit) =>
+      _write(emit, () => _facade.deletePiece(event.id));
 
-  /// Runs a save or delete, then reloads the list.
-  ///
-  /// If the write succeeds but the reload fails, the action still reports
-  /// success (the data is stored) and the list shows its load failure.
+  /// A failed reload still reports success: the write itself was stored.
   Future<void> _write(
     Emitter<PlanState> emit,
     Future<Object?> Function() action,

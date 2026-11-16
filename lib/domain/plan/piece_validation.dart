@@ -1,7 +1,4 @@
-/// Input rules for the Add/Edit Piece form.
-///
-/// Each validator takes the raw field text and returns `null` when it's valid,
-/// or a [PieceFieldError] that the UI maps to translated text.
+/// Lengths count runes, so an emoji is one character, not two code units.
 library;
 
 const int maxTitleLength = 80;
@@ -19,19 +16,17 @@ enum PieceFieldError {
 PieceFieldError? validateTitle(String input) {
   final title = input.trim();
   if (title.isEmpty) return PieceFieldError.titleRequired;
-  if (title.length > maxTitleLength) return PieceFieldError.titleTooLong;
+  if (title.runes.length > maxTitleLength) return PieceFieldError.titleTooLong;
   return null;
 }
 
-/// Composer is optional; only its length is checked.
 PieceFieldError? validateComposer(String input) {
-  if (input.trim().length > maxComposerLength) {
+  if (input.trim().runes.length > maxComposerLength) {
     return PieceFieldError.composerTooLong;
   }
   return null;
 }
 
-/// Target tempo is optional; when given it must be a whole number in range.
 PieceFieldError? validateTargetBpm(String input) {
   final text = input.trim();
   if (text.isEmpty) return null;

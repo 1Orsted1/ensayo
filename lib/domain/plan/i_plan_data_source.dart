@@ -1,13 +1,11 @@
 import 'package:ensayo/domain/plan/piece.dart';
 
 abstract class IPlanDataSource {
-  /// All pieces in the plan, newest first.
+  /// Newest first.
   Future<List<Piece>> getPieces();
 
-  /// Inserts the piece when its id is null, otherwise updates it.
-  /// Returns the stored piece (with its id).
+  /// Inserts when the id is null, otherwise updates.
   Future<Piece> savePiece(Piece piece);
 
-  /// Removes the piece and its focus tags.
   Future<void> deletePiece(int id);
 }

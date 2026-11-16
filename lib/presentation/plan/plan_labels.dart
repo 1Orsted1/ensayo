@@ -1,9 +1,9 @@
-import 'package:ensayo/application/plan/plan_bloc.dart';
 import 'package:ensayo/domain/plan/focus_tag.dart';
 import 'package:ensayo/domain/plan/piece_status.dart';
+import 'package:ensayo/domain/plan/piece_validation.dart';
+import 'package:ensayo/domain/plan/plan_filter.dart';
 import 'package:ensayo/i18n/strings.g.dart';
-
-/// Translated names for plan enums, shared by the plan list and the form.
+import 'package:reactive_forms/reactive_forms.dart';
 
 String statusLabel(Translations t, PieceStatus status) => switch (status) {
   PieceStatus.learning => t.plan.status.learning,
@@ -26,4 +26,16 @@ String filterLabel(Translations t, PlanFilter filter) => switch (filter) {
   PlanFilter.polishing => statusLabel(t, PieceStatus.polishing),
   PlanFilter.performanceReady => statusLabel(t, PieceStatus.performanceReady),
   PlanFilter.archived => statusLabel(t, PieceStatus.archived),
+};
+
+Map<String, ValidationMessageFunction> pieceValidationMessages(
+  Translations t,
+) => {
+  PieceFieldError.titleRequired.name: (_) => t.plan.validation.titleRequired,
+  PieceFieldError.titleTooLong.name: (_) =>
+      t.plan.validation.titleTooLong(max: maxTitleLength),
+  PieceFieldError.composerTooLong.name: (_) =>
+      t.plan.validation.composerTooLong(max: maxComposerLength),
+  PieceFieldError.bpmOutOfRange.name: (_) =>
+      t.plan.validation.bpmOutOfRange(min: minTargetBpm, max: maxTargetBpm),
 };

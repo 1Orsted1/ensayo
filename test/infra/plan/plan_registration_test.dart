@@ -13,11 +13,15 @@ void main() {
 
   tearDown(() => GetIt.instance.reset());
 
-  test('the plan facade and bloc resolve in the test environment', () async {
+  test('the plan facade and a fresh plan bloc resolve in the test '
+      'environment', () async {
     expect(GetIt.instance<IPlanFacade>(), isA<IPlanFacade>());
 
-    final bloc = GetIt.instance<PlanBloc>();
-    expect(bloc, isA<PlanBloc>());
-    await bloc.close();
+    final first = GetIt.instance<PlanBloc>();
+    final second = GetIt.instance<PlanBloc>();
+    addTearDown(first.close);
+    addTearDown(second.close);
+    // D10: a factory, so a recreated provider never gets a closed instance.
+    expect(identical(first, second), isFalse);
   });
 }

@@ -16,7 +16,10 @@ class ScaffoldWithNavBar extends StatelessWidget {
         selectedIndex: navigationShell.currentIndex,
         onDestinationSelected: (i) => navigationShell.goBranch(i),
         destinations: [
-          NavigationDestination(icon: const Icon(Icons.home), label: t.nav.home),
+          NavigationDestination(
+            icon: const Icon(Icons.home),
+            label: t.nav.home,
+          ),
           NavigationDestination(
             icon: const Icon(Icons.calendar_month),
             label: t.nav.plan,
