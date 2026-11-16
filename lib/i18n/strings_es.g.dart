@@ -94,7 +94,18 @@ class _Translations$plan$es implements Translations$plan$en {
 	final TranslationsEs _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'Página de plan';
+	@override String get title => 'Plan de práctica';
+	@override String get hero => 'Arma Tu Repertorio';
+	@override String get helper => 'Las piezas en las que estás trabajando, todas en un lugar.';
+	@override String get bpmUnit => 'BPM';
+	@override late final _Translations$plan$filter$es filter = _Translations$plan$filter$es._(_root);
+	@override late final _Translations$plan$status$es status = _Translations$plan$status$es._(_root);
+	@override late final _Translations$plan$tag$es tag = _Translations$plan$tag$es._(_root);
+	@override late final _Translations$plan$form$es form = _Translations$plan$form$es._(_root);
+	@override late final _Translations$plan$validation$es validation = _Translations$plan$validation$es._(_root);
+	@override late final _Translations$plan$deleteDialog$es deleteDialog = _Translations$plan$deleteDialog$es._(_root);
+	@override late final _Translations$plan$empty$es empty = _Translations$plan$empty$es._(_root);
+	@override late final _Translations$plan$failure$es failure = _Translations$plan$failure$es._(_root);
 }
 
 // Path: session
@@ -183,6 +194,114 @@ class _Translations$home$recentPieces$es implements Translations$home$recentPiec
 	@override String get viewAll => 'Ver todo';
 }
 
+// Path: plan.filter
+class _Translations$plan$filter$es implements Translations$plan$filter$en {
+	_Translations$plan$filter$es._(this._root);
+
+	final TranslationsEs _root; // ignore: unused_field
+
+	// Translations
+	@override String get all => 'Todas';
+}
+
+// Path: plan.status
+class _Translations$plan$status$es implements Translations$plan$status$en {
+	_Translations$plan$status$es._(this._root);
+
+	final TranslationsEs _root; // ignore: unused_field
+
+	// Translations
+	@override String get learning => 'Aprendiendo';
+	@override String get polishing => 'Puliendo';
+	@override String get performanceReady => 'Lista para tocar';
+	@override String get archived => 'Archivada';
+}
+
+// Path: plan.tag
+class _Translations$plan$tag$es implements Translations$plan$tag$en {
+	_Translations$plan$tag$es._(this._root);
+
+	final TranslationsEs _root; // ignore: unused_field
+
+	// Translations
+	@override String get technique => 'Técnica';
+	@override String get repertoire => 'Repertorio';
+	@override String get sightReading => 'Lectura a primera vista';
+	@override String get theory => 'Teoría';
+	@override String get improvisation => 'Improvisación';
+}
+
+// Path: plan.form
+class _Translations$plan$form$es implements Translations$plan$form$en {
+	_Translations$plan$form$es._(this._root);
+
+	final TranslationsEs _root; // ignore: unused_field
+
+	// Translations
+	@override String get addTitle => 'Añadir Pieza al Plan';
+	@override String get editTitle => 'Editar Pieza';
+	@override String get titleLabel => 'TÍTULO';
+	@override String get composerLabel => 'COMPOSITOR (OPCIONAL)';
+	@override String get statusLabel => 'ESTADO ACTUAL';
+	@override String get tempoLabel => 'TEMPO OBJETIVO';
+	@override String get tagsLabel => 'ENFOQUES';
+	@override String get save => 'Guardar pieza';
+	@override String get discard => 'Descartar cambios';
+	@override String get delete => 'Eliminar pieza';
+}
+
+// Path: plan.validation
+class _Translations$plan$validation$es implements Translations$plan$validation$en {
+	_Translations$plan$validation$es._(this._root);
+
+	final TranslationsEs _root; // ignore: unused_field
+
+	// Translations
+	@override String get titleRequired => 'Añade un título';
+	@override String titleTooLong({required Object max}) => 'El título puede tener hasta ${max} caracteres';
+	@override String composerTooLong({required Object max}) => 'El compositor puede tener hasta ${max} caracteres';
+	@override String bpmOutOfRange({required Object min, required Object max}) => 'Usa un tempo de ${min} a ${max} BPM';
+}
+
+// Path: plan.deleteDialog
+class _Translations$plan$deleteDialog$es implements Translations$plan$deleteDialog$en {
+	_Translations$plan$deleteDialog$es._(this._root);
+
+	final TranslationsEs _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => '¿Eliminar esta pieza?';
+	@override String get body => 'Se quitará de tu plan para siempre. Para conservarla, cambia su estado a Archivada.';
+	@override String get confirm => 'Eliminar';
+	@override String get cancel => 'Cancelar';
+}
+
+// Path: plan.empty
+class _Translations$plan$empty$es implements Translations$plan$empty$en {
+	_Translations$plan$empty$es._(this._root);
+
+	final TranslationsEs _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Tu plan está vacío';
+	@override String get body => 'Añade la primera pieza en la que estás trabajando.';
+	@override String get action => 'Añadir una pieza';
+	@override String get noMatches => 'Ninguna pieza coincide con este filtro.';
+}
+
+// Path: plan.failure
+class _Translations$plan$failure$es implements Translations$plan$failure$en {
+	_Translations$plan$failure$es._(this._root);
+
+	final TranslationsEs _root; // ignore: unused_field
+
+	// Translations
+	@override String get load => 'No se pudo cargar tu plan.';
+	@override String get save => 'No se pudo guardar la pieza. Tus cambios siguen aquí.';
+	@override String get delete => 'No se pudo eliminar la pieza.';
+	@override String get retry => 'Intentar de nuevo';
+}
+
 /// The flat map containing all translations for locale <es>.
 /// Only for edge cases! For simple maps, use the map function of this library.
 ///
@@ -204,7 +323,46 @@ extension on TranslationsEs {
 			'home.quickStart.subtitle' => 'Tu enfoque de hoy: destreza técnica',
 			'home.recentPieces.title' => 'Piezas recientes',
 			'home.recentPieces.viewAll' => 'Ver todo',
-			'plan.title' => 'Página de plan',
+			'plan.title' => 'Plan de práctica',
+			'plan.hero' => 'Arma Tu Repertorio',
+			'plan.helper' => 'Las piezas en las que estás trabajando, todas en un lugar.',
+			'plan.bpmUnit' => 'BPM',
+			'plan.filter.all' => 'Todas',
+			'plan.status.learning' => 'Aprendiendo',
+			'plan.status.polishing' => 'Puliendo',
+			'plan.status.performanceReady' => 'Lista para tocar',
+			'plan.status.archived' => 'Archivada',
+			'plan.tag.technique' => 'Técnica',
+			'plan.tag.repertoire' => 'Repertorio',
+			'plan.tag.sightReading' => 'Lectura a primera vista',
+			'plan.tag.theory' => 'Teoría',
+			'plan.tag.improvisation' => 'Improvisación',
+			'plan.form.addTitle' => 'Añadir Pieza al Plan',
+			'plan.form.editTitle' => 'Editar Pieza',
+			'plan.form.titleLabel' => 'TÍTULO',
+			'plan.form.composerLabel' => 'COMPOSITOR (OPCIONAL)',
+			'plan.form.statusLabel' => 'ESTADO ACTUAL',
+			'plan.form.tempoLabel' => 'TEMPO OBJETIVO',
+			'plan.form.tagsLabel' => 'ENFOQUES',
+			'plan.form.save' => 'Guardar pieza',
+			'plan.form.discard' => 'Descartar cambios',
+			'plan.form.delete' => 'Eliminar pieza',
+			'plan.validation.titleRequired' => 'Añade un título',
+			'plan.validation.titleTooLong' => ({required Object max}) => 'El título puede tener hasta ${max} caracteres',
+			'plan.validation.composerTooLong' => ({required Object max}) => 'El compositor puede tener hasta ${max} caracteres',
+			'plan.validation.bpmOutOfRange' => ({required Object min, required Object max}) => 'Usa un tempo de ${min} a ${max} BPM',
+			'plan.deleteDialog.title' => '¿Eliminar esta pieza?',
+			'plan.deleteDialog.body' => 'Se quitará de tu plan para siempre. Para conservarla, cambia su estado a Archivada.',
+			'plan.deleteDialog.confirm' => 'Eliminar',
+			'plan.deleteDialog.cancel' => 'Cancelar',
+			'plan.empty.title' => 'Tu plan está vacío',
+			'plan.empty.body' => 'Añade la primera pieza en la que estás trabajando.',
+			'plan.empty.action' => 'Añadir una pieza',
+			'plan.empty.noMatches' => 'Ninguna pieza coincide con este filtro.',
+			'plan.failure.load' => 'No se pudo cargar tu plan.',
+			'plan.failure.save' => 'No se pudo guardar la pieza. Tus cambios siguen aquí.',
+			'plan.failure.delete' => 'No se pudo eliminar la pieza.',
+			'plan.failure.retry' => 'Intentar de nuevo',
 			'session.title' => 'Página de sesión',
 			'progress.title' => 'Página de progreso',
 			'practiceStreak.title' => 'Racha de práctica',

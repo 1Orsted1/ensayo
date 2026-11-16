@@ -803,7 +803,7 @@ class $TagsTable extends Tags with TableInfo<$TagsTable, Tag> {
     aliasedName,
     false,
     additionalChecks: GeneratedColumn.checkTextLength(
-      minTextLength: 6,
+      minTextLength: 1,
       maxTextLength: 32,
     ),
     type: DriftSqlType.string,
@@ -991,14 +991,46 @@ class $SongsTable extends Songs with TableInfo<$SongsTable, Song> {
     aliasedName,
     false,
     additionalChecks: GeneratedColumn.checkTextLength(
-      minTextLength: 6,
-      maxTextLength: 32,
+      minTextLength: 1,
+      maxTextLength: 80,
     ),
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _composerMeta = const VerificationMeta(
+    'composer',
+  );
   @override
-  List<GeneratedColumn> get $columns => [id, name];
+  late final GeneratedColumn<String> composer = GeneratedColumn<String>(
+    'composer',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  late final GeneratedColumnWithTypeConverter<PieceStatus, String> status =
+      GeneratedColumn<String>(
+        'status',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+        defaultValue: const Constant('learning'),
+      ).withConverter<PieceStatus>($SongsTable.$converterstatus);
+  static const VerificationMeta _targetBpmMeta = const VerificationMeta(
+    'targetBpm',
+  );
+  @override
+  late final GeneratedColumn<int> targetBpm = GeneratedColumn<int>(
+    'target_bpm',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, name, composer, status, targetBpm];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -1022,6 +1054,18 @@ class $SongsTable extends Songs with TableInfo<$SongsTable, Song> {
     } else if (isInserting) {
       context.missing(_nameMeta);
     }
+    if (data.containsKey('composer')) {
+      context.handle(
+        _composerMeta,
+        composer.isAcceptableOrUnknown(data['composer']!, _composerMeta),
+      );
+    }
+    if (data.containsKey('target_bpm')) {
+      context.handle(
+        _targetBpmMeta,
+        targetBpm.isAcceptableOrUnknown(data['target_bpm']!, _targetBpmMeta),
+      );
+    }
     return context;
   }
 
@@ -1039,6 +1083,20 @@ class $SongsTable extends Songs with TableInfo<$SongsTable, Song> {
         DriftSqlType.string,
         data['${effectivePrefix}name'],
       )!,
+      composer: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}composer'],
+      ),
+      status: $SongsTable.$converterstatus.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}status'],
+        )!,
+      ),
+      targetBpm: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}target_bpm'],
+      ),
     );
   }
 
@@ -1046,22 +1104,55 @@ class $SongsTable extends Songs with TableInfo<$SongsTable, Song> {
   $SongsTable createAlias(String alias) {
     return $SongsTable(attachedDatabase, alias);
   }
+
+  static JsonTypeConverter2<PieceStatus, String, String> $converterstatus =
+      const EnumNameConverter<PieceStatus>(PieceStatus.values);
 }
 
 class Song extends DataClass implements Insertable<Song> {
   final int id;
   final String name;
-  const Song({required this.id, required this.name});
+  final String? composer;
+  final PieceStatus status;
+  final int? targetBpm;
+  const Song({
+    required this.id,
+    required this.name,
+    this.composer,
+    required this.status,
+    this.targetBpm,
+  });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['name'] = Variable<String>(name);
+    if (!nullToAbsent || composer != null) {
+      map['composer'] = Variable<String>(composer);
+    }
+    {
+      map['status'] = Variable<String>(
+        $SongsTable.$converterstatus.toSql(status),
+      );
+    }
+    if (!nullToAbsent || targetBpm != null) {
+      map['target_bpm'] = Variable<int>(targetBpm);
+    }
     return map;
   }
 
   SongsCompanion toCompanion(bool nullToAbsent) {
-    return SongsCompanion(id: Value(id), name: Value(name));
+    return SongsCompanion(
+      id: Value(id),
+      name: Value(name),
+      composer: composer == null && nullToAbsent
+          ? const Value.absent()
+          : Value(composer),
+      status: Value(status),
+      targetBpm: targetBpm == null && nullToAbsent
+          ? const Value.absent()
+          : Value(targetBpm),
+    );
   }
 
   factory Song.fromJson(
@@ -1072,6 +1163,11 @@ class Song extends DataClass implements Insertable<Song> {
     return Song(
       id: serializer.fromJson<int>(json['id']),
       name: serializer.fromJson<String>(json['name']),
+      composer: serializer.fromJson<String?>(json['composer']),
+      status: $SongsTable.$converterstatus.fromJson(
+        serializer.fromJson<String>(json['status']),
+      ),
+      targetBpm: serializer.fromJson<int?>(json['targetBpm']),
     );
   }
   @override
@@ -1080,15 +1176,34 @@ class Song extends DataClass implements Insertable<Song> {
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'name': serializer.toJson<String>(name),
+      'composer': serializer.toJson<String?>(composer),
+      'status': serializer.toJson<String>(
+        $SongsTable.$converterstatus.toJson(status),
+      ),
+      'targetBpm': serializer.toJson<int?>(targetBpm),
     };
   }
 
-  Song copyWith({int? id, String? name}) =>
-      Song(id: id ?? this.id, name: name ?? this.name);
+  Song copyWith({
+    int? id,
+    String? name,
+    Value<String?> composer = const Value.absent(),
+    PieceStatus? status,
+    Value<int?> targetBpm = const Value.absent(),
+  }) => Song(
+    id: id ?? this.id,
+    name: name ?? this.name,
+    composer: composer.present ? composer.value : this.composer,
+    status: status ?? this.status,
+    targetBpm: targetBpm.present ? targetBpm.value : this.targetBpm,
+  );
   Song copyWithCompanion(SongsCompanion data) {
     return Song(
       id: data.id.present ? data.id.value : this.id,
       name: data.name.present ? data.name.value : this.name,
+      composer: data.composer.present ? data.composer.value : this.composer,
+      status: data.status.present ? data.status.value : this.status,
+      targetBpm: data.targetBpm.present ? data.targetBpm.value : this.targetBpm,
     );
   }
 
@@ -1096,40 +1211,77 @@ class Song extends DataClass implements Insertable<Song> {
   String toString() {
     return (StringBuffer('Song(')
           ..write('id: $id, ')
-          ..write('name: $name')
+          ..write('name: $name, ')
+          ..write('composer: $composer, ')
+          ..write('status: $status, ')
+          ..write('targetBpm: $targetBpm')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, name);
+  int get hashCode => Object.hash(id, name, composer, status, targetBpm);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is Song && other.id == this.id && other.name == this.name);
+      (other is Song &&
+          other.id == this.id &&
+          other.name == this.name &&
+          other.composer == this.composer &&
+          other.status == this.status &&
+          other.targetBpm == this.targetBpm);
 }
 
 class SongsCompanion extends UpdateCompanion<Song> {
   final Value<int> id;
   final Value<String> name;
+  final Value<String?> composer;
+  final Value<PieceStatus> status;
+  final Value<int?> targetBpm;
   const SongsCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
+    this.composer = const Value.absent(),
+    this.status = const Value.absent(),
+    this.targetBpm = const Value.absent(),
   });
-  SongsCompanion.insert({this.id = const Value.absent(), required String name})
-    : name = Value(name);
+  SongsCompanion.insert({
+    this.id = const Value.absent(),
+    required String name,
+    this.composer = const Value.absent(),
+    this.status = const Value.absent(),
+    this.targetBpm = const Value.absent(),
+  }) : name = Value(name);
   static Insertable<Song> custom({
     Expression<int>? id,
     Expression<String>? name,
+    Expression<String>? composer,
+    Expression<String>? status,
+    Expression<int>? targetBpm,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (name != null) 'name': name,
+      if (composer != null) 'composer': composer,
+      if (status != null) 'status': status,
+      if (targetBpm != null) 'target_bpm': targetBpm,
     });
   }
 
-  SongsCompanion copyWith({Value<int>? id, Value<String>? name}) {
-    return SongsCompanion(id: id ?? this.id, name: name ?? this.name);
+  SongsCompanion copyWith({
+    Value<int>? id,
+    Value<String>? name,
+    Value<String?>? composer,
+    Value<PieceStatus>? status,
+    Value<int?>? targetBpm,
+  }) {
+    return SongsCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      composer: composer ?? this.composer,
+      status: status ?? this.status,
+      targetBpm: targetBpm ?? this.targetBpm,
+    );
   }
 
   @override
@@ -1141,6 +1293,17 @@ class SongsCompanion extends UpdateCompanion<Song> {
     if (name.present) {
       map['name'] = Variable<String>(name.value);
     }
+    if (composer.present) {
+      map['composer'] = Variable<String>(composer.value);
+    }
+    if (status.present) {
+      map['status'] = Variable<String>(
+        $SongsTable.$converterstatus.toSql(status.value),
+      );
+    }
+    if (targetBpm.present) {
+      map['target_bpm'] = Variable<int>(targetBpm.value);
+    }
     return map;
   }
 
@@ -1148,7 +1311,10 @@ class SongsCompanion extends UpdateCompanion<Song> {
   String toString() {
     return (StringBuffer('SongsCompanion(')
           ..write('id: $id, ')
-          ..write('name: $name')
+          ..write('name: $name, ')
+          ..write('composer: $composer, ')
+          ..write('status: $status, ')
+          ..write('targetBpm: $targetBpm')
           ..write(')'))
         .toString();
   }
@@ -2386,9 +2552,21 @@ typedef $$TagsTableProcessedTableManager =
       PrefetchHooks Function({bool tagsAssignedRefs})
     >;
 typedef $$SongsTableCreateCompanionBuilder =
-    SongsCompanion Function({Value<int> id, required String name});
+    SongsCompanion Function({
+      Value<int> id,
+      required String name,
+      Value<String?> composer,
+      Value<PieceStatus> status,
+      Value<int?> targetBpm,
+    });
 typedef $$SongsTableUpdateCompanionBuilder =
-    SongsCompanion Function({Value<int> id, Value<String> name});
+    SongsCompanion Function({
+      Value<int> id,
+      Value<String> name,
+      Value<String?> composer,
+      Value<PieceStatus> status,
+      Value<int?> targetBpm,
+    });
 
 final class $$SongsTableReferences
     extends BaseReferences<_$AppDatabase, $SongsTable, Song> {
@@ -2428,6 +2606,22 @@ class $$SongsTableFilterComposer extends Composer<_$AppDatabase, $SongsTable> {
 
   ColumnFilters<String> get name => $composableBuilder(
     column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get composer => $composableBuilder(
+    column: $table.composer,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnWithTypeConverterFilters<PieceStatus, PieceStatus, String> get status =>
+      $composableBuilder(
+        column: $table.status,
+        builder: (column) => ColumnWithTypeConverterFilters(column),
+      );
+
+  ColumnFilters<int> get targetBpm => $composableBuilder(
+    column: $table.targetBpm,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -2475,6 +2669,21 @@ class $$SongsTableOrderingComposer
     column: $table.name,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<String> get composer => $composableBuilder(
+    column: $table.composer,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get status => $composableBuilder(
+    column: $table.status,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get targetBpm => $composableBuilder(
+    column: $table.targetBpm,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$SongsTableAnnotationComposer
@@ -2491,6 +2700,15 @@ class $$SongsTableAnnotationComposer
 
   GeneratedColumn<String> get name =>
       $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get composer =>
+      $composableBuilder(column: $table.composer, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<PieceStatus, String> get status =>
+      $composableBuilder(column: $table.status, builder: (column) => column);
+
+  GeneratedColumn<int> get targetBpm =>
+      $composableBuilder(column: $table.targetBpm, builder: (column) => column);
 
   Expression<T> tagsAssignedRefs<T extends Object>(
     Expression<T> Function($$TagsAssignedTableAnnotationComposer a) f,
@@ -2548,10 +2766,30 @@ class $$SongsTableTableManager
               ({
                 Value<int> id = const Value.absent(),
                 Value<String> name = const Value.absent(),
-              }) => SongsCompanion(id: id, name: name),
+                Value<String?> composer = const Value.absent(),
+                Value<PieceStatus> status = const Value.absent(),
+                Value<int?> targetBpm = const Value.absent(),
+              }) => SongsCompanion(
+                id: id,
+                name: name,
+                composer: composer,
+                status: status,
+                targetBpm: targetBpm,
+              ),
           createCompanionCallback:
-              ({Value<int> id = const Value.absent(), required String name}) =>
-                  SongsCompanion.insert(id: id, name: name),
+              ({
+                Value<int> id = const Value.absent(),
+                required String name,
+                Value<String?> composer = const Value.absent(),
+                Value<PieceStatus> status = const Value.absent(),
+                Value<int?> targetBpm = const Value.absent(),
+              }) => SongsCompanion.insert(
+                id: id,
+                name: name,
+                composer: composer,
+                status: status,
+                targetBpm: targetBpm,
+              ),
           withReferenceMapper: (p0) => p0
               .map(
                 (e) =>

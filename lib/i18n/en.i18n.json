@@ -23,7 +23,62 @@
     }
   },
   "plan": {
-    "title": "Plan page"
+    "title": "Practice Plan",
+    "hero": "Curate Your Setlist",
+    "helper": "The pieces you're working on, all in one place.",
+    "bpmUnit": "BPM",
+    "filter": {
+      "all": "All"
+    },
+    "status": {
+      "learning": "Learning",
+      "polishing": "Polishing",
+      "performanceReady": "Performance Ready",
+      "archived": "Archived"
+    },
+    "tag": {
+      "technique": "Technique",
+      "repertoire": "Repertoire",
+      "sightReading": "Sight-reading",
+      "theory": "Theory",
+      "improvisation": "Improvisation"
+    },
+    "form": {
+      "addTitle": "Add Piece to Plan",
+      "editTitle": "Edit Piece",
+      "titleLabel": "TITLE",
+      "composerLabel": "COMPOSER (OPTIONAL)",
+      "statusLabel": "CURRENT STATUS",
+      "tempoLabel": "TARGET TEMPO",
+      "tagsLabel": "FOCUS TAGS",
+      "save": "Save Piece",
+      "discard": "Discard Changes",
+      "delete": "Delete piece"
+    },
+    "validation": {
+      "titleRequired": "Add a title",
+      "titleTooLong": "Keep the title to $max characters or fewer",
+      "composerTooLong": "Keep the composer to $max characters or fewer",
+      "bpmOutOfRange": "Use a tempo from $min to $max BPM"
+    },
+    "deleteDialog": {
+      "title": "Delete this piece?",
+      "body": "It will be removed from your plan for good. To keep it, set its status to Archived instead.",
+      "confirm": "Delete",
+      "cancel": "Cancel"
+    },
+    "empty": {
+      "title": "Your plan is empty",
+      "body": "Add the first piece you're working on.",
+      "action": "Add a piece",
+      "noMatches": "No pieces match this filter."
+    },
+    "failure": {
+      "load": "Couldn't load your plan.",
+      "save": "Couldn't save the piece. Your changes are still here.",
+      "delete": "Couldn't delete the piece.",
+      "retry": "Try again"
+    }
   },
   "session": {
     "title": "Session page"

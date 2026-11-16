@@ -62,6 +62,13 @@ Router is configured in `lib/presentation/core/app_router.dart` using `StatefulS
 ### Theming
 Dual-font Material 3 theme with full light/dark coverage. Light theme: `lib/presentation/theme/ensayo_theme_light.dart`; dark: `ensayo_theme_dark.dart`. Custom extensions (card styles, etc.) in `lib/presentation/theme/extensions/`. Theme switching is managed by `ThemeCubit`.
 
+### Code Conventions
+- **Widgets:** one widget per file. Screens live in a feature folder (e.g. `lib/presentation/plan/`), and the widgets they use live in its `widgets/` subfolder. Extract reusable widgets instead of nesting private `_Widget` classes.
+- **Forms:** use `reactive_forms`. Files holding a form are named `*_form.dart`. Validation rules live in domain and are wired in as reactive_forms validators.
+- **Bloc events/states:** freezed abstract classes with named factories (`const factory PlanEvent.started() = _Started;`), dispatched as `bloc.add(const PlanEvent.started())`.
+- **Feature enums** (filters, load/action statuses) live in `lib/domain/<feature>/`, one per file.
+- **Tests:** one test per feature behavior plus a small `*_break_test.dart` suite of realistic attempts to break it. A separate agent from the one that wrote the code writes the tests, from the specs.
+
 ## Database Schema
 
 Six Drift tables: `Metrics` (streak/goal tracking), `PracticeLogs` (sessions with feelings), `Songs`, `Tags`, `TagsAssigned` (songs↔tags join), and `Feelings`.

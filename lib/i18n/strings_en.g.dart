@@ -118,8 +118,26 @@ class Translations$plan$en {
 
 	// Translations
 
-	/// en: 'Plan page'
-	String get title => 'Plan page';
+	/// en: 'Practice Plan'
+	String get title => 'Practice Plan';
+
+	/// en: 'Curate Your Setlist'
+	String get hero => 'Curate Your Setlist';
+
+	/// en: 'The pieces you're working on, all in one place.'
+	String get helper => 'The pieces you\'re working on, all in one place.';
+
+	/// en: 'BPM'
+	String get bpmUnit => 'BPM';
+
+	late final Translations$plan$filter$en filter = Translations$plan$filter$en._(_root);
+	late final Translations$plan$status$en status = Translations$plan$status$en._(_root);
+	late final Translations$plan$tag$en tag = Translations$plan$tag$en._(_root);
+	late final Translations$plan$form$en form = Translations$plan$form$en._(_root);
+	late final Translations$plan$validation$en validation = Translations$plan$validation$en._(_root);
+	late final Translations$plan$deleteDialog$en deleteDialog = Translations$plan$deleteDialog$en._(_root);
+	late final Translations$plan$empty$en empty = Translations$plan$empty$en._(_root);
+	late final Translations$plan$failure$en failure = Translations$plan$failure$en._(_root);
 }
 
 // Path: session
@@ -236,6 +254,186 @@ class Translations$home$recentPieces$en {
 	String get viewAll => 'View all';
 }
 
+// Path: plan.filter
+class Translations$plan$filter$en {
+	Translations$plan$filter$en._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'All'
+	String get all => 'All';
+}
+
+// Path: plan.status
+class Translations$plan$status$en {
+	Translations$plan$status$en._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Learning'
+	String get learning => 'Learning';
+
+	/// en: 'Polishing'
+	String get polishing => 'Polishing';
+
+	/// en: 'Performance Ready'
+	String get performanceReady => 'Performance Ready';
+
+	/// en: 'Archived'
+	String get archived => 'Archived';
+}
+
+// Path: plan.tag
+class Translations$plan$tag$en {
+	Translations$plan$tag$en._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Technique'
+	String get technique => 'Technique';
+
+	/// en: 'Repertoire'
+	String get repertoire => 'Repertoire';
+
+	/// en: 'Sight-reading'
+	String get sightReading => 'Sight-reading';
+
+	/// en: 'Theory'
+	String get theory => 'Theory';
+
+	/// en: 'Improvisation'
+	String get improvisation => 'Improvisation';
+}
+
+// Path: plan.form
+class Translations$plan$form$en {
+	Translations$plan$form$en._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Add Piece to Plan'
+	String get addTitle => 'Add Piece to Plan';
+
+	/// en: 'Edit Piece'
+	String get editTitle => 'Edit Piece';
+
+	/// en: 'TITLE'
+	String get titleLabel => 'TITLE';
+
+	/// en: 'COMPOSER (OPTIONAL)'
+	String get composerLabel => 'COMPOSER (OPTIONAL)';
+
+	/// en: 'CURRENT STATUS'
+	String get statusLabel => 'CURRENT STATUS';
+
+	/// en: 'TARGET TEMPO'
+	String get tempoLabel => 'TARGET TEMPO';
+
+	/// en: 'FOCUS TAGS'
+	String get tagsLabel => 'FOCUS TAGS';
+
+	/// en: 'Save Piece'
+	String get save => 'Save Piece';
+
+	/// en: 'Discard Changes'
+	String get discard => 'Discard Changes';
+
+	/// en: 'Delete piece'
+	String get delete => 'Delete piece';
+}
+
+// Path: plan.validation
+class Translations$plan$validation$en {
+	Translations$plan$validation$en._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Add a title'
+	String get titleRequired => 'Add a title';
+
+	/// en: 'Keep the title to $max characters or fewer'
+	String titleTooLong({required Object max}) => 'Keep the title to ${max} characters or fewer';
+
+	/// en: 'Keep the composer to $max characters or fewer'
+	String composerTooLong({required Object max}) => 'Keep the composer to ${max} characters or fewer';
+
+	/// en: 'Use a tempo from $min to $max BPM'
+	String bpmOutOfRange({required Object min, required Object max}) => 'Use a tempo from ${min} to ${max} BPM';
+}
+
+// Path: plan.deleteDialog
+class Translations$plan$deleteDialog$en {
+	Translations$plan$deleteDialog$en._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Delete this piece?'
+	String get title => 'Delete this piece?';
+
+	/// en: 'It will be removed from your plan for good. To keep it, set its status to Archived instead.'
+	String get body => 'It will be removed from your plan for good. To keep it, set its status to Archived instead.';
+
+	/// en: 'Delete'
+	String get confirm => 'Delete';
+
+	/// en: 'Cancel'
+	String get cancel => 'Cancel';
+}
+
+// Path: plan.empty
+class Translations$plan$empty$en {
+	Translations$plan$empty$en._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Your plan is empty'
+	String get title => 'Your plan is empty';
+
+	/// en: 'Add the first piece you're working on.'
+	String get body => 'Add the first piece you\'re working on.';
+
+	/// en: 'Add a piece'
+	String get action => 'Add a piece';
+
+	/// en: 'No pieces match this filter.'
+	String get noMatches => 'No pieces match this filter.';
+}
+
+// Path: plan.failure
+class Translations$plan$failure$en {
+	Translations$plan$failure$en._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Couldn't load your plan.'
+	String get load => 'Couldn\'t load your plan.';
+
+	/// en: 'Couldn't save the piece. Your changes are still here.'
+	String get save => 'Couldn\'t save the piece. Your changes are still here.';
+
+	/// en: 'Couldn't delete the piece.'
+	String get delete => 'Couldn\'t delete the piece.';
+
+	/// en: 'Try again'
+	String get retry => 'Try again';
+}
+
 /// The flat map containing all translations for locale <en>.
 /// Only for edge cases! For simple maps, use the map function of this library.
 ///
@@ -257,7 +455,46 @@ extension on Translations {
 			'home.quickStart.subtitle' => 'Your focus today: technical proficiency',
 			'home.recentPieces.title' => 'Recent pieces',
 			'home.recentPieces.viewAll' => 'View all',
-			'plan.title' => 'Plan page',
+			'plan.title' => 'Practice Plan',
+			'plan.hero' => 'Curate Your Setlist',
+			'plan.helper' => 'The pieces you\'re working on, all in one place.',
+			'plan.bpmUnit' => 'BPM',
+			'plan.filter.all' => 'All',
+			'plan.status.learning' => 'Learning',
+			'plan.status.polishing' => 'Polishing',
+			'plan.status.performanceReady' => 'Performance Ready',
+			'plan.status.archived' => 'Archived',
+			'plan.tag.technique' => 'Technique',
+			'plan.tag.repertoire' => 'Repertoire',
+			'plan.tag.sightReading' => 'Sight-reading',
+			'plan.tag.theory' => 'Theory',
+			'plan.tag.improvisation' => 'Improvisation',
+			'plan.form.addTitle' => 'Add Piece to Plan',
+			'plan.form.editTitle' => 'Edit Piece',
+			'plan.form.titleLabel' => 'TITLE',
+			'plan.form.composerLabel' => 'COMPOSER (OPTIONAL)',
+			'plan.form.statusLabel' => 'CURRENT STATUS',
+			'plan.form.tempoLabel' => 'TARGET TEMPO',
+			'plan.form.tagsLabel' => 'FOCUS TAGS',
+			'plan.form.save' => 'Save Piece',
+			'plan.form.discard' => 'Discard Changes',
+			'plan.form.delete' => 'Delete piece',
+			'plan.validation.titleRequired' => 'Add a title',
+			'plan.validation.titleTooLong' => ({required Object max}) => 'Keep the title to ${max} characters or fewer',
+			'plan.validation.composerTooLong' => ({required Object max}) => 'Keep the composer to ${max} characters or fewer',
+			'plan.validation.bpmOutOfRange' => ({required Object min, required Object max}) => 'Use a tempo from ${min} to ${max} BPM',
+			'plan.deleteDialog.title' => 'Delete this piece?',
+			'plan.deleteDialog.body' => 'It will be removed from your plan for good. To keep it, set its status to Archived instead.',
+			'plan.deleteDialog.confirm' => 'Delete',
+			'plan.deleteDialog.cancel' => 'Cancel',
+			'plan.empty.title' => 'Your plan is empty',
+			'plan.empty.body' => 'Add the first piece you\'re working on.',
+			'plan.empty.action' => 'Add a piece',
+			'plan.empty.noMatches' => 'No pieces match this filter.',
+			'plan.failure.load' => 'Couldn\'t load your plan.',
+			'plan.failure.save' => 'Couldn\'t save the piece. Your changes are still here.',
+			'plan.failure.delete' => 'Couldn\'t delete the piece.',
+			'plan.failure.retry' => 'Try again',
 			'session.title' => 'Session page',
 			'progress.title' => 'Progress page',
 			'practiceStreak.title' => 'Practice streak',

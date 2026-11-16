@@ -46,4 +46,10 @@ app.*.map.json
 
 # FVM Version Cache
 .fvm/
-CLAUDE.md
+.claude
+.agents
+
+./CLAUDE.md
+AGENTS.md
+openspec/
+docs/

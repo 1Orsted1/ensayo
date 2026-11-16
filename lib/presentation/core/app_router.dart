@@ -5,6 +5,7 @@ import 'package:ensayo/presentation/dashboard/plan_screen.dart';
 import 'package:ensayo/presentation/dashboard/progress_screen.dart';
 import 'package:ensayo/presentation/dashboard/session_screen.dart';
 import 'package:ensayo/presentation/demo_screen.dart';
+import 'package:ensayo/presentation/plan/piece_form_screen.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -13,6 +14,22 @@ final _homeNavKey = GlobalKey<NavigatorState>();
 final _planNavKey = GlobalKey<NavigatorState>();
 final _sessionNavKey = GlobalKey<NavigatorState>();
 final _progressNavKey = GlobalKey<NavigatorState>();
+
+/// Add and edit routes under `/plan`. Shared with the navigation test.
+final planSubRoutes = <RouteBase>[
+  GoRoute(
+    path: 'new',
+    builder: (BuildContext context, GoRouterState state) =>
+        const PieceFormScreen(),
+  ),
+  GoRoute(
+    path: ':pieceId',
+    redirect: (BuildContext context, GoRouterState state) =>
+        int.tryParse(state.pathParameters['pieceId']!) == null ? '/plan' : null,
+    builder: (BuildContext context, GoRouterState state) =>
+        PieceFormScreen(pieceId: int.parse(state.pathParameters['pieceId']!)),
+  ),
+];
 
 final appRouter = GoRouter(
   initialLocation: '/home',
@@ -46,13 +63,7 @@ final appRouter = GoRouter(
               path: '/plan',
               builder: (BuildContext context, GoRouterState state) =>
                   PlanScreen(),
-              routes: [
-                GoRoute(
-                  path: 'demo',
-                  builder: (BuildContext context, GoRouterState state) =>
-                      DemoScreen(),
-                ),
-              ],
+              routes: planSubRoutes,
             ),
           ],
         ),

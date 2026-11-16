@@ -23,7 +23,62 @@
     }
   },
   "plan": {
-    "title": "Página de plan"
+    "title": "Plan de práctica",
+    "hero": "Arma Tu Repertorio",
+    "helper": "Las piezas en las que estás trabajando, todas en un lugar.",
+    "bpmUnit": "BPM",
+    "filter": {
+      "all": "Todas"
+    },
+    "status": {
+      "learning": "Aprendiendo",
+      "polishing": "Puliendo",
+      "performanceReady": "Lista para tocar",
+      "archived": "Archivada"
+    },
+    "tag": {
+      "technique": "Técnica",
+      "repertoire": "Repertorio",
+      "sightReading": "Lectura a primera vista",
+      "theory": "Teoría",
+      "improvisation": "Improvisación"
+    },
+    "form": {
+      "addTitle": "Añadir Pieza al Plan",
+      "editTitle": "Editar Pieza",
+      "titleLabel": "TÍTULO",
+      "composerLabel": "COMPOSITOR (OPCIONAL)",
+      "statusLabel": "ESTADO ACTUAL",
+      "tempoLabel": "TEMPO OBJETIVO",
+      "tagsLabel": "ENFOQUES",
+      "save": "Guardar pieza",
+      "discard": "Descartar cambios",
+      "delete": "Eliminar pieza"
+    },
+    "validation": {
+      "titleRequired": "Añade un título",
+      "titleTooLong": "El título puede tener hasta $max caracteres",
+      "composerTooLong": "El compositor puede tener hasta $max caracteres",
+      "bpmOutOfRange": "Usa un tempo de $min a $max BPM"
+    },
+    "deleteDialog": {
+      "title": "¿Eliminar esta pieza?",
+      "body": "Se quitará de tu plan para siempre. Para conservarla, cambia su estado a Archivada.",
+      "confirm": "Eliminar",
+      "cancel": "Cancelar"
+    },
+    "empty": {
+      "title": "Tu plan está vacío",
+      "body": "Añade la primera pieza en la que estás trabajando.",
+      "action": "Añadir una pieza",
+      "noMatches": "Ninguna pieza coincide con este filtro."
+    },
+    "failure": {
+      "load": "No se pudo cargar tu plan.",
+      "save": "No se pudo guardar la pieza. Tus cambios siguen aquí.",
+      "delete": "No se pudo eliminar la pieza.",
+      "retry": "Intentar de nuevo"
+    }
   },
   "session": {
     "title": "Página de sesión"
