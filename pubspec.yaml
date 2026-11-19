@@ -13,6 +13,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   cupertino_icons: ^1.0.8
+  clock: ^1.1.2
   bloc: ^9.2.0
   flutter_bloc: ^9.1.1
   freezed: ^3.2.4

@@ -7,8 +7,9 @@
   },
   "nav": {
     "home": "Inicio",
+    "dashboard": "Panel",
     "plan": "Plan",
-    "session": "Sesión",
+    "logs": "Registros",
     "progress": "Progreso"
   },
   "home": {
@@ -81,7 +82,56 @@
     }
   },
   "session": {
-    "title": "Página de sesión"
+    "live": "EN VIVO",
+    "inProgress": "Sesión en curso",
+    "piecesCompleted": {
+      "one": "$count pieza completada",
+      "other": "$count piezas completadas"
+    },
+    "piecePosition": "PIEZA $current DE $total",
+    "moodLabel": "¿CÓMO TE SENTISTE?",
+    "noteLabel": "OBSERVACIÓN Y NOTAS",
+    "noteHint": "¿Qué notaste?",
+    "durationLabel": "DURACIÓN",
+    "tempoLabel": "TEMPO",
+    "minutesUnit": "min",
+    "mood": {
+      "tough": "Difícil",
+      "okay": "Normal",
+      "calm": "Tranquilo",
+      "inspired": "Inspirado",
+      "proud": "Orgulloso"
+    },
+    "validation": {
+      "durationOutOfRange": "Usa una duración de $min a $max minutos",
+      "noteTooLong": "La nota puede tener hasta $max caracteres",
+      "tempoOutOfRange": "Usa un tempo de $min a $max BPM"
+    },
+    "logAndContinue": "Guardar pieza y continuar",
+    "skip": "Omitir",
+    "queueDone": "Todas las piezas están listas. Termina cuando quieras.",
+    "freePractice": "No hay piezas para registrar. Disfruta la práctica libre o añade piezas a tu plan la próxima vez.",
+    "finishSession": "Terminar sesión",
+    "close": "Cerrar sesión",
+    "leave": {
+      "title": "¿Salir de esta sesión?",
+      "body": "Puedes terminarla, descartarla o seguir practicando.",
+      "discard": "Descartar sesión",
+      "keepPracticing": "Seguir practicando"
+    },
+    "discardDialog": {
+      "title": "¿Descartar esta sesión?",
+      "body": "Se eliminarán la sesión y sus registros de piezas.",
+      "confirm": "Descartar",
+      "cancel": "Cancelar"
+    },
+    "failure": {
+      "restore": "No se pudo recuperar tu sesión. Puedes empezar de nuevo.",
+      "start": "No se pudo iniciar una sesión.",
+      "log": "No se pudo guardar esta pieza. Tus cambios siguen aquí.",
+      "finish": "No se pudo terminar la sesión. Puedes intentarlo de nuevo.",
+      "discard": "No se pudo descartar la sesión. Puedes intentarlo de nuevo."
+    }
   },
   "progress": {
     "title": "Página de progreso"
@@ -89,17 +139,37 @@
   "practiceStreak": {
     "title": "Racha de práctica",
     "subtitle": "Esta es tu oportunidad de mejorar",
-    "days": "$count días"
+    "days": {
+      "one": "$count día",
+      "other": "$count días"
+    },
+    "loadFailure": "No se pudo cargar"
   },
   "dailyGoal": {
     "title": "Meta diaria",
-    "remaining": "/$goal min"
+    "remaining": "/ $goal min",
+    "editorTitle": "Editar meta diaria",
+    "minutesUnit": "min",
+    "save": "Guardar",
+    "saveFailure": "No se pudo guardar tu meta."
+  },
+  "logs": {
+    "title": "Registros",
+    "empty": "Las sesiones terminadas aparecerán aquí.",
+    "pieceCount": {
+      "one": "$count pieza",
+      "other": "$count piezas"
+    },
+    "minutes": "min",
+    "loadFailure": "No se pudieron cargar tus registros.",
+    "retry": "Intentar de nuevo"
   },
   "metronome": {
     "title": "Metrónomo rápido",
     "bpm": "$count bpm"
   },
   "quickStartCard": {
-    "startSession": "Iniciar práctica"
+    "startSession": "Iniciar sesión",
+    "resumeSession": "Reanudar sesión"
   }
 }

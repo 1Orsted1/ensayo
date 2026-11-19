@@ -14,13 +14,17 @@ import 'package:firebase_analytics/firebase_analytics.dart' as _i398;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
+import 'application/logs/logs_bloc.dart' as _i61;
 import 'application/metrics/metrics_cubit.dart' as _i600;
 import 'application/plan/plan_bloc.dart' as _i37;
+import 'application/session/session_bloc.dart' as _i297;
 import 'application/theme/theme_cubit.dart' as _i309;
 import 'domain/metrics/i_metrics_data_source.dart' as _i864;
 import 'domain/metrics/i_metrics_facade.dart' as _i159;
 import 'domain/plan/i_plan_data_source.dart' as _i281;
 import 'domain/plan/i_plan_facade.dart' as _i670;
+import 'domain/session/i_session_data_source.dart' as _i1004;
+import 'domain/session/i_session_facade.dart' as _i445;
 import 'domain/theme/i_personalized_theme.dart' as _i130;
 import 'infra/app_database.dart' as _i437;
 import 'infra/metrics/metrics_data_source_imp.dart' as _i825;
@@ -28,6 +32,8 @@ import 'infra/metrics/metrics_facade_imp.dart' as _i846;
 import 'infra/plan/plan_data_source_imp.dart' as _i696;
 import 'infra/plan/plan_facade_imp.dart' as _i610;
 import 'infra/register_module.dart' as _i761;
+import 'infra/session/session_data_source_imp.dart' as _i33;
+import 'infra/session/session_facade_imp.dart' as _i729;
 import 'presentation/theme/ensayo_theme_dark.dart' as _i213;
 import 'presentation/theme/ensayo_theme_light.dart' as _i553;
 
@@ -77,15 +83,33 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i670.IPlanFacade>(
       () => _i610.PlanFacadeImp(planDataSource: gh<_i281.IPlanDataSource>()),
     );
+    gh.factory<_i1004.ISessionDataSource>(
+      () => _i33.SessionDataSourceImp(dataBase: gh<_i437.AppDatabase>()),
+    );
     gh.factory<_i159.IMetricsFacade>(
       () => _i846.MetricsFacadeImp(
         metricsDataSource: gh<_i864.IMetricsDataSource>(),
       ),
     );
     gh.factory<_i37.PlanBloc>(() => _i37.PlanBloc(gh<_i670.IPlanFacade>()));
-    gh.lazySingleton<_i600.MetricsCubit>(
-      () => _i600.MetricsCubit(gh<_i159.IMetricsFacade>()),
+    gh.factory<_i445.ISessionFacade>(
+      () => _i729.SessionFacadeImp(
+        sessionDataSource: gh<_i1004.ISessionDataSource>(),
+      ),
     );
+    gh.lazySingleton<_i600.MetricsCubit>(
+      () => _i600.MetricsCubit(
+        gh<_i159.IMetricsFacade>(),
+        gh<_i445.ISessionFacade>(),
+      ),
+    );
+    gh.factory<_i297.SessionBloc>(
+      () => _i297.SessionBloc(
+        gh<_i445.ISessionFacade>(),
+        gh<_i670.IPlanFacade>(),
+      ),
+    );
+    gh.factory<_i61.LogsBloc>(() => _i61.LogsBloc(gh<_i445.ISessionFacade>()));
     return this;
   }
 }

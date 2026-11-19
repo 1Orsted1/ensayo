@@ -55,6 +55,7 @@ class Translations with BaseTranslations<AppLocale, Translations> {
 	late final Translations$progress$en progress = Translations$progress$en._(_root);
 	late final Translations$practiceStreak$en practiceStreak = Translations$practiceStreak$en._(_root);
 	late final Translations$dailyGoal$en dailyGoal = Translations$dailyGoal$en._(_root);
+	late final Translations$logs$en logs = Translations$logs$en._(_root);
 	late final Translations$metronome$en metronome = Translations$metronome$en._(_root);
 	late final Translations$quickStartCard$en quickStartCard = Translations$quickStartCard$en._(_root);
 }
@@ -85,11 +86,14 @@ class Translations$nav$en {
 	/// en: 'Home'
 	String get home => 'Home';
 
+	/// en: 'Dashboard'
+	String get dashboard => 'Dashboard';
+
 	/// en: 'Plan'
 	String get plan => 'Plan';
 
-	/// en: 'Session'
-	String get session => 'Session';
+	/// en: 'Logs'
+	String get logs => 'Logs';
 
 	/// en: 'Progress'
 	String get progress => 'Progress';
@@ -148,8 +152,63 @@ class Translations$session$en {
 
 	// Translations
 
-	/// en: 'Session page'
-	String get title => 'Session page';
+	/// en: 'LIVE'
+	String get live => 'LIVE';
+
+	/// en: 'Session in progress'
+	String get inProgress => 'Session in progress';
+
+	/// en: '(one) {$count piece completed} (other) {$count pieces completed}'
+	String piecesCompleted({required num n, required Object count}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+		one: '${count} piece completed',
+		other: '${count} pieces completed',
+	);
+
+	/// en: 'PIECE $current OF $total'
+	String piecePosition({required Object current, required Object total}) => 'PIECE ${current} OF ${total}';
+
+	/// en: 'HOW DID IT FEEL?'
+	String get moodLabel => 'HOW DID IT FEEL?';
+
+	/// en: 'OBSERVATION & NOTES'
+	String get noteLabel => 'OBSERVATION & NOTES';
+
+	/// en: 'What did you notice?'
+	String get noteHint => 'What did you notice?';
+
+	/// en: 'DURATION'
+	String get durationLabel => 'DURATION';
+
+	/// en: 'TEMPO'
+	String get tempoLabel => 'TEMPO';
+
+	/// en: 'min'
+	String get minutesUnit => 'min';
+
+	late final Translations$session$mood$en mood = Translations$session$mood$en._(_root);
+	late final Translations$session$validation$en validation = Translations$session$validation$en._(_root);
+
+	/// en: 'Log Piece & Continue'
+	String get logAndContinue => 'Log Piece & Continue';
+
+	/// en: 'Skip'
+	String get skip => 'Skip';
+
+	/// en: 'All pieces are done. Finish whenever you're ready.'
+	String get queueDone => 'All pieces are done. Finish whenever you\'re ready.';
+
+	/// en: 'No pieces to log. Enjoy some free practice, or add pieces to your plan next time.'
+	String get freePractice => 'No pieces to log. Enjoy some free practice, or add pieces to your plan next time.';
+
+	/// en: 'Finish Session'
+	String get finishSession => 'Finish Session';
+
+	/// en: 'Close session'
+	String get close => 'Close session';
+
+	late final Translations$session$leave$en leave = Translations$session$leave$en._(_root);
+	late final Translations$session$discardDialog$en discardDialog = Translations$session$discardDialog$en._(_root);
+	late final Translations$session$failure$en failure = Translations$session$failure$en._(_root);
 }
 
 // Path: progress
@@ -178,8 +237,14 @@ class Translations$practiceStreak$en {
 	/// en: 'This is your opportunity to improve'
 	String get subtitle => 'This is your opportunity to improve';
 
-	/// en: '$count days'
-	String days({required Object count}) => '${count} days';
+	/// en: '(one) {$count day} (other) {$count days}'
+	String days({required num n, required Object count}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+		one: '${count} day',
+		other: '${count} days',
+	);
+
+	/// en: 'Couldn't load'
+	String get loadFailure => 'Couldn\'t load';
 }
 
 // Path: dailyGoal
@@ -193,8 +258,50 @@ class Translations$dailyGoal$en {
 	/// en: 'Daily goal'
 	String get title => 'Daily goal';
 
-	/// en: '/$goal min'
-	String remaining({required Object goal}) => '/${goal} min';
+	/// en: '/ $goal min'
+	String remaining({required Object goal}) => '/ ${goal} min';
+
+	/// en: 'Edit daily goal'
+	String get editorTitle => 'Edit daily goal';
+
+	/// en: 'min'
+	String get minutesUnit => 'min';
+
+	/// en: 'Save'
+	String get save => 'Save';
+
+	/// en: 'Couldn't save your goal.'
+	String get saveFailure => 'Couldn\'t save your goal.';
+}
+
+// Path: logs
+class Translations$logs$en {
+	Translations$logs$en._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Logs'
+	String get title => 'Logs';
+
+	/// en: 'Finished sessions will appear here.'
+	String get empty => 'Finished sessions will appear here.';
+
+	/// en: '(one) {$count piece} (other) {$count pieces}'
+	String pieceCount({required num n, required Object count}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
+		one: '${count} piece',
+		other: '${count} pieces',
+	);
+
+	/// en: 'min'
+	String get minutes => 'min';
+
+	/// en: 'Couldn't load your logs.'
+	String get loadFailure => 'Couldn\'t load your logs.';
+
+	/// en: 'Try again'
+	String get retry => 'Try again';
 }
 
 // Path: metronome
@@ -222,6 +329,9 @@ class Translations$quickStartCard$en {
 
 	/// en: 'Start Session'
 	String get startSession => 'Start Session';
+
+	/// en: 'Resume Session'
+	String get resumeSession => 'Resume Session';
 }
 
 // Path: home.quickStart
@@ -434,6 +544,114 @@ class Translations$plan$failure$en {
 	String get retry => 'Try again';
 }
 
+// Path: session.mood
+class Translations$session$mood$en {
+	Translations$session$mood$en._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Tough'
+	String get tough => 'Tough';
+
+	/// en: 'Okay'
+	String get okay => 'Okay';
+
+	/// en: 'Calm'
+	String get calm => 'Calm';
+
+	/// en: 'Inspired'
+	String get inspired => 'Inspired';
+
+	/// en: 'Proud'
+	String get proud => 'Proud';
+}
+
+// Path: session.validation
+class Translations$session$validation$en {
+	Translations$session$validation$en._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Use a duration from $min to $max minutes'
+	String durationOutOfRange({required Object min, required Object max}) => 'Use a duration from ${min} to ${max} minutes';
+
+	/// en: 'Keep the note to $max characters or fewer'
+	String noteTooLong({required Object max}) => 'Keep the note to ${max} characters or fewer';
+
+	/// en: 'Use a tempo from $min to $max BPM'
+	String tempoOutOfRange({required Object min, required Object max}) => 'Use a tempo from ${min} to ${max} BPM';
+}
+
+// Path: session.leave
+class Translations$session$leave$en {
+	Translations$session$leave$en._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Leave this session?'
+	String get title => 'Leave this session?';
+
+	/// en: 'You can finish it, discard it, or keep practicing.'
+	String get body => 'You can finish it, discard it, or keep practicing.';
+
+	/// en: 'Discard session'
+	String get discard => 'Discard session';
+
+	/// en: 'Keep Practicing'
+	String get keepPracticing => 'Keep Practicing';
+}
+
+// Path: session.discardDialog
+class Translations$session$discardDialog$en {
+	Translations$session$discardDialog$en._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Discard this session?'
+	String get title => 'Discard this session?';
+
+	/// en: 'The session and its piece logs will be deleted.'
+	String get body => 'The session and its piece logs will be deleted.';
+
+	/// en: 'Discard'
+	String get confirm => 'Discard';
+
+	/// en: 'Cancel'
+	String get cancel => 'Cancel';
+}
+
+// Path: session.failure
+class Translations$session$failure$en {
+	Translations$session$failure$en._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+
+	/// en: 'Couldn't restore your session. You can start again.'
+	String get restore => 'Couldn\'t restore your session. You can start again.';
+
+	/// en: 'Couldn't start a session.'
+	String get start => 'Couldn\'t start a session.';
+
+	/// en: 'Couldn't save this piece. Your changes are still here.'
+	String get log => 'Couldn\'t save this piece. Your changes are still here.';
+
+	/// en: 'Couldn't finish the session. You can try again.'
+	String get finish => 'Couldn\'t finish the session. You can try again.';
+
+	/// en: 'Couldn't discard the session. You can try again.'
+	String get discard => 'Couldn\'t discard the session. You can try again.';
+}
+
 /// The flat map containing all translations for locale <en>.
 /// Only for edge cases! For simple maps, use the map function of this library.
 ///
@@ -447,8 +665,9 @@ extension on Translations {
 			'login.success' => 'Logged in successfully',
 			'login.fail' => 'Logged in failed',
 			'nav.home' => 'Home',
+			'nav.dashboard' => 'Dashboard',
 			'nav.plan' => 'Plan',
-			'nav.session' => 'Session',
+			'nav.logs' => 'Logs',
 			'nav.progress' => 'Progress',
 			'home.title' => 'Home page',
 			'home.quickStart.title' => 'Ready to play',
@@ -495,16 +714,64 @@ extension on Translations {
 			'plan.failure.save' => 'Couldn\'t save the piece. Your changes are still here.',
 			'plan.failure.delete' => 'Couldn\'t delete the piece.',
 			'plan.failure.retry' => 'Try again',
-			'session.title' => 'Session page',
+			'session.live' => 'LIVE',
+			'session.inProgress' => 'Session in progress',
+			'session.piecesCompleted' => ({required num n, required Object count}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: '${count} piece completed', other: '${count} pieces completed', ), 
+			'session.piecePosition' => ({required Object current, required Object total}) => 'PIECE ${current} OF ${total}',
+			'session.moodLabel' => 'HOW DID IT FEEL?',
+			'session.noteLabel' => 'OBSERVATION & NOTES',
+			'session.noteHint' => 'What did you notice?',
+			'session.durationLabel' => 'DURATION',
+			'session.tempoLabel' => 'TEMPO',
+			'session.minutesUnit' => 'min',
+			'session.mood.tough' => 'Tough',
+			'session.mood.okay' => 'Okay',
+			'session.mood.calm' => 'Calm',
+			'session.mood.inspired' => 'Inspired',
+			'session.mood.proud' => 'Proud',
+			'session.validation.durationOutOfRange' => ({required Object min, required Object max}) => 'Use a duration from ${min} to ${max} minutes',
+			'session.validation.noteTooLong' => ({required Object max}) => 'Keep the note to ${max} characters or fewer',
+			'session.validation.tempoOutOfRange' => ({required Object min, required Object max}) => 'Use a tempo from ${min} to ${max} BPM',
+			'session.logAndContinue' => 'Log Piece & Continue',
+			'session.skip' => 'Skip',
+			'session.queueDone' => 'All pieces are done. Finish whenever you\'re ready.',
+			'session.freePractice' => 'No pieces to log. Enjoy some free practice, or add pieces to your plan next time.',
+			'session.finishSession' => 'Finish Session',
+			'session.close' => 'Close session',
+			'session.leave.title' => 'Leave this session?',
+			'session.leave.body' => 'You can finish it, discard it, or keep practicing.',
+			'session.leave.discard' => 'Discard session',
+			'session.leave.keepPracticing' => 'Keep Practicing',
+			'session.discardDialog.title' => 'Discard this session?',
+			'session.discardDialog.body' => 'The session and its piece logs will be deleted.',
+			'session.discardDialog.confirm' => 'Discard',
+			'session.discardDialog.cancel' => 'Cancel',
+			'session.failure.restore' => 'Couldn\'t restore your session. You can start again.',
+			'session.failure.start' => 'Couldn\'t start a session.',
+			'session.failure.log' => 'Couldn\'t save this piece. Your changes are still here.',
+			'session.failure.finish' => 'Couldn\'t finish the session. You can try again.',
+			'session.failure.discard' => 'Couldn\'t discard the session. You can try again.',
 			'progress.title' => 'Progress page',
 			'practiceStreak.title' => 'Practice streak',
 			'practiceStreak.subtitle' => 'This is your opportunity to improve',
-			'practiceStreak.days' => ({required Object count}) => '${count} days',
+			'practiceStreak.days' => ({required num n, required Object count}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: '${count} day', other: '${count} days', ), 
+			'practiceStreak.loadFailure' => 'Couldn\'t load',
 			'dailyGoal.title' => 'Daily goal',
-			'dailyGoal.remaining' => ({required Object goal}) => '/${goal} min',
+			'dailyGoal.remaining' => ({required Object goal}) => '/ ${goal} min',
+			'dailyGoal.editorTitle' => 'Edit daily goal',
+			'dailyGoal.minutesUnit' => 'min',
+			'dailyGoal.save' => 'Save',
+			'dailyGoal.saveFailure' => 'Couldn\'t save your goal.',
+			'logs.title' => 'Logs',
+			'logs.empty' => 'Finished sessions will appear here.',
+			'logs.pieceCount' => ({required num n, required Object count}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n, one: '${count} piece', other: '${count} pieces', ), 
+			'logs.minutes' => 'min',
+			'logs.loadFailure' => 'Couldn\'t load your logs.',
+			'logs.retry' => 'Try again',
 			'metronome.title' => 'Quick metronome',
 			'metronome.bpm' => ({required Object count}) => '${count} bpm',
 			'quickStartCard.startSession' => 'Start Session',
+			'quickStartCard.resumeSession' => 'Resume Session',
 			_ => null,
 		};
 	}

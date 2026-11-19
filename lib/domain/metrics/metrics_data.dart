@@ -6,7 +6,6 @@ part 'metrics_data.freezed.dart';
 abstract class MetricsData with _$MetricsData {
   const factory MetricsData({
     required int id,
-    required int streakDays,
-    required double dailyGoalInMinutes,
+    required int dailyGoalInMinutes,
   }) = _MetricsData;
 }

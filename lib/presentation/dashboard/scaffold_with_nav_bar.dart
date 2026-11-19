@@ -18,18 +18,18 @@ class ScaffoldWithNavBar extends StatelessWidget {
         destinations: [
           NavigationDestination(
             icon: const Icon(Icons.home),
-            label: t.nav.home,
+            label: t.nav.dashboard,
           ),
           NavigationDestination(
             icon: const Icon(Icons.calendar_month),
             label: t.nav.plan,
           ),
           NavigationDestination(
-            icon: const Icon(Icons.note_alt),
-            label: t.nav.session,
+            icon: const Icon(Icons.description),
+            label: t.nav.logs,
           ),
           NavigationDestination(
-            icon: const Icon(Icons.auto_graph),
+            icon: const Icon(Icons.show_chart),
             label: t.nav.progress,
           ),
         ],

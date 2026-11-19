@@ -1,7 +1,8 @@
 import 'package:ensayo/domain/metrics/metrics_data.dart';
 
 abstract class IMetricsFacade {
-  Future<MetricsData?> getMetrics();
-  Future<MetricsData> createMetric(); //first time event
-  Future<MetricsData> increaseStreak({required int id, required int newStreak});
+  /// Gets the oldest metrics row, creating the default row when none exists.
+  Future<MetricsData> getMetrics();
+
+  Future<MetricsData> updateDailyGoal({required int id, required int minutes});
 }

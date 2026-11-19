@@ -12,9 +12,9 @@ part of 'metrics_cubit.dart';
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
-mixin _$MetricsState implements DiagnosticableTreeMixin {
+mixin _$MetricsState {
 
- MetricsData get data; bool get isLoading;
+ int? get metricsId; int get goalMinutes; int get streakDays; int get todayMinutes; MetricsLoadStatus get loadStatus; GoalSaveStatus get goalSaveStatus;
 /// Create a copy of MetricsState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -22,25 +22,19 @@ mixin _$MetricsState implements DiagnosticableTreeMixin {
 $MetricsStateCopyWith<MetricsState> get copyWith => _$MetricsStateCopyWithImpl<MetricsState>(this as MetricsState, _$identity);
 
 
-@override
-void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
-    ..add(DiagnosticsProperty('type', 'MetricsState'))
-    ..add(DiagnosticsProperty('data', data))..add(DiagnosticsProperty('isLoading', isLoading));
-}
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is MetricsState&&(identical(other.data, data) || other.data == data)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MetricsState&&(identical(other.metricsId, metricsId) || other.metricsId == metricsId)&&(identical(other.goalMinutes, goalMinutes) || other.goalMinutes == goalMinutes)&&(identical(other.streakDays, streakDays) || other.streakDays == streakDays)&&(identical(other.todayMinutes, todayMinutes) || other.todayMinutes == todayMinutes)&&(identical(other.loadStatus, loadStatus) || other.loadStatus == loadStatus)&&(identical(other.goalSaveStatus, goalSaveStatus) || other.goalSaveStatus == goalSaveStatus));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,data,isLoading);
+int get hashCode => Object.hash(runtimeType,metricsId,goalMinutes,streakDays,todayMinutes,loadStatus,goalSaveStatus);
 
 @override
-String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'MetricsState(data: $data, isLoading: $isLoading)';
+String toString() {
+  return 'MetricsState(metricsId: $metricsId, goalMinutes: $goalMinutes, streakDays: $streakDays, todayMinutes: $todayMinutes, loadStatus: $loadStatus, goalSaveStatus: $goalSaveStatus)';
 }
 
 
@@ -51,11 +45,11 @@ abstract mixin class $MetricsStateCopyWith<$Res>  {
   factory $MetricsStateCopyWith(MetricsState value, $Res Function(MetricsState) _then) = _$MetricsStateCopyWithImpl;
 @useResult
 $Res call({
- MetricsData data, bool isLoading
+ int? metricsId, int goalMinutes, int streakDays, int todayMinutes, MetricsLoadStatus loadStatus, GoalSaveStatus goalSaveStatus
 });
 
 
-$MetricsDataCopyWith<$Res> get data;
+
 
 }
 /// @nodoc
@@ -68,23 +62,18 @@ class _$MetricsStateCopyWithImpl<$Res>
 
 /// Create a copy of MetricsState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? data = null,Object? isLoading = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? metricsId = freezed,Object? goalMinutes = null,Object? streakDays = null,Object? todayMinutes = null,Object? loadStatus = null,Object? goalSaveStatus = null,}) {
   return _then(_self.copyWith(
-data: null == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
-as MetricsData,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
-as bool,
+metricsId: freezed == metricsId ? _self.metricsId : metricsId // ignore: cast_nullable_to_non_nullable
+as int?,goalMinutes: null == goalMinutes ? _self.goalMinutes : goalMinutes // ignore: cast_nullable_to_non_nullable
+as int,streakDays: null == streakDays ? _self.streakDays : streakDays // ignore: cast_nullable_to_non_nullable
+as int,todayMinutes: null == todayMinutes ? _self.todayMinutes : todayMinutes // ignore: cast_nullable_to_non_nullable
+as int,loadStatus: null == loadStatus ? _self.loadStatus : loadStatus // ignore: cast_nullable_to_non_nullable
+as MetricsLoadStatus,goalSaveStatus: null == goalSaveStatus ? _self.goalSaveStatus : goalSaveStatus // ignore: cast_nullable_to_non_nullable
+as GoalSaveStatus,
   ));
 }
-/// Create a copy of MetricsState
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$MetricsDataCopyWith<$Res> get data {
-  
-  return $MetricsDataCopyWith<$Res>(_self.data, (value) {
-    return _then(_self.copyWith(data: value));
-  });
-}
+
 }
 
 
@@ -166,10 +155,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( MetricsData data,  bool isLoading)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int? metricsId,  int goalMinutes,  int streakDays,  int todayMinutes,  MetricsLoadStatus loadStatus,  GoalSaveStatus goalSaveStatus)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _MetricsState() when $default != null:
-return $default(_that.data,_that.isLoading);case _:
+return $default(_that.metricsId,_that.goalMinutes,_that.streakDays,_that.todayMinutes,_that.loadStatus,_that.goalSaveStatus);case _:
   return orElse();
 
 }
@@ -187,10 +176,10 @@ return $default(_that.data,_that.isLoading);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( MetricsData data,  bool isLoading)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int? metricsId,  int goalMinutes,  int streakDays,  int todayMinutes,  MetricsLoadStatus loadStatus,  GoalSaveStatus goalSaveStatus)  $default,) {final _that = this;
 switch (_that) {
 case _MetricsState():
-return $default(_that.data,_that.isLoading);case _:
+return $default(_that.metricsId,_that.goalMinutes,_that.streakDays,_that.todayMinutes,_that.loadStatus,_that.goalSaveStatus);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -207,10 +196,10 @@ return $default(_that.data,_that.isLoading);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( MetricsData data,  bool isLoading)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int? metricsId,  int goalMinutes,  int streakDays,  int todayMinutes,  MetricsLoadStatus loadStatus,  GoalSaveStatus goalSaveStatus)?  $default,) {final _that = this;
 switch (_that) {
 case _MetricsState() when $default != null:
-return $default(_that.data,_that.isLoading);case _:
+return $default(_that.metricsId,_that.goalMinutes,_that.streakDays,_that.todayMinutes,_that.loadStatus,_that.goalSaveStatus);case _:
   return null;
 
 }
@@ -221,12 +210,16 @@ return $default(_that.data,_that.isLoading);case _:
 /// @nodoc
 
 
-class _MetricsState with DiagnosticableTreeMixin implements MetricsState {
-  const _MetricsState({required this.data, this.isLoading = false});
+class _MetricsState implements MetricsState {
+  const _MetricsState({this.metricsId, this.goalMinutes = defaultGoal, this.streakDays = 0, this.todayMinutes = 0, this.loadStatus = MetricsLoadStatus.loading, this.goalSaveStatus = GoalSaveStatus.idle});
   
 
-@override final  MetricsData data;
-@override@JsonKey() final  bool isLoading;
+@override final  int? metricsId;
+@override@JsonKey() final  int goalMinutes;
+@override@JsonKey() final  int streakDays;
+@override@JsonKey() final  int todayMinutes;
+@override@JsonKey() final  MetricsLoadStatus loadStatus;
+@override@JsonKey() final  GoalSaveStatus goalSaveStatus;
 
 /// Create a copy of MetricsState
 /// with the given fields replaced by the non-null parameter values.
@@ -235,25 +228,19 @@ class _MetricsState with DiagnosticableTreeMixin implements MetricsState {
 _$MetricsStateCopyWith<_MetricsState> get copyWith => __$MetricsStateCopyWithImpl<_MetricsState>(this, _$identity);
 
 
-@override
-void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
-    ..add(DiagnosticsProperty('type', 'MetricsState'))
-    ..add(DiagnosticsProperty('data', data))..add(DiagnosticsProperty('isLoading', isLoading));
-}
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MetricsState&&(identical(other.data, data) || other.data == data)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MetricsState&&(identical(other.metricsId, metricsId) || other.metricsId == metricsId)&&(identical(other.goalMinutes, goalMinutes) || other.goalMinutes == goalMinutes)&&(identical(other.streakDays, streakDays) || other.streakDays == streakDays)&&(identical(other.todayMinutes, todayMinutes) || other.todayMinutes == todayMinutes)&&(identical(other.loadStatus, loadStatus) || other.loadStatus == loadStatus)&&(identical(other.goalSaveStatus, goalSaveStatus) || other.goalSaveStatus == goalSaveStatus));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,data,isLoading);
+int get hashCode => Object.hash(runtimeType,metricsId,goalMinutes,streakDays,todayMinutes,loadStatus,goalSaveStatus);
 
 @override
-String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'MetricsState(data: $data, isLoading: $isLoading)';
+String toString() {
+  return 'MetricsState(metricsId: $metricsId, goalMinutes: $goalMinutes, streakDays: $streakDays, todayMinutes: $todayMinutes, loadStatus: $loadStatus, goalSaveStatus: $goalSaveStatus)';
 }
 
 
@@ -264,11 +251,11 @@ abstract mixin class _$MetricsStateCopyWith<$Res> implements $MetricsStateCopyWi
   factory _$MetricsStateCopyWith(_MetricsState value, $Res Function(_MetricsState) _then) = __$MetricsStateCopyWithImpl;
 @override @useResult
 $Res call({
- MetricsData data, bool isLoading
+ int? metricsId, int goalMinutes, int streakDays, int todayMinutes, MetricsLoadStatus loadStatus, GoalSaveStatus goalSaveStatus
 });
 
 
-@override $MetricsDataCopyWith<$Res> get data;
+
 
 }
 /// @nodoc
@@ -281,24 +268,19 @@ class __$MetricsStateCopyWithImpl<$Res>
 
 /// Create a copy of MetricsState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? data = null,Object? isLoading = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? metricsId = freezed,Object? goalMinutes = null,Object? streakDays = null,Object? todayMinutes = null,Object? loadStatus = null,Object? goalSaveStatus = null,}) {
   return _then(_MetricsState(
-data: null == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
-as MetricsData,isLoading: null == isLoading ? _self.isLoading : isLoading // ignore: cast_nullable_to_non_nullable
-as bool,
+metricsId: freezed == metricsId ? _self.metricsId : metricsId // ignore: cast_nullable_to_non_nullable
+as int?,goalMinutes: null == goalMinutes ? _self.goalMinutes : goalMinutes // ignore: cast_nullable_to_non_nullable
+as int,streakDays: null == streakDays ? _self.streakDays : streakDays // ignore: cast_nullable_to_non_nullable
+as int,todayMinutes: null == todayMinutes ? _self.todayMinutes : todayMinutes // ignore: cast_nullable_to_non_nullable
+as int,loadStatus: null == loadStatus ? _self.loadStatus : loadStatus // ignore: cast_nullable_to_non_nullable
+as MetricsLoadStatus,goalSaveStatus: null == goalSaveStatus ? _self.goalSaveStatus : goalSaveStatus // ignore: cast_nullable_to_non_nullable
+as GoalSaveStatus,
   ));
 }
 
-/// Create a copy of MetricsState
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$MetricsDataCopyWith<$Res> get data {
-  
-  return $MetricsDataCopyWith<$Res>(_self.data, (value) {
-    return _then(_self.copyWith(data: value));
-  });
-}
+
 }
 
 // dart format on

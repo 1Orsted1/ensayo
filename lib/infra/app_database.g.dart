@@ -21,30 +21,18 @@ class $MetricsTable extends Metrics with TableInfo<$MetricsTable, MetricsData> {
       'PRIMARY KEY AUTOINCREMENT',
     ),
   );
-  static const VerificationMeta _streakDaysMeta = const VerificationMeta(
-    'streakDays',
-  );
+  static const VerificationMeta _dailyGoalInMinutesMeta =
+      const VerificationMeta('dailyGoalInMinutes');
   @override
-  late final GeneratedColumn<int> streakDays = GeneratedColumn<int>(
-    'streak_days',
+  late final GeneratedColumn<int> dailyGoalInMinutes = GeneratedColumn<int>(
+    'daily_goal_in_minutes',
     aliasedName,
     false,
     type: DriftSqlType.int,
     requiredDuringInsert: true,
   );
-  static const VerificationMeta _dailyGoalInMinutesMeta =
-      const VerificationMeta('dailyGoalInMinutes');
   @override
-  late final GeneratedColumn<double> dailyGoalInMinutes =
-      GeneratedColumn<double>(
-        'daily_goal_in_minutes',
-        aliasedName,
-        false,
-        type: DriftSqlType.double,
-        requiredDuringInsert: true,
-      );
-  @override
-  List<GeneratedColumn> get $columns => [id, streakDays, dailyGoalInMinutes];
+  List<GeneratedColumn> get $columns => [id, dailyGoalInMinutes];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -59,14 +47,6 @@ class $MetricsTable extends Metrics with TableInfo<$MetricsTable, MetricsData> {
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('streak_days')) {
-      context.handle(
-        _streakDaysMeta,
-        streakDays.isAcceptableOrUnknown(data['streak_days']!, _streakDaysMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_streakDaysMeta);
     }
     if (data.containsKey('daily_goal_in_minutes')) {
       context.handle(
@@ -92,12 +72,8 @@ class $MetricsTable extends Metrics with TableInfo<$MetricsTable, MetricsData> {
         DriftSqlType.int,
         data['${effectivePrefix}id'],
       )!,
-      streakDays: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}streak_days'],
-      )!,
       dailyGoalInMinutes: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
+        DriftSqlType.int,
         data['${effectivePrefix}daily_goal_in_minutes'],
       )!,
     );
@@ -111,40 +87,29 @@ class $MetricsTable extends Metrics with TableInfo<$MetricsTable, MetricsData> {
 
 class MetricsCompanion extends UpdateCompanion<MetricsData> {
   final Value<int> id;
-  final Value<int> streakDays;
-  final Value<double> dailyGoalInMinutes;
+  final Value<int> dailyGoalInMinutes;
   const MetricsCompanion({
     this.id = const Value.absent(),
-    this.streakDays = const Value.absent(),
     this.dailyGoalInMinutes = const Value.absent(),
   });
   MetricsCompanion.insert({
     this.id = const Value.absent(),
-    required int streakDays,
-    required double dailyGoalInMinutes,
-  }) : streakDays = Value(streakDays),
-       dailyGoalInMinutes = Value(dailyGoalInMinutes);
+    required int dailyGoalInMinutes,
+  }) : dailyGoalInMinutes = Value(dailyGoalInMinutes);
   static Insertable<MetricsData> custom({
     Expression<int>? id,
-    Expression<int>? streakDays,
-    Expression<double>? dailyGoalInMinutes,
+    Expression<int>? dailyGoalInMinutes,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
-      if (streakDays != null) 'streak_days': streakDays,
       if (dailyGoalInMinutes != null)
         'daily_goal_in_minutes': dailyGoalInMinutes,
     });
   }
 
-  MetricsCompanion copyWith({
-    Value<int>? id,
-    Value<int>? streakDays,
-    Value<double>? dailyGoalInMinutes,
-  }) {
+  MetricsCompanion copyWith({Value<int>? id, Value<int>? dailyGoalInMinutes}) {
     return MetricsCompanion(
       id: id ?? this.id,
-      streakDays: streakDays ?? this.streakDays,
       dailyGoalInMinutes: dailyGoalInMinutes ?? this.dailyGoalInMinutes,
     );
   }
@@ -155,11 +120,8 @@ class MetricsCompanion extends UpdateCompanion<MetricsData> {
     if (id.present) {
       map['id'] = Variable<int>(id.value);
     }
-    if (streakDays.present) {
-      map['streak_days'] = Variable<int>(streakDays.value);
-    }
     if (dailyGoalInMinutes.present) {
-      map['daily_goal_in_minutes'] = Variable<double>(dailyGoalInMinutes.value);
+      map['daily_goal_in_minutes'] = Variable<int>(dailyGoalInMinutes.value);
     }
     return map;
   }
@@ -168,8 +130,1012 @@ class MetricsCompanion extends UpdateCompanion<MetricsData> {
   String toString() {
     return (StringBuffer('MetricsCompanion(')
           ..write('id: $id, ')
-          ..write('streakDays: $streakDays, ')
           ..write('dailyGoalInMinutes: $dailyGoalInMinutes')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $PracticeSessionsTable extends PracticeSessions
+    with TableInfo<$PracticeSessionsTable, PracticeSession> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $PracticeSessionsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _startedAtMeta = const VerificationMeta(
+    'startedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> startedAt = GeneratedColumn<DateTime>(
+    'started_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _endedAtMeta = const VerificationMeta(
+    'endedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> endedAt = GeneratedColumn<DateTime>(
+    'ended_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, startedAt, endedAt];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'practice_sessions';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<PracticeSession> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('started_at')) {
+      context.handle(
+        _startedAtMeta,
+        startedAt.isAcceptableOrUnknown(data['started_at']!, _startedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_startedAtMeta);
+    }
+    if (data.containsKey('ended_at')) {
+      context.handle(
+        _endedAtMeta,
+        endedAt.isAcceptableOrUnknown(data['ended_at']!, _endedAtMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  PracticeSession map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return PracticeSession(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      startedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}started_at'],
+      )!,
+      endedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}ended_at'],
+      ),
+    );
+  }
+
+  @override
+  $PracticeSessionsTable createAlias(String alias) {
+    return $PracticeSessionsTable(attachedDatabase, alias);
+  }
+}
+
+class PracticeSession extends DataClass implements Insertable<PracticeSession> {
+  final int id;
+  final DateTime startedAt;
+  final DateTime? endedAt;
+  const PracticeSession({
+    required this.id,
+    required this.startedAt,
+    this.endedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['started_at'] = Variable<DateTime>(startedAt);
+    if (!nullToAbsent || endedAt != null) {
+      map['ended_at'] = Variable<DateTime>(endedAt);
+    }
+    return map;
+  }
+
+  PracticeSessionsCompanion toCompanion(bool nullToAbsent) {
+    return PracticeSessionsCompanion(
+      id: Value(id),
+      startedAt: Value(startedAt),
+      endedAt: endedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(endedAt),
+    );
+  }
+
+  factory PracticeSession.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return PracticeSession(
+      id: serializer.fromJson<int>(json['id']),
+      startedAt: serializer.fromJson<DateTime>(json['startedAt']),
+      endedAt: serializer.fromJson<DateTime?>(json['endedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'startedAt': serializer.toJson<DateTime>(startedAt),
+      'endedAt': serializer.toJson<DateTime?>(endedAt),
+    };
+  }
+
+  PracticeSession copyWith({
+    int? id,
+    DateTime? startedAt,
+    Value<DateTime?> endedAt = const Value.absent(),
+  }) => PracticeSession(
+    id: id ?? this.id,
+    startedAt: startedAt ?? this.startedAt,
+    endedAt: endedAt.present ? endedAt.value : this.endedAt,
+  );
+  PracticeSession copyWithCompanion(PracticeSessionsCompanion data) {
+    return PracticeSession(
+      id: data.id.present ? data.id.value : this.id,
+      startedAt: data.startedAt.present ? data.startedAt.value : this.startedAt,
+      endedAt: data.endedAt.present ? data.endedAt.value : this.endedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PracticeSession(')
+          ..write('id: $id, ')
+          ..write('startedAt: $startedAt, ')
+          ..write('endedAt: $endedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, startedAt, endedAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is PracticeSession &&
+          other.id == this.id &&
+          other.startedAt == this.startedAt &&
+          other.endedAt == this.endedAt);
+}
+
+class PracticeSessionsCompanion extends UpdateCompanion<PracticeSession> {
+  final Value<int> id;
+  final Value<DateTime> startedAt;
+  final Value<DateTime?> endedAt;
+  const PracticeSessionsCompanion({
+    this.id = const Value.absent(),
+    this.startedAt = const Value.absent(),
+    this.endedAt = const Value.absent(),
+  });
+  PracticeSessionsCompanion.insert({
+    this.id = const Value.absent(),
+    required DateTime startedAt,
+    this.endedAt = const Value.absent(),
+  }) : startedAt = Value(startedAt);
+  static Insertable<PracticeSession> custom({
+    Expression<int>? id,
+    Expression<DateTime>? startedAt,
+    Expression<DateTime>? endedAt,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (startedAt != null) 'started_at': startedAt,
+      if (endedAt != null) 'ended_at': endedAt,
+    });
+  }
+
+  PracticeSessionsCompanion copyWith({
+    Value<int>? id,
+    Value<DateTime>? startedAt,
+    Value<DateTime?>? endedAt,
+  }) {
+    return PracticeSessionsCompanion(
+      id: id ?? this.id,
+      startedAt: startedAt ?? this.startedAt,
+      endedAt: endedAt ?? this.endedAt,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (startedAt.present) {
+      map['started_at'] = Variable<DateTime>(startedAt.value);
+    }
+    if (endedAt.present) {
+      map['ended_at'] = Variable<DateTime>(endedAt.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PracticeSessionsCompanion(')
+          ..write('id: $id, ')
+          ..write('startedAt: $startedAt, ')
+          ..write('endedAt: $endedAt')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $PracticeLogsTable extends PracticeLogs
+    with TableInfo<$PracticeLogsTable, PracticeLog> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $PracticeLogsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _sessionIdMeta = const VerificationMeta(
+    'sessionId',
+  );
+  @override
+  late final GeneratedColumn<int> sessionId = GeneratedColumn<int>(
+    'session_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES practice_sessions (id)',
+    ),
+  );
+  static const VerificationMeta _songIdMeta = const VerificationMeta('songId');
+  @override
+  late final GeneratedColumn<int> songId = GeneratedColumn<int>(
+    'song_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _pieceTitleMeta = const VerificationMeta(
+    'pieceTitle',
+  );
+  @override
+  late final GeneratedColumn<String> pieceTitle = GeneratedColumn<String>(
+    'piece_title',
+    aliasedName,
+    false,
+    additionalChecks: GeneratedColumn.checkTextLength(
+      minTextLength: 1,
+      maxTextLength: 160,
+    ),
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _minutesMeta = const VerificationMeta(
+    'minutes',
+  );
+  @override
+  late final GeneratedColumn<int> minutes = GeneratedColumn<int>(
+    'minutes',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  @override
+  late final GeneratedColumnWithTypeConverter<PieceMood?, String> mood =
+      GeneratedColumn<String>(
+        'mood',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+      ).withConverter<PieceMood?>($PracticeLogsTable.$convertermoodn);
+  static const VerificationMeta _tempoBpmMeta = const VerificationMeta(
+    'tempoBpm',
+  );
+  @override
+  late final GeneratedColumn<int> tempoBpm = GeneratedColumn<int>(
+    'tempo_bpm',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _noteMeta = const VerificationMeta('note');
+  @override
+  late final GeneratedColumn<String> note = GeneratedColumn<String>(
+    'note',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _loggedAtMeta = const VerificationMeta(
+    'loggedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> loggedAt = GeneratedColumn<DateTime>(
+    'logged_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    sessionId,
+    songId,
+    pieceTitle,
+    minutes,
+    mood,
+    tempoBpm,
+    note,
+    loggedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'practice_logs';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<PracticeLog> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('session_id')) {
+      context.handle(
+        _sessionIdMeta,
+        sessionId.isAcceptableOrUnknown(data['session_id']!, _sessionIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_sessionIdMeta);
+    }
+    if (data.containsKey('song_id')) {
+      context.handle(
+        _songIdMeta,
+        songId.isAcceptableOrUnknown(data['song_id']!, _songIdMeta),
+      );
+    }
+    if (data.containsKey('piece_title')) {
+      context.handle(
+        _pieceTitleMeta,
+        pieceTitle.isAcceptableOrUnknown(data['piece_title']!, _pieceTitleMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_pieceTitleMeta);
+    }
+    if (data.containsKey('minutes')) {
+      context.handle(
+        _minutesMeta,
+        minutes.isAcceptableOrUnknown(data['minutes']!, _minutesMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_minutesMeta);
+    }
+    if (data.containsKey('tempo_bpm')) {
+      context.handle(
+        _tempoBpmMeta,
+        tempoBpm.isAcceptableOrUnknown(data['tempo_bpm']!, _tempoBpmMeta),
+      );
+    }
+    if (data.containsKey('note')) {
+      context.handle(
+        _noteMeta,
+        note.isAcceptableOrUnknown(data['note']!, _noteMeta),
+      );
+    }
+    if (data.containsKey('logged_at')) {
+      context.handle(
+        _loggedAtMeta,
+        loggedAt.isAcceptableOrUnknown(data['logged_at']!, _loggedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_loggedAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  PracticeLog map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return PracticeLog(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      sessionId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}session_id'],
+      )!,
+      songId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}song_id'],
+      ),
+      pieceTitle: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}piece_title'],
+      )!,
+      minutes: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}minutes'],
+      )!,
+      mood: $PracticeLogsTable.$convertermoodn.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}mood'],
+        ),
+      ),
+      tempoBpm: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}tempo_bpm'],
+      ),
+      note: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}note'],
+      ),
+      loggedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}logged_at'],
+      )!,
+    );
+  }
+
+  @override
+  $PracticeLogsTable createAlias(String alias) {
+    return $PracticeLogsTable(attachedDatabase, alias);
+  }
+
+  static JsonTypeConverter2<PieceMood, String, String> $convertermood =
+      const EnumNameConverter<PieceMood>(PieceMood.values);
+  static JsonTypeConverter2<PieceMood?, String?, String?> $convertermoodn =
+      JsonTypeConverter2.asNullable($convertermood);
+}
+
+class PracticeLog extends DataClass implements Insertable<PracticeLog> {
+  final int id;
+  final int sessionId;
+  final int? songId;
+  final String pieceTitle;
+  final int minutes;
+  final PieceMood? mood;
+  final int? tempoBpm;
+  final String? note;
+  final DateTime loggedAt;
+  const PracticeLog({
+    required this.id,
+    required this.sessionId,
+    this.songId,
+    required this.pieceTitle,
+    required this.minutes,
+    this.mood,
+    this.tempoBpm,
+    this.note,
+    required this.loggedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['session_id'] = Variable<int>(sessionId);
+    if (!nullToAbsent || songId != null) {
+      map['song_id'] = Variable<int>(songId);
+    }
+    map['piece_title'] = Variable<String>(pieceTitle);
+    map['minutes'] = Variable<int>(minutes);
+    if (!nullToAbsent || mood != null) {
+      map['mood'] = Variable<String>(
+        $PracticeLogsTable.$convertermoodn.toSql(mood),
+      );
+    }
+    if (!nullToAbsent || tempoBpm != null) {
+      map['tempo_bpm'] = Variable<int>(tempoBpm);
+    }
+    if (!nullToAbsent || note != null) {
+      map['note'] = Variable<String>(note);
+    }
+    map['logged_at'] = Variable<DateTime>(loggedAt);
+    return map;
+  }
+
+  PracticeLogsCompanion toCompanion(bool nullToAbsent) {
+    return PracticeLogsCompanion(
+      id: Value(id),
+      sessionId: Value(sessionId),
+      songId: songId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(songId),
+      pieceTitle: Value(pieceTitle),
+      minutes: Value(minutes),
+      mood: mood == null && nullToAbsent ? const Value.absent() : Value(mood),
+      tempoBpm: tempoBpm == null && nullToAbsent
+          ? const Value.absent()
+          : Value(tempoBpm),
+      note: note == null && nullToAbsent ? const Value.absent() : Value(note),
+      loggedAt: Value(loggedAt),
+    );
+  }
+
+  factory PracticeLog.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return PracticeLog(
+      id: serializer.fromJson<int>(json['id']),
+      sessionId: serializer.fromJson<int>(json['sessionId']),
+      songId: serializer.fromJson<int?>(json['songId']),
+      pieceTitle: serializer.fromJson<String>(json['pieceTitle']),
+      minutes: serializer.fromJson<int>(json['minutes']),
+      mood: $PracticeLogsTable.$convertermoodn.fromJson(
+        serializer.fromJson<String?>(json['mood']),
+      ),
+      tempoBpm: serializer.fromJson<int?>(json['tempoBpm']),
+      note: serializer.fromJson<String?>(json['note']),
+      loggedAt: serializer.fromJson<DateTime>(json['loggedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'sessionId': serializer.toJson<int>(sessionId),
+      'songId': serializer.toJson<int?>(songId),
+      'pieceTitle': serializer.toJson<String>(pieceTitle),
+      'minutes': serializer.toJson<int>(minutes),
+      'mood': serializer.toJson<String?>(
+        $PracticeLogsTable.$convertermoodn.toJson(mood),
+      ),
+      'tempoBpm': serializer.toJson<int?>(tempoBpm),
+      'note': serializer.toJson<String?>(note),
+      'loggedAt': serializer.toJson<DateTime>(loggedAt),
+    };
+  }
+
+  PracticeLog copyWith({
+    int? id,
+    int? sessionId,
+    Value<int?> songId = const Value.absent(),
+    String? pieceTitle,
+    int? minutes,
+    Value<PieceMood?> mood = const Value.absent(),
+    Value<int?> tempoBpm = const Value.absent(),
+    Value<String?> note = const Value.absent(),
+    DateTime? loggedAt,
+  }) => PracticeLog(
+    id: id ?? this.id,
+    sessionId: sessionId ?? this.sessionId,
+    songId: songId.present ? songId.value : this.songId,
+    pieceTitle: pieceTitle ?? this.pieceTitle,
+    minutes: minutes ?? this.minutes,
+    mood: mood.present ? mood.value : this.mood,
+    tempoBpm: tempoBpm.present ? tempoBpm.value : this.tempoBpm,
+    note: note.present ? note.value : this.note,
+    loggedAt: loggedAt ?? this.loggedAt,
+  );
+  PracticeLog copyWithCompanion(PracticeLogsCompanion data) {
+    return PracticeLog(
+      id: data.id.present ? data.id.value : this.id,
+      sessionId: data.sessionId.present ? data.sessionId.value : this.sessionId,
+      songId: data.songId.present ? data.songId.value : this.songId,
+      pieceTitle: data.pieceTitle.present
+          ? data.pieceTitle.value
+          : this.pieceTitle,
+      minutes: data.minutes.present ? data.minutes.value : this.minutes,
+      mood: data.mood.present ? data.mood.value : this.mood,
+      tempoBpm: data.tempoBpm.present ? data.tempoBpm.value : this.tempoBpm,
+      note: data.note.present ? data.note.value : this.note,
+      loggedAt: data.loggedAt.present ? data.loggedAt.value : this.loggedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PracticeLog(')
+          ..write('id: $id, ')
+          ..write('sessionId: $sessionId, ')
+          ..write('songId: $songId, ')
+          ..write('pieceTitle: $pieceTitle, ')
+          ..write('minutes: $minutes, ')
+          ..write('mood: $mood, ')
+          ..write('tempoBpm: $tempoBpm, ')
+          ..write('note: $note, ')
+          ..write('loggedAt: $loggedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    sessionId,
+    songId,
+    pieceTitle,
+    minutes,
+    mood,
+    tempoBpm,
+    note,
+    loggedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is PracticeLog &&
+          other.id == this.id &&
+          other.sessionId == this.sessionId &&
+          other.songId == this.songId &&
+          other.pieceTitle == this.pieceTitle &&
+          other.minutes == this.minutes &&
+          other.mood == this.mood &&
+          other.tempoBpm == this.tempoBpm &&
+          other.note == this.note &&
+          other.loggedAt == this.loggedAt);
+}
+
+class PracticeLogsCompanion extends UpdateCompanion<PracticeLog> {
+  final Value<int> id;
+  final Value<int> sessionId;
+  final Value<int?> songId;
+  final Value<String> pieceTitle;
+  final Value<int> minutes;
+  final Value<PieceMood?> mood;
+  final Value<int?> tempoBpm;
+  final Value<String?> note;
+  final Value<DateTime> loggedAt;
+  const PracticeLogsCompanion({
+    this.id = const Value.absent(),
+    this.sessionId = const Value.absent(),
+    this.songId = const Value.absent(),
+    this.pieceTitle = const Value.absent(),
+    this.minutes = const Value.absent(),
+    this.mood = const Value.absent(),
+    this.tempoBpm = const Value.absent(),
+    this.note = const Value.absent(),
+    this.loggedAt = const Value.absent(),
+  });
+  PracticeLogsCompanion.insert({
+    this.id = const Value.absent(),
+    required int sessionId,
+    this.songId = const Value.absent(),
+    required String pieceTitle,
+    required int minutes,
+    this.mood = const Value.absent(),
+    this.tempoBpm = const Value.absent(),
+    this.note = const Value.absent(),
+    required DateTime loggedAt,
+  }) : sessionId = Value(sessionId),
+       pieceTitle = Value(pieceTitle),
+       minutes = Value(minutes),
+       loggedAt = Value(loggedAt);
+  static Insertable<PracticeLog> custom({
+    Expression<int>? id,
+    Expression<int>? sessionId,
+    Expression<int>? songId,
+    Expression<String>? pieceTitle,
+    Expression<int>? minutes,
+    Expression<String>? mood,
+    Expression<int>? tempoBpm,
+    Expression<String>? note,
+    Expression<DateTime>? loggedAt,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (sessionId != null) 'session_id': sessionId,
+      if (songId != null) 'song_id': songId,
+      if (pieceTitle != null) 'piece_title': pieceTitle,
+      if (minutes != null) 'minutes': minutes,
+      if (mood != null) 'mood': mood,
+      if (tempoBpm != null) 'tempo_bpm': tempoBpm,
+      if (note != null) 'note': note,
+      if (loggedAt != null) 'logged_at': loggedAt,
+    });
+  }
+
+  PracticeLogsCompanion copyWith({
+    Value<int>? id,
+    Value<int>? sessionId,
+    Value<int?>? songId,
+    Value<String>? pieceTitle,
+    Value<int>? minutes,
+    Value<PieceMood?>? mood,
+    Value<int?>? tempoBpm,
+    Value<String?>? note,
+    Value<DateTime>? loggedAt,
+  }) {
+    return PracticeLogsCompanion(
+      id: id ?? this.id,
+      sessionId: sessionId ?? this.sessionId,
+      songId: songId ?? this.songId,
+      pieceTitle: pieceTitle ?? this.pieceTitle,
+      minutes: minutes ?? this.minutes,
+      mood: mood ?? this.mood,
+      tempoBpm: tempoBpm ?? this.tempoBpm,
+      note: note ?? this.note,
+      loggedAt: loggedAt ?? this.loggedAt,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (sessionId.present) {
+      map['session_id'] = Variable<int>(sessionId.value);
+    }
+    if (songId.present) {
+      map['song_id'] = Variable<int>(songId.value);
+    }
+    if (pieceTitle.present) {
+      map['piece_title'] = Variable<String>(pieceTitle.value);
+    }
+    if (minutes.present) {
+      map['minutes'] = Variable<int>(minutes.value);
+    }
+    if (mood.present) {
+      map['mood'] = Variable<String>(
+        $PracticeLogsTable.$convertermoodn.toSql(mood.value),
+      );
+    }
+    if (tempoBpm.present) {
+      map['tempo_bpm'] = Variable<int>(tempoBpm.value);
+    }
+    if (note.present) {
+      map['note'] = Variable<String>(note.value);
+    }
+    if (loggedAt.present) {
+      map['logged_at'] = Variable<DateTime>(loggedAt.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PracticeLogsCompanion(')
+          ..write('id: $id, ')
+          ..write('sessionId: $sessionId, ')
+          ..write('songId: $songId, ')
+          ..write('pieceTitle: $pieceTitle, ')
+          ..write('minutes: $minutes, ')
+          ..write('mood: $mood, ')
+          ..write('tempoBpm: $tempoBpm, ')
+          ..write('note: $note, ')
+          ..write('loggedAt: $loggedAt')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $TagsTable extends Tags with TableInfo<$TagsTable, Tag> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $TagsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    additionalChecks: GeneratedColumn.checkTextLength(
+      minTextLength: 1,
+      maxTextLength: 32,
+    ),
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, name];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'tags';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<Tag> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Tag map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Tag(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+    );
+  }
+
+  @override
+  $TagsTable createAlias(String alias) {
+    return $TagsTable(attachedDatabase, alias);
+  }
+}
+
+class Tag extends DataClass implements Insertable<Tag> {
+  final int id;
+  final String name;
+  const Tag({required this.id, required this.name});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['name'] = Variable<String>(name);
+    return map;
+  }
+
+  TagsCompanion toCompanion(bool nullToAbsent) {
+    return TagsCompanion(id: Value(id), name: Value(name));
+  }
+
+  factory Tag.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Tag(
+      id: serializer.fromJson<int>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'name': serializer.toJson<String>(name),
+    };
+  }
+
+  Tag copyWith({int? id, String? name}) =>
+      Tag(id: id ?? this.id, name: name ?? this.name);
+  Tag copyWithCompanion(TagsCompanion data) {
+    return Tag(
+      id: data.id.present ? data.id.value : this.id,
+      name: data.name.present ? data.name.value : this.name,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('Tag(')
+          ..write('id: $id, ')
+          ..write('name: $name')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, name);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Tag && other.id == this.id && other.name == this.name);
+}
+
+class TagsCompanion extends UpdateCompanion<Tag> {
+  final Value<int> id;
+  final Value<String> name;
+  const TagsCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+  });
+  TagsCompanion.insert({this.id = const Value.absent(), required String name})
+    : name = Value(name);
+  static Insertable<Tag> custom({
+    Expression<int>? id,
+    Expression<String>? name,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+    });
+  }
+
+  TagsCompanion copyWith({Value<int>? id, Value<String>? name}) {
+    return TagsCompanion(id: id ?? this.id, name: name ?? this.name);
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TagsCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name')
           ..write(')'))
         .toString();
   }
@@ -358,607 +1324,6 @@ class FeelingsCompanion extends UpdateCompanion<Feeling> {
   @override
   String toString() {
     return (StringBuffer('FeelingsCompanion(')
-          ..write('id: $id, ')
-          ..write('name: $name')
-          ..write(')'))
-        .toString();
-  }
-}
-
-class $PracticeLogsTable extends PracticeLogs
-    with TableInfo<$PracticeLogsTable, PracticeLog> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $PracticeLogsTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-    'id',
-    aliasedName,
-    false,
-    hasAutoIncrement: true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'PRIMARY KEY AUTOINCREMENT',
-    ),
-  );
-  static const VerificationMeta _createdAtMeta = const VerificationMeta(
-    'createdAt',
-  );
-  @override
-  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
-    'created_at',
-    aliasedName,
-    true,
-    type: DriftSqlType.dateTime,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _titleMeta = const VerificationMeta('title');
-  @override
-  late final GeneratedColumn<String> title = GeneratedColumn<String>(
-    'title',
-    aliasedName,
-    false,
-    additionalChecks: GeneratedColumn.checkTextLength(
-      minTextLength: 0,
-      maxTextLength: 32,
-    ),
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _noteMeta = const VerificationMeta('note');
-  @override
-  late final GeneratedColumn<String> note = GeneratedColumn<String>(
-    'note',
-    aliasedName,
-    false,
-    additionalChecks: GeneratedColumn.checkTextLength(
-      minTextLength: 0,
-      maxTextLength: 120,
-    ),
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _minutesPracticedMeta = const VerificationMeta(
-    'minutesPracticed',
-  );
-  @override
-  late final GeneratedColumn<double> minutesPracticed = GeneratedColumn<double>(
-    'minutes_practiced',
-    aliasedName,
-    false,
-    type: DriftSqlType.double,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _feelingIdMeta = const VerificationMeta(
-    'feelingId',
-  );
-  @override
-  late final GeneratedColumn<int> feelingId = GeneratedColumn<int>(
-    'feeling_id',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-    requiredDuringInsert: true,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES feelings (id) ON DELETE CASCADE',
-    ),
-  );
-  @override
-  List<GeneratedColumn> get $columns => [
-    id,
-    createdAt,
-    title,
-    note,
-    minutesPracticed,
-    feelingId,
-  ];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'practice_logs';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<PracticeLog> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('created_at')) {
-      context.handle(
-        _createdAtMeta,
-        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
-      );
-    }
-    if (data.containsKey('title')) {
-      context.handle(
-        _titleMeta,
-        title.isAcceptableOrUnknown(data['title']!, _titleMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_titleMeta);
-    }
-    if (data.containsKey('note')) {
-      context.handle(
-        _noteMeta,
-        note.isAcceptableOrUnknown(data['note']!, _noteMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_noteMeta);
-    }
-    if (data.containsKey('minutes_practiced')) {
-      context.handle(
-        _minutesPracticedMeta,
-        minutesPracticed.isAcceptableOrUnknown(
-          data['minutes_practiced']!,
-          _minutesPracticedMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_minutesPracticedMeta);
-    }
-    if (data.containsKey('feeling_id')) {
-      context.handle(
-        _feelingIdMeta,
-        feelingId.isAcceptableOrUnknown(data['feeling_id']!, _feelingIdMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_feelingIdMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  PracticeLog map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return PracticeLog(
-      id: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}id'],
-      )!,
-      createdAt: attachedDatabase.typeMapping.read(
-        DriftSqlType.dateTime,
-        data['${effectivePrefix}created_at'],
-      ),
-      title: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}title'],
-      )!,
-      note: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}note'],
-      )!,
-      minutesPracticed: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
-        data['${effectivePrefix}minutes_practiced'],
-      )!,
-      feelingId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}feeling_id'],
-      )!,
-    );
-  }
-
-  @override
-  $PracticeLogsTable createAlias(String alias) {
-    return $PracticeLogsTable(attachedDatabase, alias);
-  }
-}
-
-class PracticeLog extends DataClass implements Insertable<PracticeLog> {
-  final int id;
-  final DateTime? createdAt;
-  final String title;
-  final String note;
-  final double minutesPracticed;
-  final int feelingId;
-  const PracticeLog({
-    required this.id,
-    this.createdAt,
-    required this.title,
-    required this.note,
-    required this.minutesPracticed,
-    required this.feelingId,
-  });
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
-    if (!nullToAbsent || createdAt != null) {
-      map['created_at'] = Variable<DateTime>(createdAt);
-    }
-    map['title'] = Variable<String>(title);
-    map['note'] = Variable<String>(note);
-    map['minutes_practiced'] = Variable<double>(minutesPracticed);
-    map['feeling_id'] = Variable<int>(feelingId);
-    return map;
-  }
-
-  PracticeLogsCompanion toCompanion(bool nullToAbsent) {
-    return PracticeLogsCompanion(
-      id: Value(id),
-      createdAt: createdAt == null && nullToAbsent
-          ? const Value.absent()
-          : Value(createdAt),
-      title: Value(title),
-      note: Value(note),
-      minutesPracticed: Value(minutesPracticed),
-      feelingId: Value(feelingId),
-    );
-  }
-
-  factory PracticeLog.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return PracticeLog(
-      id: serializer.fromJson<int>(json['id']),
-      createdAt: serializer.fromJson<DateTime?>(json['createdAt']),
-      title: serializer.fromJson<String>(json['title']),
-      note: serializer.fromJson<String>(json['note']),
-      minutesPracticed: serializer.fromJson<double>(json['minutesPracticed']),
-      feelingId: serializer.fromJson<int>(json['feelingId']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'createdAt': serializer.toJson<DateTime?>(createdAt),
-      'title': serializer.toJson<String>(title),
-      'note': serializer.toJson<String>(note),
-      'minutesPracticed': serializer.toJson<double>(minutesPracticed),
-      'feelingId': serializer.toJson<int>(feelingId),
-    };
-  }
-
-  PracticeLog copyWith({
-    int? id,
-    Value<DateTime?> createdAt = const Value.absent(),
-    String? title,
-    String? note,
-    double? minutesPracticed,
-    int? feelingId,
-  }) => PracticeLog(
-    id: id ?? this.id,
-    createdAt: createdAt.present ? createdAt.value : this.createdAt,
-    title: title ?? this.title,
-    note: note ?? this.note,
-    minutesPracticed: minutesPracticed ?? this.minutesPracticed,
-    feelingId: feelingId ?? this.feelingId,
-  );
-  PracticeLog copyWithCompanion(PracticeLogsCompanion data) {
-    return PracticeLog(
-      id: data.id.present ? data.id.value : this.id,
-      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
-      title: data.title.present ? data.title.value : this.title,
-      note: data.note.present ? data.note.value : this.note,
-      minutesPracticed: data.minutesPracticed.present
-          ? data.minutesPracticed.value
-          : this.minutesPracticed,
-      feelingId: data.feelingId.present ? data.feelingId.value : this.feelingId,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('PracticeLog(')
-          ..write('id: $id, ')
-          ..write('createdAt: $createdAt, ')
-          ..write('title: $title, ')
-          ..write('note: $note, ')
-          ..write('minutesPracticed: $minutesPracticed, ')
-          ..write('feelingId: $feelingId')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode =>
-      Object.hash(id, createdAt, title, note, minutesPracticed, feelingId);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is PracticeLog &&
-          other.id == this.id &&
-          other.createdAt == this.createdAt &&
-          other.title == this.title &&
-          other.note == this.note &&
-          other.minutesPracticed == this.minutesPracticed &&
-          other.feelingId == this.feelingId);
-}
-
-class PracticeLogsCompanion extends UpdateCompanion<PracticeLog> {
-  final Value<int> id;
-  final Value<DateTime?> createdAt;
-  final Value<String> title;
-  final Value<String> note;
-  final Value<double> minutesPracticed;
-  final Value<int> feelingId;
-  const PracticeLogsCompanion({
-    this.id = const Value.absent(),
-    this.createdAt = const Value.absent(),
-    this.title = const Value.absent(),
-    this.note = const Value.absent(),
-    this.minutesPracticed = const Value.absent(),
-    this.feelingId = const Value.absent(),
-  });
-  PracticeLogsCompanion.insert({
-    this.id = const Value.absent(),
-    this.createdAt = const Value.absent(),
-    required String title,
-    required String note,
-    required double minutesPracticed,
-    required int feelingId,
-  }) : title = Value(title),
-       note = Value(note),
-       minutesPracticed = Value(minutesPracticed),
-       feelingId = Value(feelingId);
-  static Insertable<PracticeLog> custom({
-    Expression<int>? id,
-    Expression<DateTime>? createdAt,
-    Expression<String>? title,
-    Expression<String>? note,
-    Expression<double>? minutesPracticed,
-    Expression<int>? feelingId,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (createdAt != null) 'created_at': createdAt,
-      if (title != null) 'title': title,
-      if (note != null) 'note': note,
-      if (minutesPracticed != null) 'minutes_practiced': minutesPracticed,
-      if (feelingId != null) 'feeling_id': feelingId,
-    });
-  }
-
-  PracticeLogsCompanion copyWith({
-    Value<int>? id,
-    Value<DateTime?>? createdAt,
-    Value<String>? title,
-    Value<String>? note,
-    Value<double>? minutesPracticed,
-    Value<int>? feelingId,
-  }) {
-    return PracticeLogsCompanion(
-      id: id ?? this.id,
-      createdAt: createdAt ?? this.createdAt,
-      title: title ?? this.title,
-      note: note ?? this.note,
-      minutesPracticed: minutesPracticed ?? this.minutesPracticed,
-      feelingId: feelingId ?? this.feelingId,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
-    }
-    if (createdAt.present) {
-      map['created_at'] = Variable<DateTime>(createdAt.value);
-    }
-    if (title.present) {
-      map['title'] = Variable<String>(title.value);
-    }
-    if (note.present) {
-      map['note'] = Variable<String>(note.value);
-    }
-    if (minutesPracticed.present) {
-      map['minutes_practiced'] = Variable<double>(minutesPracticed.value);
-    }
-    if (feelingId.present) {
-      map['feeling_id'] = Variable<int>(feelingId.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('PracticeLogsCompanion(')
-          ..write('id: $id, ')
-          ..write('createdAt: $createdAt, ')
-          ..write('title: $title, ')
-          ..write('note: $note, ')
-          ..write('minutesPracticed: $minutesPracticed, ')
-          ..write('feelingId: $feelingId')
-          ..write(')'))
-        .toString();
-  }
-}
-
-class $TagsTable extends Tags with TableInfo<$TagsTable, Tag> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $TagsTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-    'id',
-    aliasedName,
-    false,
-    hasAutoIncrement: true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'PRIMARY KEY AUTOINCREMENT',
-    ),
-  );
-  static const VerificationMeta _nameMeta = const VerificationMeta('name');
-  @override
-  late final GeneratedColumn<String> name = GeneratedColumn<String>(
-    'name',
-    aliasedName,
-    false,
-    additionalChecks: GeneratedColumn.checkTextLength(
-      minTextLength: 1,
-      maxTextLength: 32,
-    ),
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  @override
-  List<GeneratedColumn> get $columns => [id, name];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'tags';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<Tag> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('name')) {
-      context.handle(
-        _nameMeta,
-        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_nameMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  Tag map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return Tag(
-      id: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}id'],
-      )!,
-      name: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}name'],
-      )!,
-    );
-  }
-
-  @override
-  $TagsTable createAlias(String alias) {
-    return $TagsTable(attachedDatabase, alias);
-  }
-}
-
-class Tag extends DataClass implements Insertable<Tag> {
-  final int id;
-  final String name;
-  const Tag({required this.id, required this.name});
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
-    map['name'] = Variable<String>(name);
-    return map;
-  }
-
-  TagsCompanion toCompanion(bool nullToAbsent) {
-    return TagsCompanion(id: Value(id), name: Value(name));
-  }
-
-  factory Tag.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return Tag(
-      id: serializer.fromJson<int>(json['id']),
-      name: serializer.fromJson<String>(json['name']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'name': serializer.toJson<String>(name),
-    };
-  }
-
-  Tag copyWith({int? id, String? name}) =>
-      Tag(id: id ?? this.id, name: name ?? this.name);
-  Tag copyWithCompanion(TagsCompanion data) {
-    return Tag(
-      id: data.id.present ? data.id.value : this.id,
-      name: data.name.present ? data.name.value : this.name,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('Tag(')
-          ..write('id: $id, ')
-          ..write('name: $name')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(id, name);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is Tag && other.id == this.id && other.name == this.name);
-}
-
-class TagsCompanion extends UpdateCompanion<Tag> {
-  final Value<int> id;
-  final Value<String> name;
-  const TagsCompanion({
-    this.id = const Value.absent(),
-    this.name = const Value.absent(),
-  });
-  TagsCompanion.insert({this.id = const Value.absent(), required String name})
-    : name = Value(name);
-  static Insertable<Tag> custom({
-    Expression<int>? id,
-    Expression<String>? name,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (name != null) 'name': name,
-    });
-  }
-
-  TagsCompanion copyWith({Value<int>? id, Value<String>? name}) {
-    return TagsCompanion(id: id ?? this.id, name: name ?? this.name);
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
-    }
-    if (name.present) {
-      map['name'] = Variable<String>(name.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('TagsCompanion(')
           ..write('id: $id, ')
           ..write('name: $name')
           ..write(')'))
@@ -1578,9 +1943,12 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
   late final $MetricsTable metrics = $MetricsTable(this);
-  late final $FeelingsTable feelings = $FeelingsTable(this);
+  late final $PracticeSessionsTable practiceSessions = $PracticeSessionsTable(
+    this,
+  );
   late final $PracticeLogsTable practiceLogs = $PracticeLogsTable(this);
   late final $TagsTable tags = $TagsTable(this);
+  late final $FeelingsTable feelings = $FeelingsTable(this);
   late final $SongsTable songs = $SongsTable(this);
   late final $TagsAssignedTable tagsAssigned = $TagsAssignedTable(this);
   @override
@@ -1589,21 +1957,15 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities => [
     metrics,
-    feelings,
+    practiceSessions,
     practiceLogs,
     tags,
+    feelings,
     songs,
     tagsAssigned,
   ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules([
-    WritePropagation(
-      on: TableUpdateQuery.onTableName(
-        'feelings',
-        limitUpdateKind: UpdateKind.delete,
-      ),
-      result: [TableUpdate('practice_logs', kind: UpdateKind.delete)],
-    ),
     WritePropagation(
       on: TableUpdateQuery.onTableName(
         'tags',
@@ -1622,17 +1984,9 @@ abstract class _$AppDatabase extends GeneratedDatabase {
 }
 
 typedef $$MetricsTableCreateCompanionBuilder =
-    MetricsCompanion Function({
-      Value<int> id,
-      required int streakDays,
-      required double dailyGoalInMinutes,
-    });
+    MetricsCompanion Function({Value<int> id, required int dailyGoalInMinutes});
 typedef $$MetricsTableUpdateCompanionBuilder =
-    MetricsCompanion Function({
-      Value<int> id,
-      Value<int> streakDays,
-      Value<double> dailyGoalInMinutes,
-    });
+    MetricsCompanion Function({Value<int> id, Value<int> dailyGoalInMinutes});
 
 class $$MetricsTableFilterComposer
     extends Composer<_$AppDatabase, $MetricsTable> {
@@ -1648,12 +2002,7 @@ class $$MetricsTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get streakDays => $composableBuilder(
-    column: $table.streakDays,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<double> get dailyGoalInMinutes => $composableBuilder(
+  ColumnFilters<int> get dailyGoalInMinutes => $composableBuilder(
     column: $table.dailyGoalInMinutes,
     builder: (column) => ColumnFilters(column),
   );
@@ -1673,12 +2022,7 @@ class $$MetricsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get streakDays => $composableBuilder(
-    column: $table.streakDays,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<double> get dailyGoalInMinutes => $composableBuilder(
+  ColumnOrderings<int> get dailyGoalInMinutes => $composableBuilder(
     column: $table.dailyGoalInMinutes,
     builder: (column) => ColumnOrderings(column),
   );
@@ -1696,12 +2040,7 @@ class $$MetricsTableAnnotationComposer
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
-  GeneratedColumn<int> get streakDays => $composableBuilder(
-    column: $table.streakDays,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<double> get dailyGoalInMinutes => $composableBuilder(
+  GeneratedColumn<int> get dailyGoalInMinutes => $composableBuilder(
     column: $table.dailyGoalInMinutes,
     builder: (column) => column,
   );
@@ -1739,21 +2078,17 @@ class $$MetricsTableTableManager
           updateCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
-                Value<int> streakDays = const Value.absent(),
-                Value<double> dailyGoalInMinutes = const Value.absent(),
+                Value<int> dailyGoalInMinutes = const Value.absent(),
               }) => MetricsCompanion(
                 id: id,
-                streakDays: streakDays,
                 dailyGoalInMinutes: dailyGoalInMinutes,
               ),
           createCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
-                required int streakDays,
-                required double dailyGoalInMinutes,
+                required int dailyGoalInMinutes,
               }) => MetricsCompanion.insert(
                 id: id,
-                streakDays: streakDays,
                 dailyGoalInMinutes: dailyGoalInMinutes,
               ),
           withReferenceMapper: (p0) => p0
@@ -1778,26 +2113,42 @@ typedef $$MetricsTableProcessedTableManager =
       MetricsData,
       PrefetchHooks Function()
     >;
-typedef $$FeelingsTableCreateCompanionBuilder =
-    FeelingsCompanion Function({Value<int> id, required String name});
-typedef $$FeelingsTableUpdateCompanionBuilder =
-    FeelingsCompanion Function({Value<int> id, Value<String> name});
+typedef $$PracticeSessionsTableCreateCompanionBuilder =
+    PracticeSessionsCompanion Function({
+      Value<int> id,
+      required DateTime startedAt,
+      Value<DateTime?> endedAt,
+    });
+typedef $$PracticeSessionsTableUpdateCompanionBuilder =
+    PracticeSessionsCompanion Function({
+      Value<int> id,
+      Value<DateTime> startedAt,
+      Value<DateTime?> endedAt,
+    });
 
-final class $$FeelingsTableReferences
-    extends BaseReferences<_$AppDatabase, $FeelingsTable, Feeling> {
-  $$FeelingsTableReferences(super.$_db, super.$_table, super.$_typedResult);
+final class $$PracticeSessionsTableReferences
+    extends
+        BaseReferences<_$AppDatabase, $PracticeSessionsTable, PracticeSession> {
+  $$PracticeSessionsTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
 
   static MultiTypedResultKey<$PracticeLogsTable, List<PracticeLog>>
   _practiceLogsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
     db.practiceLogs,
-    aliasName: $_aliasNameGenerator(db.feelings.id, db.practiceLogs.feelingId),
+    aliasName: $_aliasNameGenerator(
+      db.practiceSessions.id,
+      db.practiceLogs.sessionId,
+    ),
   );
 
   $$PracticeLogsTableProcessedTableManager get practiceLogsRefs {
     final manager = $$PracticeLogsTableTableManager(
       $_db,
       $_db.practiceLogs,
-    ).filter((f) => f.feelingId.id.sqlEquals($_itemColumn<int>('id')!));
+    ).filter((f) => f.sessionId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult.readTableOrNull(_practiceLogsRefsTable($_db));
     return ProcessedTableManager(
@@ -1806,9 +2157,9 @@ final class $$FeelingsTableReferences
   }
 }
 
-class $$FeelingsTableFilterComposer
-    extends Composer<_$AppDatabase, $FeelingsTable> {
-  $$FeelingsTableFilterComposer({
+class $$PracticeSessionsTableFilterComposer
+    extends Composer<_$AppDatabase, $PracticeSessionsTable> {
+  $$PracticeSessionsTableFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -1820,8 +2171,13 @@ class $$FeelingsTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get name => $composableBuilder(
-    column: $table.name,
+  ColumnFilters<DateTime> get startedAt => $composableBuilder(
+    column: $table.startedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get endedAt => $composableBuilder(
+    column: $table.endedAt,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -1832,7 +2188,7 @@ class $$FeelingsTableFilterComposer
       composer: this,
       getCurrentColumn: (t) => t.id,
       referencedTable: $db.practiceLogs,
-      getReferencedColumn: (t) => t.feelingId,
+      getReferencedColumn: (t) => t.sessionId,
       builder:
           (
             joinBuilder, {
@@ -1851,9 +2207,9 @@ class $$FeelingsTableFilterComposer
   }
 }
 
-class $$FeelingsTableOrderingComposer
-    extends Composer<_$AppDatabase, $FeelingsTable> {
-  $$FeelingsTableOrderingComposer({
+class $$PracticeSessionsTableOrderingComposer
+    extends Composer<_$AppDatabase, $PracticeSessionsTable> {
+  $$PracticeSessionsTableOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -1865,15 +2221,20 @@ class $$FeelingsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get name => $composableBuilder(
-    column: $table.name,
+  ColumnOrderings<DateTime> get startedAt => $composableBuilder(
+    column: $table.startedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get endedAt => $composableBuilder(
+    column: $table.endedAt,
     builder: (column) => ColumnOrderings(column),
   );
 }
 
-class $$FeelingsTableAnnotationComposer
-    extends Composer<_$AppDatabase, $FeelingsTable> {
-  $$FeelingsTableAnnotationComposer({
+class $$PracticeSessionsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $PracticeSessionsTable> {
+  $$PracticeSessionsTableAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -1883,8 +2244,11 @@ class $$FeelingsTableAnnotationComposer
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
-  GeneratedColumn<String> get name =>
-      $composableBuilder(column: $table.name, builder: (column) => column);
+  GeneratedColumn<DateTime> get startedAt =>
+      $composableBuilder(column: $table.startedAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get endedAt =>
+      $composableBuilder(column: $table.endedAt, builder: (column) => column);
 
   Expression<T> practiceLogsRefs<T extends Object>(
     Expression<T> Function($$PracticeLogsTableAnnotationComposer a) f,
@@ -1893,7 +2257,7 @@ class $$FeelingsTableAnnotationComposer
       composer: this,
       getCurrentColumn: (t) => t.id,
       referencedTable: $db.practiceLogs,
-      getReferencedColumn: (t) => t.feelingId,
+      getReferencedColumn: (t) => t.sessionId,
       builder:
           (
             joinBuilder, {
@@ -1912,45 +2276,59 @@ class $$FeelingsTableAnnotationComposer
   }
 }
 
-class $$FeelingsTableTableManager
+class $$PracticeSessionsTableTableManager
     extends
         RootTableManager<
           _$AppDatabase,
-          $FeelingsTable,
-          Feeling,
-          $$FeelingsTableFilterComposer,
-          $$FeelingsTableOrderingComposer,
-          $$FeelingsTableAnnotationComposer,
-          $$FeelingsTableCreateCompanionBuilder,
-          $$FeelingsTableUpdateCompanionBuilder,
-          (Feeling, $$FeelingsTableReferences),
-          Feeling,
+          $PracticeSessionsTable,
+          PracticeSession,
+          $$PracticeSessionsTableFilterComposer,
+          $$PracticeSessionsTableOrderingComposer,
+          $$PracticeSessionsTableAnnotationComposer,
+          $$PracticeSessionsTableCreateCompanionBuilder,
+          $$PracticeSessionsTableUpdateCompanionBuilder,
+          (PracticeSession, $$PracticeSessionsTableReferences),
+          PracticeSession,
           PrefetchHooks Function({bool practiceLogsRefs})
         > {
-  $$FeelingsTableTableManager(_$AppDatabase db, $FeelingsTable table)
-    : super(
+  $$PracticeSessionsTableTableManager(
+    _$AppDatabase db,
+    $PracticeSessionsTable table,
+  ) : super(
         TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              $$FeelingsTableFilterComposer($db: db, $table: table),
+              $$PracticeSessionsTableFilterComposer($db: db, $table: table),
           createOrderingComposer: () =>
-              $$FeelingsTableOrderingComposer($db: db, $table: table),
+              $$PracticeSessionsTableOrderingComposer($db: db, $table: table),
           createComputedFieldComposer: () =>
-              $$FeelingsTableAnnotationComposer($db: db, $table: table),
+              $$PracticeSessionsTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
-                Value<String> name = const Value.absent(),
-              }) => FeelingsCompanion(id: id, name: name),
+                Value<DateTime> startedAt = const Value.absent(),
+                Value<DateTime?> endedAt = const Value.absent(),
+              }) => PracticeSessionsCompanion(
+                id: id,
+                startedAt: startedAt,
+                endedAt: endedAt,
+              ),
           createCompanionCallback:
-              ({Value<int> id = const Value.absent(), required String name}) =>
-                  FeelingsCompanion.insert(id: id, name: name),
+              ({
+                Value<int> id = const Value.absent(),
+                required DateTime startedAt,
+                Value<DateTime?> endedAt = const Value.absent(),
+              }) => PracticeSessionsCompanion.insert(
+                id: id,
+                startedAt: startedAt,
+                endedAt: endedAt,
+              ),
           withReferenceMapper: (p0) => p0
               .map(
                 (e) => (
                   e.readTable(table),
-                  $$FeelingsTableReferences(db, table, e),
+                  $$PracticeSessionsTableReferences(db, table, e),
                 ),
               )
               .toList(),
@@ -1963,20 +2341,21 @@ class $$FeelingsTableTableManager
                 return [
                   if (practiceLogsRefs)
                     await $_getPrefetchedData<
-                      Feeling,
-                      $FeelingsTable,
+                      PracticeSession,
+                      $PracticeSessionsTable,
                       PracticeLog
                     >(
                       currentTable: table,
-                      referencedTable: $$FeelingsTableReferences
+                      referencedTable: $$PracticeSessionsTableReferences
                           ._practiceLogsRefsTable(db),
-                      managerFromTypedResult: (p0) => $$FeelingsTableReferences(
-                        db,
-                        table,
-                        p0,
-                      ).practiceLogsRefs,
+                      managerFromTypedResult: (p0) =>
+                          $$PracticeSessionsTableReferences(
+                            db,
+                            table,
+                            p0,
+                          ).practiceLogsRefs,
                       referencedItemsForCurrentItem: (item, referencedItems) =>
-                          referencedItems.where((e) => e.feelingId == item.id),
+                          referencedItems.where((e) => e.sessionId == item.id),
                       typedResults: items,
                     ),
                 ];
@@ -1987,56 +2366,62 @@ class $$FeelingsTableTableManager
       );
 }
 
-typedef $$FeelingsTableProcessedTableManager =
+typedef $$PracticeSessionsTableProcessedTableManager =
     ProcessedTableManager<
       _$AppDatabase,
-      $FeelingsTable,
-      Feeling,
-      $$FeelingsTableFilterComposer,
-      $$FeelingsTableOrderingComposer,
-      $$FeelingsTableAnnotationComposer,
-      $$FeelingsTableCreateCompanionBuilder,
-      $$FeelingsTableUpdateCompanionBuilder,
-      (Feeling, $$FeelingsTableReferences),
-      Feeling,
+      $PracticeSessionsTable,
+      PracticeSession,
+      $$PracticeSessionsTableFilterComposer,
+      $$PracticeSessionsTableOrderingComposer,
+      $$PracticeSessionsTableAnnotationComposer,
+      $$PracticeSessionsTableCreateCompanionBuilder,
+      $$PracticeSessionsTableUpdateCompanionBuilder,
+      (PracticeSession, $$PracticeSessionsTableReferences),
+      PracticeSession,
       PrefetchHooks Function({bool practiceLogsRefs})
     >;
 typedef $$PracticeLogsTableCreateCompanionBuilder =
     PracticeLogsCompanion Function({
       Value<int> id,
-      Value<DateTime?> createdAt,
-      required String title,
-      required String note,
-      required double minutesPracticed,
-      required int feelingId,
+      required int sessionId,
+      Value<int?> songId,
+      required String pieceTitle,
+      required int minutes,
+      Value<PieceMood?> mood,
+      Value<int?> tempoBpm,
+      Value<String?> note,
+      required DateTime loggedAt,
     });
 typedef $$PracticeLogsTableUpdateCompanionBuilder =
     PracticeLogsCompanion Function({
       Value<int> id,
-      Value<DateTime?> createdAt,
-      Value<String> title,
-      Value<String> note,
-      Value<double> minutesPracticed,
-      Value<int> feelingId,
+      Value<int> sessionId,
+      Value<int?> songId,
+      Value<String> pieceTitle,
+      Value<int> minutes,
+      Value<PieceMood?> mood,
+      Value<int?> tempoBpm,
+      Value<String?> note,
+      Value<DateTime> loggedAt,
     });
 
 final class $$PracticeLogsTableReferences
     extends BaseReferences<_$AppDatabase, $PracticeLogsTable, PracticeLog> {
   $$PracticeLogsTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
-  static $FeelingsTable _feelingIdTable(_$AppDatabase db) =>
-      db.feelings.createAlias(
-        $_aliasNameGenerator(db.practiceLogs.feelingId, db.feelings.id),
+  static $PracticeSessionsTable _sessionIdTable(_$AppDatabase db) =>
+      db.practiceSessions.createAlias(
+        $_aliasNameGenerator(db.practiceLogs.sessionId, db.practiceSessions.id),
       );
 
-  $$FeelingsTableProcessedTableManager get feelingId {
-    final $_column = $_itemColumn<int>('feeling_id')!;
+  $$PracticeSessionsTableProcessedTableManager get sessionId {
+    final $_column = $_itemColumn<int>('session_id')!;
 
-    final manager = $$FeelingsTableTableManager(
+    final manager = $$PracticeSessionsTableTableManager(
       $_db,
-      $_db.feelings,
+      $_db.practiceSessions,
     ).filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_feelingIdTable($_db));
+    final item = $_typedResult.readTableOrNull(_sessionIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: [item]),
@@ -2058,13 +2443,29 @@ class $$PracticeLogsTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<DateTime> get createdAt => $composableBuilder(
-    column: $table.createdAt,
+  ColumnFilters<int> get songId => $composableBuilder(
+    column: $table.songId,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get title => $composableBuilder(
-    column: $table.title,
+  ColumnFilters<String> get pieceTitle => $composableBuilder(
+    column: $table.pieceTitle,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get minutes => $composableBuilder(
+    column: $table.minutes,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnWithTypeConverterFilters<PieceMood?, PieceMood, String> get mood =>
+      $composableBuilder(
+        column: $table.mood,
+        builder: (column) => ColumnWithTypeConverterFilters(column),
+      );
+
+  ColumnFilters<int> get tempoBpm => $composableBuilder(
+    column: $table.tempoBpm,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -2073,25 +2474,25 @@ class $$PracticeLogsTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<double> get minutesPracticed => $composableBuilder(
-    column: $table.minutesPracticed,
+  ColumnFilters<DateTime> get loggedAt => $composableBuilder(
+    column: $table.loggedAt,
     builder: (column) => ColumnFilters(column),
   );
 
-  $$FeelingsTableFilterComposer get feelingId {
-    final $$FeelingsTableFilterComposer composer = $composerBuilder(
+  $$PracticeSessionsTableFilterComposer get sessionId {
+    final $$PracticeSessionsTableFilterComposer composer = $composerBuilder(
       composer: this,
-      getCurrentColumn: (t) => t.feelingId,
-      referencedTable: $db.feelings,
+      getCurrentColumn: (t) => t.sessionId,
+      referencedTable: $db.practiceSessions,
       getReferencedColumn: (t) => t.id,
       builder:
           (
             joinBuilder, {
             $addJoinBuilderToRootComposer,
             $removeJoinBuilderFromRootComposer,
-          }) => $$FeelingsTableFilterComposer(
+          }) => $$PracticeSessionsTableFilterComposer(
             $db: $db,
-            $table: $db.feelings,
+            $table: $db.practiceSessions,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -2116,13 +2517,28 @@ class $$PracticeLogsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
-    column: $table.createdAt,
+  ColumnOrderings<int> get songId => $composableBuilder(
+    column: $table.songId,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get title => $composableBuilder(
-    column: $table.title,
+  ColumnOrderings<String> get pieceTitle => $composableBuilder(
+    column: $table.pieceTitle,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get minutes => $composableBuilder(
+    column: $table.minutes,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get mood => $composableBuilder(
+    column: $table.mood,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get tempoBpm => $composableBuilder(
+    column: $table.tempoBpm,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -2131,25 +2547,25 @@ class $$PracticeLogsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<double> get minutesPracticed => $composableBuilder(
-    column: $table.minutesPracticed,
+  ColumnOrderings<DateTime> get loggedAt => $composableBuilder(
+    column: $table.loggedAt,
     builder: (column) => ColumnOrderings(column),
   );
 
-  $$FeelingsTableOrderingComposer get feelingId {
-    final $$FeelingsTableOrderingComposer composer = $composerBuilder(
+  $$PracticeSessionsTableOrderingComposer get sessionId {
+    final $$PracticeSessionsTableOrderingComposer composer = $composerBuilder(
       composer: this,
-      getCurrentColumn: (t) => t.feelingId,
-      referencedTable: $db.feelings,
+      getCurrentColumn: (t) => t.sessionId,
+      referencedTable: $db.practiceSessions,
       getReferencedColumn: (t) => t.id,
       builder:
           (
             joinBuilder, {
             $addJoinBuilderToRootComposer,
             $removeJoinBuilderFromRootComposer,
-          }) => $$FeelingsTableOrderingComposer(
+          }) => $$PracticeSessionsTableOrderingComposer(
             $db: $db,
-            $table: $db.feelings,
+            $table: $db.practiceSessions,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -2172,34 +2588,43 @@ class $$PracticeLogsTableAnnotationComposer
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
-  GeneratedColumn<DateTime> get createdAt =>
-      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+  GeneratedColumn<int> get songId =>
+      $composableBuilder(column: $table.songId, builder: (column) => column);
 
-  GeneratedColumn<String> get title =>
-      $composableBuilder(column: $table.title, builder: (column) => column);
+  GeneratedColumn<String> get pieceTitle => $composableBuilder(
+    column: $table.pieceTitle,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get minutes =>
+      $composableBuilder(column: $table.minutes, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<PieceMood?, String> get mood =>
+      $composableBuilder(column: $table.mood, builder: (column) => column);
+
+  GeneratedColumn<int> get tempoBpm =>
+      $composableBuilder(column: $table.tempoBpm, builder: (column) => column);
 
   GeneratedColumn<String> get note =>
       $composableBuilder(column: $table.note, builder: (column) => column);
 
-  GeneratedColumn<double> get minutesPracticed => $composableBuilder(
-    column: $table.minutesPracticed,
-    builder: (column) => column,
-  );
+  GeneratedColumn<DateTime> get loggedAt =>
+      $composableBuilder(column: $table.loggedAt, builder: (column) => column);
 
-  $$FeelingsTableAnnotationComposer get feelingId {
-    final $$FeelingsTableAnnotationComposer composer = $composerBuilder(
+  $$PracticeSessionsTableAnnotationComposer get sessionId {
+    final $$PracticeSessionsTableAnnotationComposer composer = $composerBuilder(
       composer: this,
-      getCurrentColumn: (t) => t.feelingId,
-      referencedTable: $db.feelings,
+      getCurrentColumn: (t) => t.sessionId,
+      referencedTable: $db.practiceSessions,
       getReferencedColumn: (t) => t.id,
       builder:
           (
             joinBuilder, {
             $addJoinBuilderToRootComposer,
             $removeJoinBuilderFromRootComposer,
-          }) => $$FeelingsTableAnnotationComposer(
+          }) => $$PracticeSessionsTableAnnotationComposer(
             $db: $db,
-            $table: $db.feelings,
+            $table: $db.practiceSessions,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -2223,7 +2648,7 @@ class $$PracticeLogsTableTableManager
           $$PracticeLogsTableUpdateCompanionBuilder,
           (PracticeLog, $$PracticeLogsTableReferences),
           PracticeLog,
-          PrefetchHooks Function({bool feelingId})
+          PrefetchHooks Function({bool sessionId})
         > {
   $$PracticeLogsTableTableManager(_$AppDatabase db, $PracticeLogsTable table)
     : super(
@@ -2239,34 +2664,46 @@ class $$PracticeLogsTableTableManager
           updateCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
-                Value<DateTime?> createdAt = const Value.absent(),
-                Value<String> title = const Value.absent(),
-                Value<String> note = const Value.absent(),
-                Value<double> minutesPracticed = const Value.absent(),
-                Value<int> feelingId = const Value.absent(),
+                Value<int> sessionId = const Value.absent(),
+                Value<int?> songId = const Value.absent(),
+                Value<String> pieceTitle = const Value.absent(),
+                Value<int> minutes = const Value.absent(),
+                Value<PieceMood?> mood = const Value.absent(),
+                Value<int?> tempoBpm = const Value.absent(),
+                Value<String?> note = const Value.absent(),
+                Value<DateTime> loggedAt = const Value.absent(),
               }) => PracticeLogsCompanion(
                 id: id,
-                createdAt: createdAt,
-                title: title,
+                sessionId: sessionId,
+                songId: songId,
+                pieceTitle: pieceTitle,
+                minutes: minutes,
+                mood: mood,
+                tempoBpm: tempoBpm,
                 note: note,
-                minutesPracticed: minutesPracticed,
-                feelingId: feelingId,
+                loggedAt: loggedAt,
               ),
           createCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
-                Value<DateTime?> createdAt = const Value.absent(),
-                required String title,
-                required String note,
-                required double minutesPracticed,
-                required int feelingId,
+                required int sessionId,
+                Value<int?> songId = const Value.absent(),
+                required String pieceTitle,
+                required int minutes,
+                Value<PieceMood?> mood = const Value.absent(),
+                Value<int?> tempoBpm = const Value.absent(),
+                Value<String?> note = const Value.absent(),
+                required DateTime loggedAt,
               }) => PracticeLogsCompanion.insert(
                 id: id,
-                createdAt: createdAt,
-                title: title,
+                sessionId: sessionId,
+                songId: songId,
+                pieceTitle: pieceTitle,
+                minutes: minutes,
+                mood: mood,
+                tempoBpm: tempoBpm,
                 note: note,
-                minutesPracticed: minutesPracticed,
-                feelingId: feelingId,
+                loggedAt: loggedAt,
               ),
           withReferenceMapper: (p0) => p0
               .map(
@@ -2276,7 +2713,7 @@ class $$PracticeLogsTableTableManager
                 ),
               )
               .toList(),
-          prefetchHooksCallback: ({feelingId = false}) {
+          prefetchHooksCallback: ({sessionId = false}) {
             return PrefetchHooks(
               db: db,
               explicitlyWatchedTables: [],
@@ -2296,15 +2733,15 @@ class $$PracticeLogsTableTableManager
                       dynamic
                     >
                   >(state) {
-                    if (feelingId) {
+                    if (sessionId) {
                       state =
                           state.withJoin(
                                 currentTable: table,
-                                currentColumn: table.feelingId,
+                                currentColumn: table.sessionId,
                                 referencedTable: $$PracticeLogsTableReferences
-                                    ._feelingIdTable(db),
+                                    ._sessionIdTable(db),
                                 referencedColumn: $$PracticeLogsTableReferences
-                                    ._feelingIdTable(db)
+                                    ._sessionIdTable(db)
                                     .id,
                               )
                               as T;
@@ -2333,7 +2770,7 @@ typedef $$PracticeLogsTableProcessedTableManager =
       $$PracticeLogsTableUpdateCompanionBuilder,
       (PracticeLog, $$PracticeLogsTableReferences),
       PracticeLog,
-      PrefetchHooks Function({bool feelingId})
+      PrefetchHooks Function({bool sessionId})
     >;
 typedef $$TagsTableCreateCompanionBuilder =
     TagsCompanion Function({Value<int> id, required String name});
@@ -2550,6 +2987,123 @@ typedef $$TagsTableProcessedTableManager =
       (Tag, $$TagsTableReferences),
       Tag,
       PrefetchHooks Function({bool tagsAssignedRefs})
+    >;
+typedef $$FeelingsTableCreateCompanionBuilder =
+    FeelingsCompanion Function({Value<int> id, required String name});
+typedef $$FeelingsTableUpdateCompanionBuilder =
+    FeelingsCompanion Function({Value<int> id, Value<String> name});
+
+class $$FeelingsTableFilterComposer
+    extends Composer<_$AppDatabase, $FeelingsTable> {
+  $$FeelingsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$FeelingsTableOrderingComposer
+    extends Composer<_$AppDatabase, $FeelingsTable> {
+  $$FeelingsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$FeelingsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $FeelingsTable> {
+  $$FeelingsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+}
+
+class $$FeelingsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $FeelingsTable,
+          Feeling,
+          $$FeelingsTableFilterComposer,
+          $$FeelingsTableOrderingComposer,
+          $$FeelingsTableAnnotationComposer,
+          $$FeelingsTableCreateCompanionBuilder,
+          $$FeelingsTableUpdateCompanionBuilder,
+          (Feeling, BaseReferences<_$AppDatabase, $FeelingsTable, Feeling>),
+          Feeling,
+          PrefetchHooks Function()
+        > {
+  $$FeelingsTableTableManager(_$AppDatabase db, $FeelingsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$FeelingsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$FeelingsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$FeelingsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<String> name = const Value.absent(),
+              }) => FeelingsCompanion(id: id, name: name),
+          createCompanionCallback:
+              ({Value<int> id = const Value.absent(), required String name}) =>
+                  FeelingsCompanion.insert(id: id, name: name),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$FeelingsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $FeelingsTable,
+      Feeling,
+      $$FeelingsTableFilterComposer,
+      $$FeelingsTableOrderingComposer,
+      $$FeelingsTableAnnotationComposer,
+      $$FeelingsTableCreateCompanionBuilder,
+      $$FeelingsTableUpdateCompanionBuilder,
+      (Feeling, BaseReferences<_$AppDatabase, $FeelingsTable, Feeling>),
+      Feeling,
+      PrefetchHooks Function()
     >;
 typedef $$SongsTableCreateCompanionBuilder =
     SongsCompanion Function({
@@ -3208,11 +3762,13 @@ class $AppDatabaseManager {
   $AppDatabaseManager(this._db);
   $$MetricsTableTableManager get metrics =>
       $$MetricsTableTableManager(_db, _db.metrics);
-  $$FeelingsTableTableManager get feelings =>
-      $$FeelingsTableTableManager(_db, _db.feelings);
+  $$PracticeSessionsTableTableManager get practiceSessions =>
+      $$PracticeSessionsTableTableManager(_db, _db.practiceSessions);
   $$PracticeLogsTableTableManager get practiceLogs =>
       $$PracticeLogsTableTableManager(_db, _db.practiceLogs);
   $$TagsTableTableManager get tags => $$TagsTableTableManager(_db, _db.tags);
+  $$FeelingsTableTableManager get feelings =>
+      $$FeelingsTableTableManager(_db, _db.feelings);
   $$SongsTableTableManager get songs =>
       $$SongsTableTableManager(_db, _db.songs);
   $$TagsAssignedTableTableManager get tagsAssigned =>

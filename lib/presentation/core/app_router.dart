@@ -1,18 +1,23 @@
+import 'package:ensayo/application/session/session_bloc.dart';
+import 'package:ensayo/domain/session/session_status.dart';
 import 'package:ensayo/injection.dart';
-import 'package:ensayo/presentation/dashboard/scaffold_with_nav_bar.dart';
 import 'package:ensayo/presentation/dashboard/home_screen.dart';
-import 'package:ensayo/presentation/plan/plan_screen.dart';
 import 'package:ensayo/presentation/dashboard/progress_screen.dart';
-import 'package:ensayo/presentation/dashboard/session_screen.dart';
+import 'package:ensayo/presentation/dashboard/scaffold_with_nav_bar.dart';
 import 'package:ensayo/presentation/demo_screen.dart';
+import 'package:ensayo/presentation/logs/logs_screen.dart';
 import 'package:ensayo/presentation/plan/piece_form.dart';
+import 'package:ensayo/presentation/plan/plan_screen.dart';
+import 'package:ensayo/presentation/session/active_session_screen.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _homeNavKey = GlobalKey<NavigatorState>();
 final _planNavKey = GlobalKey<NavigatorState>();
-final _sessionNavKey = GlobalKey<NavigatorState>();
+final _logsNavKey = GlobalKey<NavigatorState>();
 final _progressNavKey = GlobalKey<NavigatorState>();
 
 /// Public so the navigation test can mount the real routes.
@@ -31,8 +36,18 @@ final planSubRoutes = <RouteBase>[
 ];
 
 final appRouter = GoRouter(
+  navigatorKey: _rootNavigatorKey,
   initialLocation: '/home',
   routes: [
+    GoRoute(
+      path: '/session',
+      parentNavigatorKey: _rootNavigatorKey,
+      redirect: (context, state) {
+        final status = context.read<SessionBloc>().state.status;
+        return status == SessionStatus.active ? null : '/home';
+      },
+      builder: (context, state) => const ActiveSessionScreen(),
+    ),
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {
         return ScaffoldWithNavBar(navigationShell: navigationShell);
@@ -43,13 +58,11 @@ final appRouter = GoRouter(
           routes: [
             GoRoute(
               path: '/home',
-              builder: (BuildContext context, GoRouterState state) =>
-                  HomeScreen(),
+              builder: (context, state) => const HomeScreen(),
               routes: [
                 GoRoute(
                   path: 'demo',
-                  builder: (BuildContext context, GoRouterState state) =>
-                      DemoScreen(),
+                  builder: (context, state) => const DemoScreen(),
                 ),
               ],
             ),
@@ -60,26 +73,17 @@ final appRouter = GoRouter(
           routes: [
             GoRoute(
               path: '/plan',
-              builder: (BuildContext context, GoRouterState state) =>
-                  PlanScreen(),
+              builder: (context, state) => const PlanScreen(),
               routes: planSubRoutes,
             ),
           ],
         ),
         StatefulShellBranch(
-          navigatorKey: _sessionNavKey,
+          navigatorKey: _logsNavKey,
           routes: [
             GoRoute(
-              path: '/session',
-              builder: (BuildContext context, GoRouterState state) =>
-                  SessionScreen(),
-              routes: [
-                GoRoute(
-                  path: 'demo',
-                  builder: (BuildContext context, GoRouterState state) =>
-                      DemoScreen(),
-                ),
-              ],
+              path: '/logs',
+              builder: (context, state) => const LogsScreen(),
             ),
           ],
         ),
@@ -88,13 +92,11 @@ final appRouter = GoRouter(
           routes: [
             GoRoute(
               path: '/progress',
-              builder: (BuildContext context, GoRouterState state) =>
-                  ProgressScreen(),
+              builder: (context, state) => const ProgressScreen(),
               routes: [
                 GoRoute(
                   path: 'demo',
-                  builder: (BuildContext context, GoRouterState state) =>
-                      DemoScreen(),
+                  builder: (context, state) => const DemoScreen(),
                 ),
               ],
             ),

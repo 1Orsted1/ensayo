@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$MetricsData {
 
- int get id; int get streakDays; double get dailyGoalInMinutes;
+ int get id; int get dailyGoalInMinutes;
 /// Create a copy of MetricsData
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $MetricsDataCopyWith<MetricsData> get copyWith => _$MetricsDataCopyWithImpl<Metr
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is MetricsData&&(identical(other.id, id) || other.id == id)&&(identical(other.streakDays, streakDays) || other.streakDays == streakDays)&&(identical(other.dailyGoalInMinutes, dailyGoalInMinutes) || other.dailyGoalInMinutes == dailyGoalInMinutes));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MetricsData&&(identical(other.id, id) || other.id == id)&&(identical(other.dailyGoalInMinutes, dailyGoalInMinutes) || other.dailyGoalInMinutes == dailyGoalInMinutes));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,streakDays,dailyGoalInMinutes);
+int get hashCode => Object.hash(runtimeType,id,dailyGoalInMinutes);
 
 @override
 String toString() {
-  return 'MetricsData(id: $id, streakDays: $streakDays, dailyGoalInMinutes: $dailyGoalInMinutes)';
+  return 'MetricsData(id: $id, dailyGoalInMinutes: $dailyGoalInMinutes)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $MetricsDataCopyWith<$Res>  {
   factory $MetricsDataCopyWith(MetricsData value, $Res Function(MetricsData) _then) = _$MetricsDataCopyWithImpl;
 @useResult
 $Res call({
- int id, int streakDays, double dailyGoalInMinutes
+ int id, int dailyGoalInMinutes
 });
 
 
@@ -62,12 +62,11 @@ class _$MetricsDataCopyWithImpl<$Res>
 
 /// Create a copy of MetricsData
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? streakDays = null,Object? dailyGoalInMinutes = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? dailyGoalInMinutes = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as int,streakDays: null == streakDays ? _self.streakDays : streakDays // ignore: cast_nullable_to_non_nullable
 as int,dailyGoalInMinutes: null == dailyGoalInMinutes ? _self.dailyGoalInMinutes : dailyGoalInMinutes // ignore: cast_nullable_to_non_nullable
-as double,
+as int,
   ));
 }
 
@@ -152,10 +151,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  int streakDays,  double dailyGoalInMinutes)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  int dailyGoalInMinutes)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _MetricsData() when $default != null:
-return $default(_that.id,_that.streakDays,_that.dailyGoalInMinutes);case _:
+return $default(_that.id,_that.dailyGoalInMinutes);case _:
   return orElse();
 
 }
@@ -173,10 +172,10 @@ return $default(_that.id,_that.streakDays,_that.dailyGoalInMinutes);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  int streakDays,  double dailyGoalInMinutes)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  int dailyGoalInMinutes)  $default,) {final _that = this;
 switch (_that) {
 case _MetricsData():
-return $default(_that.id,_that.streakDays,_that.dailyGoalInMinutes);case _:
+return $default(_that.id,_that.dailyGoalInMinutes);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -193,10 +192,10 @@ return $default(_that.id,_that.streakDays,_that.dailyGoalInMinutes);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  int streakDays,  double dailyGoalInMinutes)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  int dailyGoalInMinutes)?  $default,) {final _that = this;
 switch (_that) {
 case _MetricsData() when $default != null:
-return $default(_that.id,_that.streakDays,_that.dailyGoalInMinutes);case _:
+return $default(_that.id,_that.dailyGoalInMinutes);case _:
   return null;
 
 }
@@ -208,12 +207,11 @@ return $default(_that.id,_that.streakDays,_that.dailyGoalInMinutes);case _:
 
 
 class _MetricsData implements MetricsData {
-  const _MetricsData({required this.id, required this.streakDays, required this.dailyGoalInMinutes});
+  const _MetricsData({required this.id, required this.dailyGoalInMinutes});
   
 
 @override final  int id;
-@override final  int streakDays;
-@override final  double dailyGoalInMinutes;
+@override final  int dailyGoalInMinutes;
 
 /// Create a copy of MetricsData
 /// with the given fields replaced by the non-null parameter values.
@@ -225,16 +223,16 @@ _$MetricsDataCopyWith<_MetricsData> get copyWith => __$MetricsDataCopyWithImpl<_
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MetricsData&&(identical(other.id, id) || other.id == id)&&(identical(other.streakDays, streakDays) || other.streakDays == streakDays)&&(identical(other.dailyGoalInMinutes, dailyGoalInMinutes) || other.dailyGoalInMinutes == dailyGoalInMinutes));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MetricsData&&(identical(other.id, id) || other.id == id)&&(identical(other.dailyGoalInMinutes, dailyGoalInMinutes) || other.dailyGoalInMinutes == dailyGoalInMinutes));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,streakDays,dailyGoalInMinutes);
+int get hashCode => Object.hash(runtimeType,id,dailyGoalInMinutes);
 
 @override
 String toString() {
-  return 'MetricsData(id: $id, streakDays: $streakDays, dailyGoalInMinutes: $dailyGoalInMinutes)';
+  return 'MetricsData(id: $id, dailyGoalInMinutes: $dailyGoalInMinutes)';
 }
 
 
@@ -245,7 +243,7 @@ abstract mixin class _$MetricsDataCopyWith<$Res> implements $MetricsDataCopyWith
   factory _$MetricsDataCopyWith(_MetricsData value, $Res Function(_MetricsData) _then) = __$MetricsDataCopyWithImpl;
 @override @useResult
 $Res call({
- int id, int streakDays, double dailyGoalInMinutes
+ int id, int dailyGoalInMinutes
 });
 
 
@@ -262,12 +260,11 @@ class __$MetricsDataCopyWithImpl<$Res>
 
 /// Create a copy of MetricsData
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? streakDays = null,Object? dailyGoalInMinutes = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? dailyGoalInMinutes = null,}) {
   return _then(_MetricsData(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as int,streakDays: null == streakDays ? _self.streakDays : streakDays // ignore: cast_nullable_to_non_nullable
 as int,dailyGoalInMinutes: null == dailyGoalInMinutes ? _self.dailyGoalInMinutes : dailyGoalInMinutes // ignore: cast_nullable_to_non_nullable
-as double,
+as int,
   ));
 }
 

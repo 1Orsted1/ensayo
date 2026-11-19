@@ -1,4 +1,3 @@
-import 'package:ensayo/i18n/strings.g.dart';
 import 'package:ensayo/presentation/theme/extensions/app_theme_extensions.dart';
 import 'package:flutter/material.dart';
 
@@ -6,18 +5,19 @@ class QuickStartCard extends StatelessWidget {
   const QuickStartCard({
     required this.title,
     required this.subtitle,
+    required this.buttonLabel,
     required this.onStart,
     super.key,
   });
 
   final String title;
   final String subtitle;
+  final String buttonLabel;
   final VoidCallback onStart;
 
   @override
   Widget build(BuildContext context) {
     final style = context.customCardStyle;
-    final t = context.t;
 
     return Material(
       elevation: 2.0,
@@ -39,7 +39,7 @@ class QuickStartCard extends StatelessWidget {
             OutlinedButton(
               onPressed: onStart,
               style: style.buttonStyle,
-              child: Text(t.quickStartCard.startSession),
+              child: Text(buttonLabel),
             ),
           ],
         ),

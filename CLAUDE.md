@@ -71,7 +71,9 @@ Dual-font Material 3 theme with full light/dark coverage. Light theme: `lib/pres
 
 ## Database Schema
 
-Six Drift tables: `Metrics` (streak/goal tracking), `PracticeLogs` (sessions with feelings), `Songs`, `Tags`, `TagsAssigned` (songs↔tags join), and `Feelings`.
+Six Drift tables: `Metrics` (streak/goal tracking), `PracticeLogs` (sessions with feelings), `Songs` (practice-plan pieces: title, composer, status, target BPM), `Tags` (seeded focus tags), `TagsAssigned` (songs↔tags join), and `Feelings`.
+
+Schema version 2. Migrations live in `AppDatabase.migration` as `if (from < N)` steps; never edit a step that has shipped.
 
 ## CI
 

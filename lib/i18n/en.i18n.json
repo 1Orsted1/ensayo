@@ -7,8 +7,9 @@
   },
   "nav": {
     "home": "Home",
+    "dashboard": "Dashboard",
     "plan": "Plan",
-    "session": "Session",
+    "logs": "Logs",
     "progress": "Progress"
   },
   "home": {
@@ -81,7 +82,56 @@
     }
   },
   "session": {
-    "title": "Session page"
+    "live": "LIVE",
+    "inProgress": "Session in progress",
+    "piecesCompleted": {
+      "one": "$count piece completed",
+      "other": "$count pieces completed"
+    },
+    "piecePosition": "PIECE $current OF $total",
+    "moodLabel": "HOW DID IT FEEL?",
+    "noteLabel": "OBSERVATION & NOTES",
+    "noteHint": "What did you notice?",
+    "durationLabel": "DURATION",
+    "tempoLabel": "TEMPO",
+    "minutesUnit": "min",
+    "mood": {
+      "tough": "Tough",
+      "okay": "Okay",
+      "calm": "Calm",
+      "inspired": "Inspired",
+      "proud": "Proud"
+    },
+    "validation": {
+      "durationOutOfRange": "Use a duration from $min to $max minutes",
+      "noteTooLong": "Keep the note to $max characters or fewer",
+      "tempoOutOfRange": "Use a tempo from $min to $max BPM"
+    },
+    "logAndContinue": "Log Piece & Continue",
+    "skip": "Skip",
+    "queueDone": "All pieces are done. Finish whenever you're ready.",
+    "freePractice": "No pieces to log. Enjoy some free practice, or add pieces to your plan next time.",
+    "finishSession": "Finish Session",
+    "close": "Close session",
+    "leave": {
+      "title": "Leave this session?",
+      "body": "You can finish it, discard it, or keep practicing.",
+      "discard": "Discard session",
+      "keepPracticing": "Keep Practicing"
+    },
+    "discardDialog": {
+      "title": "Discard this session?",
+      "body": "The session and its piece logs will be deleted.",
+      "confirm": "Discard",
+      "cancel": "Cancel"
+    },
+    "failure": {
+      "restore": "Couldn't restore your session. You can start again.",
+      "start": "Couldn't start a session.",
+      "log": "Couldn't save this piece. Your changes are still here.",
+      "finish": "Couldn't finish the session. You can try again.",
+      "discard": "Couldn't discard the session. You can try again."
+    }
   },
   "progress": {
     "title": "Progress page"
@@ -89,17 +139,37 @@
   "practiceStreak": {
     "title": "Practice streak",
     "subtitle": "This is your opportunity to improve",
-    "days": "$count days"
+    "days": {
+      "one": "$count day",
+      "other": "$count days"
+    },
+    "loadFailure": "Couldn't load"
   },
   "dailyGoal": {
     "title": "Daily goal",
-    "remaining": "/$goal min"
+    "remaining": "/ $goal min",
+    "editorTitle": "Edit daily goal",
+    "minutesUnit": "min",
+    "save": "Save",
+    "saveFailure": "Couldn't save your goal."
+  },
+  "logs": {
+    "title": "Logs",
+    "empty": "Finished sessions will appear here.",
+    "pieceCount": {
+      "one": "$count piece",
+      "other": "$count pieces"
+    },
+    "minutes": "min",
+    "loadFailure": "Couldn't load your logs.",
+    "retry": "Try again"
   },
   "metronome": {
     "title": "Quick metronome",
     "bpm": "$count bpm"
   },
   "quickStartCard": {
-    "startSession": "Start Session"
+    "startSession": "Start Session",
+    "resumeSession": "Resume Session"
   }
 }

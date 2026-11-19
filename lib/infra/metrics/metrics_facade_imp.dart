@@ -10,20 +10,10 @@ class MetricsFacadeImp implements IMetricsFacade {
   final IMetricsDataSource metricsDataSource;
 
   @override
-  Future<MetricsData?> getMetrics() async {
-    return await metricsDataSource.getMetrics();
-  }
+  Future<MetricsData> getMetrics() => metricsDataSource.getMetrics();
 
   @override
-  Future<MetricsData> increaseStreak({
-    required int id,
-    required int newStreak,
-  }) {
-    return metricsDataSource.increaseStreak(id: id, newStreak: newStreak);
-  }
-
-  @override
-  Future<MetricsData> createMetric() {
-    return metricsDataSource.createMetric();
+  Future<MetricsData> updateDailyGoal({required int id, required int minutes}) {
+    return metricsDataSource.updateDailyGoal(id: id, minutes: minutes);
   }
 }
