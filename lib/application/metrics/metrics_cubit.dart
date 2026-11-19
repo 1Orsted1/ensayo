@@ -14,11 +14,12 @@ part 'metrics_cubit.freezed.dart';
 
 @lazySingleton
 class MetricsCubit extends Cubit<MetricsState> {
-  MetricsCubit(this._metricsFacade, this._sessionFacade)
+  MetricsCubit(this._metricsFacade, this._sessionFacade, this._clock)
     : super(const MetricsState());
 
   final IMetricsFacade _metricsFacade;
   final ISessionFacade _sessionFacade;
+  final Clock _clock;
   var _loadGeneration = 0;
 
   Future<void> load() async {
@@ -29,7 +30,7 @@ class MetricsCubit extends Cubit<MetricsState> {
       final sessions = await _sessionFacade.getFinishedSessions();
       if (generation != _loadGeneration) return;
 
-      final now = clock.now();
+      final now = _clock.now();
       emit(
         state.copyWith(
           metricsId: metrics.id,

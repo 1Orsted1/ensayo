@@ -9,6 +9,7 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:clock/clock.dart' as _i454;
 import 'package:drift/backends.dart' as _i883;
 import 'package:firebase_analytics/firebase_analytics.dart' as _i398;
 import 'package:get_it/get_it.dart' as _i174;
@@ -50,6 +51,7 @@ extension GetItInjectableX on _i174.GetIt {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     final registerModule = _$RegisterModule();
     gh.lazySingleton<_i309.ThemeCubit>(() => _i309.ThemeCubit());
+    gh.lazySingleton<_i454.Clock>(() => registerModule.clock);
     gh.lazySingleton<_i398.FirebaseAnalytics>(
       () => registerModule.getAnalitics(),
     );
@@ -101,12 +103,14 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i600.MetricsCubit(
         gh<_i159.IMetricsFacade>(),
         gh<_i445.ISessionFacade>(),
+        gh<_i454.Clock>(),
       ),
     );
     gh.factory<_i297.SessionBloc>(
       () => _i297.SessionBloc(
         gh<_i445.ISessionFacade>(),
         gh<_i670.IPlanFacade>(),
+        gh<_i454.Clock>(),
       ),
     );
     gh.factory<_i61.LogsBloc>(() => _i61.LogsBloc(gh<_i445.ISessionFacade>()));

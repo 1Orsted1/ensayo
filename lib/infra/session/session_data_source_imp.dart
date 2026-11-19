@@ -55,10 +55,12 @@ class SessionDataSourceImp implements ISessionDataSource {
     final rows =
         await (dataBase.update(
           dataBase.practiceSessions,
-        )..where((t) => t.id.equals(id))).writeReturning(
+        )..where((t) => t.id.equals(id) & t.endedAt.isNull())).writeReturning(
           db.PracticeSessionsCompanion(endedAt: drift.Value(at)),
         );
-    if (rows.isEmpty) throw StateError('Session $id does not exist');
+    if (rows.isEmpty) {
+      throw StateError('Session $id is missing or already finished');
+    }
   }
 
   @override
@@ -76,6 +78,7 @@ class SessionDataSourceImp implements ISessionDataSource {
   @override
   Future<List<SessionSummary>> getFinishedSessions() async {
     final pieceCount = dataBase.practiceLogs.id.count();
+    final loggedMinutes = dataBase.practiceLogs.minutes.sum();
     final query = dataBase.select(dataBase.practiceSessions).join([
       drift.leftOuterJoin(
         dataBase.practiceLogs,
@@ -88,13 +91,14 @@ class SessionDataSourceImp implements ISessionDataSource {
       drift.OrderingTerm.desc(dataBase.practiceSessions.startedAt),
       drift.OrderingTerm.desc(dataBase.practiceSessions.id),
     ]);
-    query.addColumns([pieceCount]);
+    query.addColumns([pieceCount, loggedMinutes]);
 
     return [
       for (final row in await query.get())
         _toSummary(
           row.readTable(dataBase.practiceSessions),
           row.read(pieceCount) ?? 0,
+          row.read(loggedMinutes) ?? 0,
         ),
     ];
   }
@@ -126,13 +130,18 @@ class SessionDataSourceImp implements ISessionDataSource {
     );
   }
 
-  SessionSummary _toSummary(db.PracticeSession row, int pieceCount) {
+  SessionSummary _toSummary(
+    db.PracticeSession row,
+    int pieceCount,
+    int loggedMinutes,
+  ) {
     final endedAt = row.endedAt!;
     return SessionSummary(
       id: row.id,
       startedAt: row.startedAt,
       duration: endedAt.difference(row.startedAt),
       pieceCount: pieceCount,
+      loggedMinutes: loggedMinutes,
     );
   }
 }

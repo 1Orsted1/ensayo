@@ -20,7 +20,7 @@ void main() {
 
   // Design: Session data source behavior test.
   test('starting, logging two pieces and finishing produces the complete '
-      'session summary', () async {
+      'session summary with the summed logged minutes', () async {
     final plan = PlanDataSourceImp(dataBase: db);
     final nocturne = await plan.savePiece(const Piece(title: 'Nocturne'));
     final etude = await plan.savePiece(const Piece(title: 'Etude'));
@@ -67,6 +67,7 @@ void main() {
         startedAt: startedAt,
         duration: const Duration(minutes: 42),
         pieceCount: 2,
+        loggedMinutes: 25,
       ),
     ]);
   });

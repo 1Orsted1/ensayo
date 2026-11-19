@@ -8,12 +8,14 @@ SessionSummary _session({
   required int id,
   required DateTime startedAt,
   required Duration duration,
+  required int loggedMinutes,
 }) {
   return SessionSummary(
     id: id,
     startedAt: startedAt,
     duration: duration,
-    pieceCount: 0,
+    pieceCount: loggedMinutes == 0 ? 0 : 1,
+    loggedMinutes: loggedMinutes,
   );
 }
 
@@ -25,6 +27,7 @@ void main() {
         id: 1,
         startedAt: DateTime(2026, 11, 17, 18),
         duration: const Duration(minutes: 40),
+        loggedMinutes: 40,
       );
 
       withClock(Clock.fixed(now), () {
@@ -37,11 +40,43 @@ void main() {
       final session = _session(
         id: 1,
         startedAt: DateTime(2026, 11, 17, 23, 50),
-        duration: const Duration(minutes: 30),
+        duration: const Duration(minutes: 45),
+        loggedMinutes: 30,
       );
 
       withClock(Clock.fixed(now), () {
         expect(minutesOn(DateTime(2026, 11, 17), [session]), 30);
+        expect(minutesOn(clock.now(), [session]), 0);
+      });
+    });
+
+    test(
+      'a long session with few logged minutes counts only those minutes',
+      () {
+        final now = DateTime(2026, 11, 18, 12);
+        final session = _session(
+          id: 1,
+          startedAt: DateTime(2026, 11, 18, 9),
+          duration: const Duration(minutes: 40),
+          loggedMinutes: 15,
+        );
+
+        withClock(Clock.fixed(now), () {
+          expect(minutesOn(clock.now(), [session]), 15);
+        });
+      },
+    );
+
+    test('a finished session with nothing logged adds no minutes', () {
+      final now = DateTime(2026, 11, 18, 12);
+      final session = _session(
+        id: 1,
+        startedAt: DateTime(2026, 11, 18, 9),
+        duration: const Duration(minutes: 25),
+        loggedMinutes: 0,
+      );
+
+      withClock(Clock.fixed(now), () {
         expect(minutesOn(clock.now(), [session]), 0);
       });
     });

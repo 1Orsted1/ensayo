@@ -42,8 +42,9 @@ void main() {
     });
 
     test('a failed load reports failure and a retry succeeds', () async {
-      when(facade.getFinishedSessions())
-          .thenAnswer((_) async => throw storageError);
+      when(
+        facade.getFinishedSessions(),
+      ).thenAnswer((_) async => throw storageError);
 
       await start();
 
@@ -56,6 +57,7 @@ void main() {
           startedAt: DateTime(2026, 11, 19, 9),
           duration: const Duration(minutes: 25),
           pieceCount: 2,
+          loggedMinutes: 25,
         ),
       ];
       when(facade.getFinishedSessions()).thenAnswer((_) async => sessions);

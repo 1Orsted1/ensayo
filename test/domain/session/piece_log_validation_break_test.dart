@@ -22,11 +22,14 @@ void main() {
       expect(validateNote(fiveHundredOneRunes), isNotNull);
     });
 
-    test('tempo enforces its range while accepting typed integers and blank', () {
-      expect(validateTargetBpm('0'), isNotNull);
-      expect(validateTargetBpm('301'), isNotNull);
-      expect(validateTargetBpm('007'), isNull);
-      expect(validateTargetBpm(''), isNull);
-    });
+    test(
+      'tempo enforces its range while accepting typed integers and blank',
+      () {
+        expect(validateTargetBpm('0'), isNotNull);
+        expect(validateTargetBpm('301'), isNotNull);
+        expect(validateTargetBpm('007'), isNull);
+        expect(validateTargetBpm(''), isNull);
+      },
+    );
   });
 }

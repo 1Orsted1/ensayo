@@ -9,5 +9,8 @@ abstract class SessionSummary with _$SessionSummary {
     required DateTime startedAt,
     required Duration duration,
     required int pieceCount,
+
+    /// Sum of the minutes the user logged per piece; drives the daily goal.
+    required int loggedMinutes,
   }) = _SessionSummary;
 }

@@ -71,10 +71,7 @@ void main() {
       final etude = _piece(3, 'Etude', PieceStatus.polishing);
       final prelude = _piece(4, 'Prelude', PieceStatus.performanceReady);
 
-      final queue = buildQueue(
-        [nocturne, gigue, etude, prelude],
-        const {1},
-      );
+      final queue = buildQueue([nocturne, gigue, etude, prelude], const {1});
 
       expect(queue.map((piece) => piece.id), [3, 4]);
     });

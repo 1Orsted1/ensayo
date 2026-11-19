@@ -18,12 +18,14 @@ void main() {
         startedAt: DateTime(2026, 11, 19, 9),
         duration: const Duration(minutes: 20),
         pieceCount: 2,
+        loggedMinutes: 18,
       ),
       SessionSummary(
         id: 1,
         startedAt: DateTime(2026, 11, 18, 18, 5),
         duration: const Duration(minutes: 42),
         pieceCount: 3,
+        loggedMinutes: 40,
       ),
     ];
     when(facade.getFinishedSessions()).thenAnswer((_) async => sessions);

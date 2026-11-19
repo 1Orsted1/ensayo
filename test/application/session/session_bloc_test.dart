@@ -13,31 +13,28 @@ import 'package:mockito/mockito.dart';
 
 import 'session_bloc_test.mocks.dart';
 
-@GenerateNiceMocks([
-  MockSpec<ISessionFacade>(),
-  MockSpec<IPlanFacade>(),
-])
+@GenerateNiceMocks([MockSpec<ISessionFacade>(), MockSpec<IPlanFacade>()])
 void main() {
-  test('start, log, and finish move through active to idle and finish once',
-      () async {
-    final now = DateTime(2026, 11, 19, 12);
-    final sessionFacade = MockISessionFacade();
-    final planFacade = MockIPlanFacade();
-    final bloc = SessionBloc(sessionFacade, planFacade);
-    addTearDown(bloc.close);
+  test(
+    'start, log, and finish move through active to idle and finish once',
+    () async {
+      final now = DateTime(2026, 11, 19, 12);
+      final sessionFacade = MockISessionFacade();
+      final planFacade = MockIPlanFacade();
+      final bloc = SessionBloc(sessionFacade, planFacade, Clock.fixed(now));
+      addTearDown(bloc.close);
 
-    const nocturne = Piece(id: 1, title: 'Nocturne', targetBpm: 120);
-    const gigue = Piece(id: 2, title: 'Gigue');
-    final session = PracticeSession(
-      id: 7,
-      startedAt: now,
-      endedAt: null,
-      loggedSongIds: const {},
-      completedCount: 0,
-      lastLoggedAt: null,
-    );
+      const nocturne = Piece(id: 1, title: 'Nocturne', targetBpm: 120);
+      const gigue = Piece(id: 2, title: 'Gigue');
+      final session = PracticeSession(
+        id: 7,
+        startedAt: now,
+        endedAt: null,
+        loggedSongIds: const {},
+        completedCount: 0,
+        lastLoggedAt: null,
+      );
 
-    await withClock(Clock.fixed(now), () async {
       when(sessionFacade.getUnfinishedSession()).thenAnswer((_) async => null);
       bloc.add(const SessionEvent.restored());
       await pumpEventQueue();
@@ -88,8 +85,9 @@ void main() {
       ]);
       verify(sessionFacade.startSession(now)).called(1);
 
-      final log = verify(sessionFacade.logPiece(captureAny)).captured.single
-          as PieceLog;
+      final log =
+          verify(sessionFacade.logPiece(captureAny)).captured.single
+              as PieceLog;
       expect(
         log,
         PieceLog(
@@ -104,6 +102,6 @@ void main() {
         ),
       );
       verify(sessionFacade.finishSession(7, now)).called(1);
-    });
-  });
+    },
+  );
 }

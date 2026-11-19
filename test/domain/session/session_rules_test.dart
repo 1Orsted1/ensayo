@@ -17,10 +17,7 @@ void main() {
         lastLoggedAt: lastLoggedAt,
       );
 
-      expect(
-        staleOutcome(session, now),
-        StaleOutcome.finishAt(lastLoggedAt),
-      );
+      expect(staleOutcome(session, now), StaleOutcome.finishAt(lastLoggedAt));
     });
   });
 }

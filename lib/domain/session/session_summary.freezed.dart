@@ -14,7 +14,8 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$SessionSummary {
 
- int get id; DateTime get startedAt; Duration get duration; int get pieceCount;
+ int get id; DateTime get startedAt; Duration get duration; int get pieceCount;/// Sum of the minutes the user logged per piece; drives the daily goal.
+ int get loggedMinutes;
 /// Create a copy of SessionSummary
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +26,16 @@ $SessionSummaryCopyWith<SessionSummary> get copyWith => _$SessionSummaryCopyWith
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SessionSummary&&(identical(other.id, id) || other.id == id)&&(identical(other.startedAt, startedAt) || other.startedAt == startedAt)&&(identical(other.duration, duration) || other.duration == duration)&&(identical(other.pieceCount, pieceCount) || other.pieceCount == pieceCount));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SessionSummary&&(identical(other.id, id) || other.id == id)&&(identical(other.startedAt, startedAt) || other.startedAt == startedAt)&&(identical(other.duration, duration) || other.duration == duration)&&(identical(other.pieceCount, pieceCount) || other.pieceCount == pieceCount)&&(identical(other.loggedMinutes, loggedMinutes) || other.loggedMinutes == loggedMinutes));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,startedAt,duration,pieceCount);
+int get hashCode => Object.hash(runtimeType,id,startedAt,duration,pieceCount,loggedMinutes);
 
 @override
 String toString() {
-  return 'SessionSummary(id: $id, startedAt: $startedAt, duration: $duration, pieceCount: $pieceCount)';
+  return 'SessionSummary(id: $id, startedAt: $startedAt, duration: $duration, pieceCount: $pieceCount, loggedMinutes: $loggedMinutes)';
 }
 
 
@@ -45,7 +46,7 @@ abstract mixin class $SessionSummaryCopyWith<$Res>  {
   factory $SessionSummaryCopyWith(SessionSummary value, $Res Function(SessionSummary) _then) = _$SessionSummaryCopyWithImpl;
 @useResult
 $Res call({
- int id, DateTime startedAt, Duration duration, int pieceCount
+ int id, DateTime startedAt, Duration duration, int pieceCount, int loggedMinutes
 });
 
 
@@ -62,12 +63,13 @@ class _$SessionSummaryCopyWithImpl<$Res>
 
 /// Create a copy of SessionSummary
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? startedAt = null,Object? duration = null,Object? pieceCount = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? startedAt = null,Object? duration = null,Object? pieceCount = null,Object? loggedMinutes = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,startedAt: null == startedAt ? _self.startedAt : startedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,duration: null == duration ? _self.duration : duration // ignore: cast_nullable_to_non_nullable
 as Duration,pieceCount: null == pieceCount ? _self.pieceCount : pieceCount // ignore: cast_nullable_to_non_nullable
+as int,loggedMinutes: null == loggedMinutes ? _self.loggedMinutes : loggedMinutes // ignore: cast_nullable_to_non_nullable
 as int,
   ));
 }
@@ -153,10 +155,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  DateTime startedAt,  Duration duration,  int pieceCount)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  DateTime startedAt,  Duration duration,  int pieceCount,  int loggedMinutes)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SessionSummary() when $default != null:
-return $default(_that.id,_that.startedAt,_that.duration,_that.pieceCount);case _:
+return $default(_that.id,_that.startedAt,_that.duration,_that.pieceCount,_that.loggedMinutes);case _:
   return orElse();
 
 }
@@ -174,10 +176,10 @@ return $default(_that.id,_that.startedAt,_that.duration,_that.pieceCount);case _
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  DateTime startedAt,  Duration duration,  int pieceCount)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  DateTime startedAt,  Duration duration,  int pieceCount,  int loggedMinutes)  $default,) {final _that = this;
 switch (_that) {
 case _SessionSummary():
-return $default(_that.id,_that.startedAt,_that.duration,_that.pieceCount);case _:
+return $default(_that.id,_that.startedAt,_that.duration,_that.pieceCount,_that.loggedMinutes);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -194,10 +196,10 @@ return $default(_that.id,_that.startedAt,_that.duration,_that.pieceCount);case _
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  DateTime startedAt,  Duration duration,  int pieceCount)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  DateTime startedAt,  Duration duration,  int pieceCount,  int loggedMinutes)?  $default,) {final _that = this;
 switch (_that) {
 case _SessionSummary() when $default != null:
-return $default(_that.id,_that.startedAt,_that.duration,_that.pieceCount);case _:
+return $default(_that.id,_that.startedAt,_that.duration,_that.pieceCount,_that.loggedMinutes);case _:
   return null;
 
 }
@@ -209,13 +211,15 @@ return $default(_that.id,_that.startedAt,_that.duration,_that.pieceCount);case _
 
 
 class _SessionSummary implements SessionSummary {
-  const _SessionSummary({required this.id, required this.startedAt, required this.duration, required this.pieceCount});
+  const _SessionSummary({required this.id, required this.startedAt, required this.duration, required this.pieceCount, required this.loggedMinutes});
   
 
 @override final  int id;
 @override final  DateTime startedAt;
 @override final  Duration duration;
 @override final  int pieceCount;
+/// Sum of the minutes the user logged per piece; drives the daily goal.
+@override final  int loggedMinutes;
 
 /// Create a copy of SessionSummary
 /// with the given fields replaced by the non-null parameter values.
@@ -227,16 +231,16 @@ _$SessionSummaryCopyWith<_SessionSummary> get copyWith => __$SessionSummaryCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SessionSummary&&(identical(other.id, id) || other.id == id)&&(identical(other.startedAt, startedAt) || other.startedAt == startedAt)&&(identical(other.duration, duration) || other.duration == duration)&&(identical(other.pieceCount, pieceCount) || other.pieceCount == pieceCount));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SessionSummary&&(identical(other.id, id) || other.id == id)&&(identical(other.startedAt, startedAt) || other.startedAt == startedAt)&&(identical(other.duration, duration) || other.duration == duration)&&(identical(other.pieceCount, pieceCount) || other.pieceCount == pieceCount)&&(identical(other.loggedMinutes, loggedMinutes) || other.loggedMinutes == loggedMinutes));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,startedAt,duration,pieceCount);
+int get hashCode => Object.hash(runtimeType,id,startedAt,duration,pieceCount,loggedMinutes);
 
 @override
 String toString() {
-  return 'SessionSummary(id: $id, startedAt: $startedAt, duration: $duration, pieceCount: $pieceCount)';
+  return 'SessionSummary(id: $id, startedAt: $startedAt, duration: $duration, pieceCount: $pieceCount, loggedMinutes: $loggedMinutes)';
 }
 
 
@@ -247,7 +251,7 @@ abstract mixin class _$SessionSummaryCopyWith<$Res> implements $SessionSummaryCo
   factory _$SessionSummaryCopyWith(_SessionSummary value, $Res Function(_SessionSummary) _then) = __$SessionSummaryCopyWithImpl;
 @override @useResult
 $Res call({
- int id, DateTime startedAt, Duration duration, int pieceCount
+ int id, DateTime startedAt, Duration duration, int pieceCount, int loggedMinutes
 });
 
 
@@ -264,12 +268,13 @@ class __$SessionSummaryCopyWithImpl<$Res>
 
 /// Create a copy of SessionSummary
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? startedAt = null,Object? duration = null,Object? pieceCount = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? startedAt = null,Object? duration = null,Object? pieceCount = null,Object? loggedMinutes = null,}) {
   return _then(_SessionSummary(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,startedAt: null == startedAt ? _self.startedAt : startedAt // ignore: cast_nullable_to_non_nullable
 as DateTime,duration: null == duration ? _self.duration : duration // ignore: cast_nullable_to_non_nullable
 as Duration,pieceCount: null == pieceCount ? _self.pieceCount : pieceCount // ignore: cast_nullable_to_non_nullable
+as int,loggedMinutes: null == loggedMinutes ? _self.loggedMinutes : loggedMinutes // ignore: cast_nullable_to_non_nullable
 as int,
   ));
 }

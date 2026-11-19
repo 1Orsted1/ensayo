@@ -82,6 +82,27 @@ void main() {
   });
 
   test(
+    'finishing an already-finished session throws and keeps its end time',
+    () async {
+      final session = await dataSource.startSession(DateTime(2026, 11, 14, 9));
+      final endedAt = DateTime(2026, 11, 14, 9, 30);
+      await dataSource.finishSession(session.id, endedAt);
+
+      await expectLater(
+        dataSource.finishSession(session.id, DateTime(2026, 11, 14, 11)),
+        throwsA(isA<StateError>()),
+      );
+
+      final stored = (await db.select(db.practiceSessions).get()).single;
+      expect(stored.endedAt, endedAt);
+      expect(
+        (await dataSource.getFinishedSessions()).single.duration,
+        const Duration(minutes: 30),
+      );
+    },
+  );
+
+  test(
     'a log for a deleted song keeps the song id and title snapshot',
     () async {
       final plan = PlanDataSourceImp(dataBase: db);
@@ -121,6 +142,7 @@ void main() {
 
     expect(summaries.map((summary) => summary.id), [newer.id, older.id]);
     expect(summaries.map((summary) => summary.pieceCount), [0, 0]);
+    expect(summaries.map((summary) => summary.loggedMinutes), [0, 0]);
     expect(summaries.map((summary) => summary.duration), [
       const Duration(minutes: 10),
       const Duration(minutes: 20),

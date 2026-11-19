@@ -18,7 +18,7 @@ part 'session_state.dart';
 
 @injectable
 class SessionBloc extends Bloc<SessionEvent, SessionState> {
-  SessionBloc(this._sessionFacade, this._planFacade)
+  SessionBloc(this._sessionFacade, this._planFacade, this._clock)
     : super(SessionState.initial()) {
     on<_Restored>(_onRestored);
     on<_StartRequested>(_onStartRequested);
@@ -30,6 +30,7 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
 
   final ISessionFacade _sessionFacade;
   final IPlanFacade _planFacade;
+  final Clock _clock;
 
   Future<void> _onRestored(_Restored event, Emitter<SessionState> emit) async {
     emit(state.copyWith(status: SessionStatus.restoring, failure: null));
@@ -40,7 +41,7 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
         return;
       }
 
-      final outcome = staleOutcome(session, clock.now());
+      final outcome = staleOutcome(session, _clock.now());
       await outcome.when(
         resume: () async {
           final plan = await _planFacade.getPieces();
@@ -89,7 +90,7 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
       ),
     );
     try {
-      final session = await _sessionFacade.startSession(clock.now());
+      final session = await _sessionFacade.startSession(_clock.now());
       final plan = await _planFacade.getPieces();
       emit(
         state.copyWith(
@@ -132,7 +133,7 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
         failure: null,
       ),
     );
-    final now = clock.now();
+    final now = _clock.now();
     try {
       await _sessionFacade.logPiece(
         PieceLog(
@@ -181,7 +182,7 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
     emit(
       state.copyWith(
         currentIndex: state.currentIndex + 1,
-        currentSince: clock.now(),
+        currentSince: _clock.now(),
         actionStatus: SessionActionStatus.idle,
         failure: null,
       ),
@@ -195,7 +196,7 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
     return _closeSession(
       emit,
       failure: SessionFailure.finish,
-      action: (id) => _sessionFacade.finishSession(id, clock.now()),
+      action: (id) => _sessionFacade.finishSession(id, _clock.now()),
     );
   }
 
@@ -247,7 +248,7 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
       session: null,
       queue: <Piece>[],
       currentIndex: 0,
-      currentSince: clock.now(),
+      currentSince: _clock.now(),
       actionStatus: SessionActionStatus.idle,
       failure: null,
     );

@@ -8,10 +8,7 @@ void main() {
       final now = DateTime(2026, 11, 18, 12);
 
       withClock(Clock.fixed(now), () {
-        expect(
-          computeStreak([DateTime(2026, 11, 17, 9)], clock.now()),
-          1,
-        );
+        expect(computeStreak([DateTime(2026, 11, 17, 9)], clock.now()), 1);
       });
     });
 
@@ -19,10 +16,7 @@ void main() {
       final now = DateTime(2026, 11, 18, 12);
 
       withClock(Clock.fixed(now), () {
-        expect(
-          computeStreak([DateTime(2026, 11, 16, 9)], clock.now()),
-          0,
-        );
+        expect(computeStreak([DateTime(2026, 11, 16, 9)], clock.now()), 0);
       });
     });
 
@@ -30,10 +24,7 @@ void main() {
       final now = DateTime(2026, 11, 18, 20);
 
       withClock(Clock.fixed(now), () {
-        final starts = [
-          DateTime(2026, 11, 18, 8),
-          DateTime(2026, 11, 18, 19),
-        ];
+        final starts = [DateTime(2026, 11, 18, 8), DateTime(2026, 11, 18, 19)];
 
         expect(computeStreak(starts, clock.now()), 1);
       });
@@ -60,10 +51,7 @@ void main() {
       final now = DateTime(2026, 11, 18, 12);
 
       withClock(Clock.fixed(now), () {
-        expect(
-          computeStreak([DateTime(2026, 11, 19, 9)], clock.now()),
-          0,
-        );
+        expect(computeStreak([DateTime(2026, 11, 19, 9)], clock.now()), 0);
       });
     });
   });

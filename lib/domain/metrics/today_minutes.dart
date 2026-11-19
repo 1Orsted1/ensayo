@@ -3,7 +3,7 @@ import 'package:ensayo/domain/session/session_summary.dart';
 int minutesOn(DateTime day, Iterable<SessionSummary> sessions) {
   return sessions
       .where((session) => _isSameDay(session.startedAt, day))
-      .fold(0, (total, session) => total + session.duration.inMinutes);
+      .fold(0, (total, session) => total + session.loggedMinutes);
 }
 
 bool _isSameDay(DateTime a, DateTime b) {

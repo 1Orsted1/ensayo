@@ -17,23 +17,18 @@ import 'metrics_cubit_break_test.mocks.dart';
 
 final _now = DateTime(2026, 11, 19, 12);
 
-SessionSummary _summary(
-  int id,
-  DateTime startedAt,
-  int minutes,
-) {
+// Wall-clock duration runs past the logged minutes so only logged time counts.
+SessionSummary _summary(int id, DateTime startedAt, int loggedMinutes) {
   return SessionSummary(
     id: id,
     startedAt: startedAt,
-    duration: Duration(minutes: minutes),
+    duration: Duration(minutes: loggedMinutes + 7),
     pieceCount: 1,
+    loggedMinutes: loggedMinutes,
   );
 }
 
-@GenerateNiceMocks([
-  MockSpec<IMetricsFacade>(),
-  MockSpec<ISessionFacade>(),
-])
+@GenerateNiceMocks([MockSpec<IMetricsFacade>(), MockSpec<ISessionFacade>()])
 void main() {
   late MockIMetricsFacade metricsFacade;
   late MockISessionFacade sessionFacade;
@@ -45,7 +40,7 @@ void main() {
     observer = RecordingBlocObserver.install(addTearDown);
     metricsFacade = MockIMetricsFacade();
     sessionFacade = MockISessionFacade();
-    cubit = MetricsCubit(metricsFacade, sessionFacade);
+    cubit = MetricsCubit(metricsFacade, sessionFacade, Clock.fixed(_now));
   });
 
   tearDown(() => cubit.close());
@@ -55,7 +50,7 @@ void main() {
       const metrics = MetricsData(id: 3, dailyGoalInMinutes: 60);
       when(metricsFacade.getMetrics()).thenAnswer((_) async => metrics);
       when(sessionFacade.getFinishedSessions()).thenAnswer((_) async => []);
-      await withClock(Clock.fixed(_now), cubit.load);
+      await cubit.load();
       expect(cubit.state.goalMinutes, 60);
 
       when(
@@ -73,20 +68,23 @@ void main() {
       verify(metricsFacade.updateDailyGoal(id: 3, minutes: 45)).called(1);
     });
 
-    test('a session facade load failure makes the metrics unavailable',
-        () async {
-      const metrics = MetricsData(id: 3, dailyGoalInMinutes: 60);
-      when(metricsFacade.getMetrics()).thenAnswer((_) async => metrics);
-      when(sessionFacade.getFinishedSessions())
-          .thenAnswer((_) async => throw storageError);
+    test(
+      'a session facade load failure makes the metrics unavailable',
+      () async {
+        const metrics = MetricsData(id: 3, dailyGoalInMinutes: 60);
+        when(metricsFacade.getMetrics()).thenAnswer((_) async => metrics);
+        when(
+          sessionFacade.getFinishedSessions(),
+        ).thenAnswer((_) async => throw storageError);
 
-      await withClock(Clock.fixed(_now), cubit.load);
+        await cubit.load();
 
-      expect(cubit.state.loadStatus, MetricsLoadStatus.failure);
-      expect(observer.errors, [storageError]);
-      verify(metricsFacade.getMetrics()).called(1);
-      verify(sessionFacade.getFinishedSessions()).called(1);
-    });
+        expect(cubit.state.loadStatus, MetricsLoadStatus.failure);
+        expect(observer.errors, [storageError]);
+        verify(metricsFacade.getMetrics()).called(1);
+        verify(sessionFacade.getFinishedSessions()).called(1);
+      },
+    );
 
     test('when two loads race, only the latest result wins', () async {
       final firstSessions = Completer<List<SessionSummary>>();
@@ -105,37 +103,33 @@ void main() {
         return sessionCalls == 1 ? firstSessions.future : secondSessions.future;
       });
 
-      await withClock(Clock.fixed(_now), () async {
-        final firstLoad = cubit.load();
-        await pumpEventQueue();
-        final secondLoad = cubit.load();
-        await pumpEventQueue();
+      final firstLoad = cubit.load();
+      await pumpEventQueue();
+      final secondLoad = cubit.load();
+      await pumpEventQueue();
 
-        secondSessions.complete([
-          _summary(1, DateTime(2026, 11, 17, 8), 15),
-          _summary(2, DateTime(2026, 11, 18, 18), 25),
-          _summary(3, DateTime(2026, 11, 19, 9), 20),
-          _summary(4, DateTime(2026, 11, 19, 10), 10),
-        ]);
-        await secondLoad;
-        await pumpEventQueue();
+      secondSessions.complete([
+        _summary(1, DateTime(2026, 11, 17, 8), 15),
+        _summary(2, DateTime(2026, 11, 18, 18), 25),
+        _summary(3, DateTime(2026, 11, 19, 9), 20),
+        _summary(4, DateTime(2026, 11, 19, 10), 10),
+      ]);
+      await secondLoad;
+      await pumpEventQueue();
 
-        expect(cubit.state.loadStatus, MetricsLoadStatus.loaded);
-        expect(cubit.state.goalMinutes, 45);
-        expect(cubit.state.streakDays, 3);
-        expect(cubit.state.todayMinutes, 30);
+      expect(cubit.state.loadStatus, MetricsLoadStatus.loaded);
+      expect(cubit.state.goalMinutes, 45);
+      expect(cubit.state.streakDays, 3);
+      expect(cubit.state.todayMinutes, 30);
 
-        firstSessions.complete([
-          _summary(5, DateTime(2026, 11, 19, 7), 5),
-        ]);
-        await firstLoad;
-        await pumpEventQueue();
+      firstSessions.complete([_summary(5, DateTime(2026, 11, 19, 7), 5)]);
+      await firstLoad;
+      await pumpEventQueue();
 
-        expect(cubit.state.loadStatus, MetricsLoadStatus.loaded);
-        expect(cubit.state.goalMinutes, 45);
-        expect(cubit.state.streakDays, 3);
-        expect(cubit.state.todayMinutes, 30);
-      });
+      expect(cubit.state.loadStatus, MetricsLoadStatus.loaded);
+      expect(cubit.state.goalMinutes, 45);
+      expect(cubit.state.streakDays, 3);
+      expect(cubit.state.todayMinutes, 30);
 
       verify(metricsFacade.getMetrics()).called(2);
       verify(sessionFacade.getFinishedSessions()).called(2);
